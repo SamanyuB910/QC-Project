@@ -5,6 +5,7 @@
     .venv/Scripts/python.exe tools/run_local.py --backend aer-forte --set shots=100
     .venv/Scripts/python.exe tools/run_local.py --backend fake-ibm
     .venv/Scripts/python.exe tools/run_local.py --backend basic --set circuits=single --set dump_counts=true
+    .venv/Scripts/python.exe tools/run_local.py --backend basic --save-figures figures   # figures as PNG files
 
 Backends: basic (Qiskit BasicSimulator = Qollab's built-in), aer (ideal Aer), aer-forte (Aer with IonQ forte-1
 legacy depolarizing rates: 1q 2.67e-4, 2q 4.95e-3), fake-ibm (GenericBackendV2 heavy-hex device with noise).
@@ -65,6 +66,22 @@ def parse_value(v):
     return v
 
 
+def save_figures_instead_of_showing(folder):
+    """On Qollab, plt.show() draws each figure in the Run output. Here, save each one as a PNG instead."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    folder.mkdir(parents=True, exist_ok=True)
+    names = iter(["price_ladder.png", "recovery_vs_shots.png"])
+
+    def show(*args, **kwargs):
+        path = folder / next(names, f"figure_{len(list(folder.glob('*.png'))) + 1}.png")
+        plt.gcf().savefig(path, dpi=150)
+        print(f"  [run_local] figure saved: {path}")
+
+    plt.show = show
+
+
 def run(backend_name, settings, project=PROJECT, entry="main.py"):
     os.chdir(project)
     sys.path.insert(0, str(project))
@@ -82,12 +99,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--backend", default="basic")
     ap.add_argument("--set", action="append", default=[], help="main() setting, e.g. shots=200")
+    ap.add_argument("--save-figures", metavar="FOLDER",
+                    help="save the figures as PNG files in this folder (relative to the repository root)")
     args = ap.parse_args()
     settings = {}
     for kv in args.set:
         k, v = kv.split("=", 1)
         settings[k] = parse_value(v)
     os.environ.setdefault("MPLBACKEND", "Agg")
+    if args.save_figures:
+        save_figures_instead_of_showing((ROOT / args.save_figures).resolve())
     calls, secs = run(args.backend, settings)
     print(f"\n[run_local] backend={args.backend} run() calls={calls} main() wall time={secs:.1f}s")
     if calls != 1:

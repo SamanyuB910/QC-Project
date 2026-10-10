@@ -31,6 +31,12 @@
 
 \*Cross-validated on all 297 patients, best of 1,287 panels, so optimistic. The honest held-out numbers are on the project page.
 
+![Price ladder: the best cross-validated AUC reachable at each five-test panel price, rising in steps from $9.20 (AUC 0.838) to $293.10 (AUC 0.911); diamonds mark the exact optimum at each price weight](docs/figures/price_ladder.png)
+
+![Chance that one 1,000-shot job finds every optimal panel, against shots per circuit: the ideal circuit reaches 98%, the independent-choice sampler 63%, uniform random panels 11%](docs/figures/recovery_vs_shots.png)
+
+*Both figures are drawn by the program on every Run (on Qollab they appear in the Run output); the numbers are also printed as tables.*
+
 ## Run it
 
 **On Qollab:** upload [`five_tests_priced/`](five_tests_priced/) and press **Run** on any simulator.
@@ -43,6 +49,7 @@ py -3.12 -m venv .venv
 .venv/Scripts/python tools/run_local.py --backend basic          # Qollab's built-in simulator (BasicSimulator)
 .venv/Scripts/python tools/run_local.py --backend aer-forte      # Aer with IonQ forte-1 legacy noise rates
 .venv/Scripts/python tools/run_local.py --backend fake-ibm       # a routed, noisy IBM-style device
+.venv/Scripts/python tools/run_local.py --backend basic --save-figures figures   # also save the two figures as PNGs
 .venv/Scripts/python -m pytest tools/tests                       # the test suite (~1 min)
 .venv/Scripts/python tools/precompute.py auc baselines penalty gates honestcv confirm2 confirm3 noisy
 ```

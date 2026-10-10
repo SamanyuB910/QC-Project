@@ -20,3 +20,4 @@ desktop.ini
 
 # Qollab upload archive (built by tools/make_upload_zip.py)
 qollab_upload.zip
+/figures/
