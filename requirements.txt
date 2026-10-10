@@ -1,0 +1,10 @@
+# Local development environment (NOT uploaded to Qollab; Qollab provides its own Qiskit 2.5.x runtime).
+# Matches Qollab's runtime as closely as possible: Qiskit 2.5.x, NumPy 2.x.
+qiskit==2.5.2
+qiskit-aer==0.17.2
+numpy>=2.0
+scipy
+pandas
+scikit-learn
+matplotlib
+pytest
