@@ -1,0 +1,56 @@
+
+== prompt-like k=3 lam=0.2: P_min=0.0020  P_bound(no-oracle)=0.6689 (332.9x P_min)  Qiskit-auto=4.35 (2164x)
+method                                  p   2q P(opt|feas) P(opt)/raw P(feas) AR|feas
+XY (free RY start)                      1  234     0.03760    0.00838   0.223   0.762
+penalty P_bound (no oracle)             1   78     0.00082    0.00040   0.481   0.525
+penalty 2x P_min                        1   78     0.00663    0.00098   0.147   0.673
+penalty 4x P_min                        1   78     0.00470    0.00089   0.191   0.650
+XY (free RY start)                      2  468     0.16640    0.03707   0.223   0.863
+penalty P_bound (no oracle)             2  156     0.00086    0.00056   0.649   0.528
+penalty 2x P_min                        2  156     0.08557    0.01190   0.139   0.754
+penalty 4x P_min                        2  156     0.06792    0.01054   0.155   0.744
+XY (free RY start)                      3  702     0.37374    0.08326   0.223   0.912
+penalty P_bound (no oracle)             3  234     0.00099    0.00070   0.704   0.536
+penalty 2x P_min                        3  234     0.27518    0.07299   0.265   0.864
+penalty 4x P_min                        3  234     0.19922    0.06596   0.331   0.847
+XY (free RY start)                      4  936     0.24622    0.05485   0.223   0.896
+penalty P_bound (no oracle)             4  312     0.00107    0.00059   0.555   0.540
+penalty 2x P_min                        4  312     0.34250    0.13947   0.407   0.900
+penalty 4x P_min                        4  312     0.27100    0.11882   0.438   0.887
+XY (free RY start)                      5 1170     0.32828    0.07314   0.223   0.915
+penalty P_bound (no oracle)             5  390     0.00113    0.00076   0.677   0.543
+penalty 2x P_min                        5  390     0.44616    0.17834   0.400   0.920
+penalty 4x P_min                        5  390     0.33858    0.16072   0.475   0.899
+XY (free RY start)                      6 1404     0.40961    0.09125   0.223   0.929
+penalty P_bound (no oracle)             6  468     0.00124    0.00086   0.692   0.548
+penalty 2x P_min                        6  468     0.57558    0.26836   0.466   0.943
+penalty 4x P_min                        6  468     0.47666    0.23397   0.491   0.930
+  (190s)
+
+== ours k=10x20 lam=0.1: P_min=0.0154  P_bound(no-oracle)=0.3861 (25.0x P_min)  Qiskit-auto=4.35 (282x)
+method                                  p   2q P(opt|feas) P(opt)/raw P(feas) AR|feas
+XY (free RY start)                      1  234     0.01547    0.00345   0.223   0.861
+penalty P_bound (no oracle)             1   78     0.00081    0.00039   0.476   0.635
+penalty 2x P_min                        1   78     0.00122    0.00058   0.479   0.665
+penalty 4x P_min                        1   78     0.00100    0.00048   0.478   0.650
+XY (free RY start)                      2  468     0.03325    0.00741   0.223   0.928
+penalty P_bound (no oracle)             2  156     0.00084    0.00056   0.664   0.637
+penalty 2x P_min                        2  156     0.00334    0.00180   0.538   0.737
+penalty 4x P_min                        2  156     0.00164    0.00092   0.559   0.686
+XY (free RY start)                      3  702     0.04823    0.01074   0.223   0.952
+penalty P_bound (no oracle)             3  234     0.00093    0.00068   0.730   0.645
+penalty 2x P_min                        3  234     0.01066    0.00540   0.506   0.832
+penalty 4x P_min                        3  234     0.00230    0.00157   0.683   0.708
+XY (free RY start)                      4  936     0.05744    0.01280   0.223   0.953
+penalty P_bound (no oracle)             4  312     0.00102    0.00079   0.772   0.651
+penalty 2x P_min                        4  312     0.01787    0.00967   0.541   0.882
+penalty 4x P_min                        4  312     0.00376    0.00229   0.609   0.749
+XY (free RY start)                      5 1170     0.09676    0.02156   0.223   0.961
+penalty P_bound (no oracle)             5  390     0.00103    0.00073   0.703   0.652
+penalty 2x P_min                        5  390     0.02227    0.01402   0.630   0.890
+penalty 4x P_min                        5  390     0.00533    0.00329   0.617   0.774
+XY (free RY start)                      6 1404     0.12701    0.02830   0.223   0.967
+penalty P_bound (no oracle)             6  468     0.00102    0.00064   0.628   0.652
+penalty 2x P_min                        6  468     0.02273    0.01488   0.655   0.901
+penalty 4x P_min                        6  468     0.00950    0.00666   0.701   0.821
+  (231s)

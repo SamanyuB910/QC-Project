@@ -1,0 +1,82 @@
+  prompt-like: kNN-MI k=3 seed0, lambda=0.2: p=1 done (48s)
+  prompt-like: kNN-MI k=3 seed0, lambda=0.2: p=2 done (99s)
+  prompt-like: kNN-MI k=3 seed0, lambda=0.2: p=3 done (141s)
+  prompt-like: kNN-MI k=3 seed0, lambda=0.2: p=4 done (181s)
+  prompt-like: kNN-MI k=3 seed0, lambda=0.2: p=5 done (244s)
+  prompt-like: kNN-MI k=3 seed0, lambda=0.2: p=6 done (311s)
+  ours: kNN-MI k=10 avg 20 seeds, lambda=0.1: p=1 done (34s)
+  ours: kNN-MI k=10 avg 20 seeds, lambda=0.1: p=2 done (147s)
+  ours: kNN-MI k=10 avg 20 seeds, lambda=0.1: p=3 done (178s)
+  ours: kNN-MI k=10 avg 20 seeds, lambda=0.1: p=4 done (204s)
+  ours: kNN-MI k=10 avg 20 seeds, lambda=0.1: p=5 done (236s)
+  ours: kNN-MI k=10 avg 20 seeds, lambda=0.1: p=6 done (274s)
+
+== prompt-like: kNN-MI k=3 seed0, lambda=0.2 | optimum ['cp', 'chol', 'slope', 'ca', 'thal'] | P_min=0.0020 | random 5-subset P(opt)=0.00078
+method                                        p   2q tune   P(feas) P(opt)/raw shot P(opt|feas) AR|feas top10/raw
+XY mixer, exact Dicke start                   1  524 energy   1.000         0.03760     0.03760   0.762    0.1989
+XY mixer, free RY start + keep weight-5       1  234 energy   0.223         0.00838     0.03760   0.762    0.0443
+XY mixer, exact Dicke start                   1  524 oracle   1.000         0.05422     0.05422   0.727    0.2115
+XY mixer, free RY start + keep weight-5       1  234 oracle   0.223         0.01208     0.05422   0.727    0.0471
+penalty P=0.5xPmin                            1   78 energy   0.122         0.00108     0.00891   0.686    0.0095
+penalty P=1xPmin                              1   78 energy   0.129         0.00104     0.00806   0.682    0.0094
+penalty P=1xPmin                              1   78 oracle   0.184         0.00513     0.02784   0.453    0.0082
+penalty P=2xPmin                              1   78 energy   0.147         0.00098     0.00663   0.673    0.0091
+penalty P=10xPmin                             1   78 energy   0.313         0.00077     0.00247   0.599    0.0074
+penalty P=4.35 (Qiskit auto)                  1   78 energy   0.476         0.00037     0.00078   0.522    0.0037
+XY mixer, exact Dicke start                   2  758 energy   1.000         0.16640     0.16640   0.863    0.5331
+XY mixer, free RY start + keep weight-5       2  468 energy   0.223         0.03707     0.16640   0.863    0.1188
+XY mixer, exact Dicke start                   2  758 oracle   1.000         0.23932     0.23932   0.817    0.4938
+XY mixer, free RY start + keep weight-5       2  468 oracle   0.223         0.05332     0.23932   0.817    0.1100
+penalty P=0.5xPmin                            2  156 energy   0.122         0.01203     0.09844   0.761    0.0350
+penalty P=1xPmin                              2  156 energy   0.128         0.01210     0.09433   0.759    0.0362
+penalty P=1xPmin                              2  156 oracle   0.292         0.04284     0.14679   0.730    0.0656
+penalty P=2xPmin                              2  156 energy   0.139         0.01190     0.08557   0.754    0.0380
+penalty P=10xPmin                             2  156 energy   0.179         0.00545     0.03047   0.732    0.0295
+penalty P=4.35 (Qiskit auto)                  2  156 energy   0.663         0.00052     0.00079   0.523    0.0052
+penalty P=1xPmin                              3  234 energy   0.228         0.07342     0.32230   0.871    0.1333
+penalty P=1xPmin                              3  234 oracle   0.448         0.22273     0.49745   0.869    0.2829
+penalty P=4.35 (Qiskit auto)                  3  234 energy   0.728         0.00059     0.00081   0.524    0.0058
+penalty P=1xPmin                              4  312 energy   0.376         0.14724     0.39160   0.908    0.2477
+penalty P=1xPmin                              4  312 oracle   0.423         0.25252     0.59661   0.919    0.3129
+penalty P=4.35 (Qiskit auto)                  4  312 energy   0.773         0.00064     0.00082   0.525    0.0063
+penalty P=1xPmin                              5  390 energy   0.352         0.18212     0.51704   0.931    0.2646
+penalty P=1xPmin                              5  390 oracle   0.463         0.32240     0.69573   0.940    0.3658
+penalty P=4.35 (Qiskit auto)                  5  390 energy   0.703         0.00058     0.00082   0.525    0.0057
+penalty P=1xPmin                              6  468 energy   0.442         0.28002     0.63316   0.950    0.3609
+penalty P=1xPmin                              6  468 oracle   0.571         0.43463     0.76077   0.960    0.4765
+penalty P=4.35 (Qiskit auto)                  6  468 energy   0.627         0.00052     0.00082   0.525    0.0051
+
+== ours: kNN-MI k=10 avg 20 seeds, lambda=0.1 | optimum ['cp', 'chol', 'oldpeak', 'ca', 'thal'] | P_min=0.0154 | random 5-subset P(opt)=0.00078
+method                                        p   2q tune   P(feas) P(opt)/raw shot P(opt|feas) AR|feas top10/raw
+XY mixer, exact Dicke start                   1  524 energy   1.000         0.01547     0.01547   0.861    0.1639
+XY mixer, free RY start + keep weight-5       1  234 energy   0.223         0.00345     0.01547   0.861    0.0365
+XY mixer, exact Dicke start                   1  524 oracle   1.000         0.01675     0.01675   0.849    0.1829
+XY mixer, free RY start + keep weight-5       1  234 oracle   0.223         0.00373     0.01675   0.849    0.0407
+penalty P=0.5xPmin                            1   78 energy   0.445         0.00115     0.00258   0.716    0.0100
+penalty P=1xPmin                              1   78 energy   0.473         0.00079     0.00167   0.687    0.0073
+penalty P=1xPmin                              1   78 oracle   0.133         0.00107     0.00803   0.601    0.0098
+penalty P=2xPmin                              1   78 energy   0.479         0.00058     0.00122   0.665    0.0056
+penalty P=10xPmin                             1   78 energy   0.477         0.00041     0.00086   0.640    0.0041
+penalty P=4.35 (Qiskit auto)                  1   78 energy   0.475         0.00037     0.00078   0.632    0.0037
+XY mixer, exact Dicke start                   2  758 energy   1.000         0.03325     0.03325   0.928    0.3694
+XY mixer, free RY start + keep weight-5       2  468 energy   0.223         0.00741     0.03325   0.928    0.0823
+XY mixer, exact Dicke start                   2  758 oracle   1.000         0.03590     0.03590   0.918    0.3955
+XY mixer, free RY start + keep weight-5       2  468 oracle   0.223         0.00800     0.03590   0.918    0.0881
+penalty P=0.5xPmin                            2  156 energy   0.371         0.00618     0.01665   0.873    0.0647
+penalty P=1xPmin                              2  156 energy   0.450         0.00398     0.00885   0.811    0.0365
+penalty P=1xPmin                              2  156 oracle   0.391         0.00528     0.01351   0.825    0.0517
+penalty P=2xPmin                              2  156 energy   0.538         0.00180     0.00334   0.737    0.0167
+penalty P=10xPmin                             2  156 energy   0.661         0.00062     0.00093   0.645    0.0060
+penalty P=4.35 (Qiskit auto)                  2  156 energy   0.665         0.00052     0.00078   0.632    0.0052
+penalty P=1xPmin                              3  234 energy   0.528         0.00911     0.01724   0.892    0.1149
+penalty P=1xPmin                              3  234 oracle   0.585         0.01073     0.01833   0.892    0.1348
+penalty P=4.35 (Qiskit auto)                  3  234 energy   0.732         0.00058     0.00079   0.633    0.0058
+penalty P=1xPmin                              4  312 energy   0.574         0.01569     0.02735   0.917    0.1783
+penalty P=1xPmin                              4  312 oracle   0.473         0.01741     0.03681   0.918    0.1671
+penalty P=4.35 (Qiskit auto)                  4  312 energy   0.776         0.00062     0.00080   0.634    0.0062
+penalty P=1xPmin                              5  390 energy   0.579         0.02197     0.03793   0.938    0.2271
+penalty P=1xPmin                              5  390 oracle   0.422         0.02294     0.05436   0.944    0.1870
+penalty P=4.35 (Qiskit auto)                  5  390 energy   0.706         0.00056     0.00080   0.634    0.0056
+penalty P=1xPmin                              6  468 energy   0.493         0.02586     0.05251   0.949    0.2318
+penalty P=1xPmin                              6  468 oracle   0.504         0.02711     0.05383   0.937    0.2119
+penalty P=4.35 (Qiskit auto)                  6  468 energy   0.630         0.00050     0.00080   0.634    0.0050
