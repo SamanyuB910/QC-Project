@@ -45,7 +45,9 @@ History and vitals cost $1 each (age, sex, chest-pain type, resting blood pressu
 | $191.20 | sex, chest-pain type, resting BP, ST slope, fluoroscopy | + treadmill ECG + fluoroscopy | 0.902 |
 | $293.10 | sex, chest-pain type, ST slope, fluoroscopy, thallium | + treadmill + thallium + fluoroscopy | 0.911 |
 
-The program also draws this ladder as a figure, with a text description first.
+![Price ladder: the best cross-validated AUC reachable at each five-test panel price, rising in steps from $9.20 (AUC 0.838) to $293.10 (AUC 0.911); diamonds mark the panel the objective picks at each price weight](https://raw.githubusercontent.com/SamanyuB910/QC-Project/main/docs/figures/price_ladder.png)
+
+*The program draws this figure on every Run, after a text description; diamonds mark the panel the objective picks at each price weight.*
 
 ## 2. Data and prices
 
@@ -78,6 +80,21 @@ Press **Run**. It needs no setup: the defaults are chosen per simulator, and the
 | `dump_counts` | false | Print the raw counts as one line of JSON, for archiving a run |
 
 **Browsers:** Chrome, Edge, Brave, Opera or Firefox 153+. Safari cannot run Qollab projects.
+
+**What a Run prints.** Six numbered sections: the decision, the exact classical answer, the circuits with a prediction made before the job, what the samples show, offline evidence, and what the project does not claim. Both figures appear inside the output. The core result, from the built-in simulator with default settings:
+
+```
+4. What the samples show [live run on basic, 1000 shots per circuit]
+  mu   | five-test shots | P(optimal panel) observed [95% CI] | ideal circuit | independent-choice | uniform | best sample = optimum?
+  -----+-----------------+------------------------------------+---------------+--------------------+---------+-----------------------
+  0.0  | 230 of 1000     | 0.0174 [0.0068, 0.0439]            | 0.0229        | 0.0137             | 0.0008  | yes
+  0.02 | 207 of 1000     | 0.0145 [0.0049, 0.0417]            | 0.0070        | 0.0044             | 0.0008  | yes
+  0.05 | 244 of 1000     | 0.0041 [0.0007, 0.0228]            | 0.0057        | 0.0025             | 0.0008  | yes
+  0.1  | 224 of 1000     | 0.0045 [0.0008, 0.0249]            | 0.0150        | 0.0038             | 0.0008  | yes
+  0.2  | 216 of 1000     | 0.0185 [0.0072, 0.0466]            | 0.0208        | 0.0039             | 0.0008  | yes
+
+  pooled over the job: 4 of 4 distinct optimal panels sampled
+```
 
 ## 4. Classical first
 
@@ -146,6 +163,8 @@ This is the chance that **one job** finds **all four** distinct optimal panels. 
 | Uniform five-test panels | 0% | 0% | 2% | 11% |
 
 *Classical rows: 200 seeded jobs, every evaluated panel counted. The noise rows use IonQ's documented legacy depolarizing rates, which are not IonQ's current model or hardware.*
+
+![Chance that one job finds every optimal panel, against shots per circuit on a log scale: the ideal circuit reaches 98% at 1,000 shots, the independent-choice sampler 63%, uniform random panels 11%](https://raw.githubusercontent.com/SamanyuB910/QC-Project/main/docs/figures/recovery_vs_shots.png)
 
 ### Pre-registered checks (registered Sat Oct 10, 15:00 ET; git tag `prereg`)
 
