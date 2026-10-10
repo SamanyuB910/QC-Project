@@ -1,0 +1,21 @@
+Build v1.5 (Sat Oct 10, 2026): readability rewrite of five_tests_priced/*.py -- clearer names, comments and
+docstrings; main() split into one function per report section. No change in behaviour.
+
+How "no change in behaviour" was checked: the program's full printed output was recorded with build v1.4,
+then again with v1.5, in 11 configurations (tools/run_local.py and two fake-IonQ backends):
+
+  basic_default        built-in simulator, default settings
+  basic_single         circuits = single, dump_counts = true
+  basic_probe          circuits = probe (gate-convention probe)
+  basic_nobase_nofig   run_baselines = false, show_figures = false, shots = 300, seed = 11
+  basic_reval          revalidate_auc = true (live scikit-learn AUCs), circuits = all
+  basic_badmode        circuits = "weird" (falls back to auto), single_mu = 0.07
+  aer_default          ideal Aer simulator
+  aer_forte            Aer with IonQ's older published noise rates
+  fake_ibm             routed heavy-hex IBM-style device with noise
+  ionq_fail_cache      fake IonQ backend whose job fails -> cached IonQ counts are shown
+  ionq_ok              fake IonQ backend that succeeds -> single circuit, sampler_seed, IonQ notes
+
+Result: all 11 outputs identical line for line, after masking only what changes on every run anyway
+(elapsed times, random job ids, the build id, and source line numbers inside a local matplotlib warning).
+Test suite: 61 passed. Every core./quantum./classical. name used by tools/ still exists.
