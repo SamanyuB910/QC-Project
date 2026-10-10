@@ -34,6 +34,23 @@ What I'm checking:
 - timings;
 - whether IonQ returns properly sampled counts.
 
-## Step 1: v0 safety entry (after I push Phase 1, target Sat 21:00)
+## Step 1: v0 safety entry (target Sat 21:00)
 
-Filled in when Phase 1 lands: upload the `five_tests_priced/` folder, run, **publish (MIT)**, and **submit from the Qollab registration page with theme = Quantum Impact**.
+1. **Upload.** Qollab → New Project → **Upload your own files**. Drag in the whole `five_tests_priced/` folder, or a zip of it (one wrapping folder is stripped automatically). The folder's `README.md` becomes the project write-up.
+   - Files: `main.py`, `ftp_core.py`, `ftp_classical.py`, `ftp_quantum.py`, `ftp_report.py`, `README.md`, `LICENSE`, `DATA_NOTICE.md`, `data/heart_cleveland_297.csv`, `results/precomputed.json`.
+   - **The captain should create it on their own profile.** Only the creator can edit it, and only the captain or a joined teammate's public project can be submitted.
+2. **Run on Built-in simulator** with default settings. It should finish in seconds. Paste the output back to me.
+3. **Run on IonQ Forte 1 (remote simulator)** with defaults (`circuits = auto`, `shots = 0`, which means 500 per circuit). Accept the consent dialog if one appears; the simulator is free. Paste the output back.
+   - If it prints `JOB FAILED`, press Run again with `circuits = single` and paste that too.
+4. **Publish** → choose a version name → visibility **public**. Public Qollab projects are automatically MIT-licensed.
+5. **Record a quick placeholder video.** The registration form *requires* a video URL. A 2–3 min screen recording of the Run plus the write-up is fine for now (Loom/YouTube/Drive, viewable without sign-in). Replace it with the real video on Sunday.
+6. **Submit from the Qollab registration page** (captain):
+   - pick the project;
+   - **Theme = Impact**;
+   - paste the video URL;
+   - optionally fill "Dependencies and environment": "Qiskit 2.5 + NumPy; no extra packages";
+   - tick the rules box;
+   - submit.
+
+   You can edit and re-submit until Sun Oct 11, 19:00 ET.
+7. **Optional, so its queue time overlaps sleep:** run IonQ Forte 1 again with `dump_counts = true` and paste the `COUNTS_JSON ...` line. I'll store it as the cached IonQ result.

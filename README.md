@@ -4,7 +4,9 @@
 
 **This effort is supported by Qollab & IonQ.**
 
-> **Status: under construction.** The build window runs from Fri Oct 9, 19:00 ET to Sun Oct 11, 19:00 ET. This README becomes the full project page as the build proceeds. The runnable Qollab project is the folder [`five_tests_priced/`](five_tests_priced/). Everything under `research_notes/`, `reports/` and `ideation/` is supporting research (see *Pre-existing work* below).
+> **Status: build v0 (safety version) is runnable.** The build window runs from Fri Oct 9, 19:00 ET to Sun Oct 11, 19:00 ET. This README becomes the full project page as the build proceeds. The runnable Qollab project is the folder [`five_tests_priced/`](five_tests_priced/), and its [README](five_tests_priced/README.md) is the Qollab write-up. Everything under `research_notes/`, `reports/` and `ideation/` is supporting research (see *Pre-existing work* below).
+>
+> **Run it locally:** `py -3.12 -m venv .venv`, then `.venv/Scripts/pip install -r requirements.txt`, then `.venv/Scripts/python tools/run_local.py --backend basic`. Tests: `.venv/Scripts/python -m pytest tools/tests`.
 
 - **Theme:** Quantum Impact. **Prompt:** QCA Georgia Tech Qiskit Fall Fest 2026, Prompt B ("Heart Disease Readings").
 - **Submissions:** Qiskit Fall Fest (GitHub + video) and Qollab × IonQ (project on qollab.xyz).
