@@ -1,0 +1,5 @@
+T0=0.003: P(opt) per mu at 222 evals = [0.9, 0.74, 0.53, 0.29, 0.27]; product (all 5) = 0.028
+T0=0.01: P(opt) per mu at 222 evals = [0.9, 0.8, 0.63, 0.32, 0.28]; product (all 5) = 0.041
+T0=0.03: P(opt) per mu at 222 evals = [0.86, 0.78, 0.66, 0.36, 0.34]; product (all 5) = 0.053
+T0=0.1: P(opt) per mu at 222 evals = [0.84, 0.8, 0.64, 0.38, 0.5]; product (all 5) = 0.079
+T0=0.3: P(opt) per mu at 222 evals = [0.78, 0.72, 0.6, 0.41, 0.57]; product (all 5) = 0.080

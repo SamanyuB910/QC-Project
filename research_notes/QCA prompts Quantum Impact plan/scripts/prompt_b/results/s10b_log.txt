@@ -1,0 +1,29 @@
+frozen schedule (tuned on 60 training instances = 12 subsamples x 5 mu): gamma=1.7182 beta=0.1676, train mean P(opt|HW5)=0.0251
+exact (cost, score) Pareto set: 13 panels; mu-grid optima: mu=0.0: ['sex', 'cp', 'slope', 'ca', 'thal'] $293.10; mu=0.02: ['cp', 'trestbps', 'thalach', 'ca', 'thal'] $206.80; mu=0.05: ['cp', 'trestbps', 'thalach', 'ca', 'thal'] $206.80; mu=0.1: ['sex', 'cp', 'trestbps', 'thalach', 'thal'] $106.90; mu=0.2: ['age', 'sex', 'cp', 'trestbps', 'fbs'] $9.20
+  mu=0.00: ideal P(opt|HW5)=0.0229  null|k=0.0137  uniform=0.00078
+  mu=0.02: ideal P(opt|HW5)=0.0070  null|k=0.0044  uniform=0.00078
+  mu=0.05: ideal P(opt|HW5)=0.0057  null|k=0.0025  uniform=0.00078
+  mu=0.10: ideal P(opt|HW5)=0.0150  null|k=0.0038  uniform=0.00078
+  mu=0.20: ideal P(opt|HW5)=0.0208  null|k=0.0039  uniform=0.00078
+noisy reference run: 10000 shots x 5 circuits in 381s
+  mu=0.00: noisy P(HW5)=0.221  noisy P(opt|HW5)=0.0167 (ideal 0.0229, null|k 0.0137, uniform 0.00078)
+  mu=0.02: noisy P(HW5)=0.217  noisy P(opt|HW5)=0.0055 (ideal 0.0070, null|k 0.0044, uniform 0.00078)
+  mu=0.05: noisy P(HW5)=0.214  noisy P(opt|HW5)=0.0051 (ideal 0.0057, null|k 0.0025, uniform 0.00078)
+  mu=0.10: noisy P(HW5)=0.210  noisy P(opt|HW5)=0.0029 (ideal 0.0150, null|k 0.0038, uniform 0.00078)
+  mu=0.20: noisy P(HW5)=0.220  noisy P(opt|HW5)=0.0186 (ideal 0.0208, null|k 0.0039, uniform 0.00078)
+shots/circuit=  100 QAOA_ideal        : mu-optima 2.50/5 (all 5:   8%)  score-Pareto   5.7/13  AUC-front 3.12/8  HV 0.976 (p5 0.923)
+shots/circuit=  100 QAOA_noisy_forte1 : mu-optima 1.79/5 (all 5:   2%)  score-Pareto   4.0/13  AUC-front 2.51/8  HV 0.963 (p5 0.858)
+shots/circuit=  100 product_null_k    : mu-optima 1.41/5 (all 5:   0%)  score-Pareto   3.0/13  AUC-front 2.00/8  HV 0.911 (p5 0.753)
+shots/circuit=  100 uniform_k         : mu-optima 0.45/5 (all 5:   0%)  score-Pareto   1.1/13  AUC-front 0.68/8  HV 0.901 (p5 0.741)
+shots/circuit=  200 QAOA_ideal        : mu-optima 3.62/5 (all 5:  32%)  score-Pareto   8.2/13  AUC-front 4.62/8  HV 0.993 (p5 0.980)
+shots/circuit=  200 QAOA_noisy_forte1 : mu-optima 3.04/5 (all 5:  12%)  score-Pareto   6.5/13  AUC-front 3.85/8  HV 0.987 (p5 0.951)
+shots/circuit=  200 product_null_k    : mu-optima 2.40/5 (all 5:   2%)  score-Pareto   5.3/13  AUC-front 3.06/8  HV 0.964 (p5 0.906)
+shots/circuit=  200 uniform_k         : mu-optima 0.84/5 (all 5:   0%)  score-Pareto   2.2/13  AUC-front 1.40/8  HV 0.950 (p5 0.853)
+shots/circuit=  500 QAOA_ideal        : mu-optima 4.63/5 (all 5:  78%)  score-Pareto  11.3/13  AUC-front 6.31/8  HV 0.998 (p5 0.993)
+shots/circuit=  500 QAOA_noisy_forte1 : mu-optima 4.46/5 (all 5:  66%)  score-Pareto  10.6/13  AUC-front 5.95/8  HV 0.998 (p5 0.993)
+shots/circuit=  500 product_null_k    : mu-optima 3.78/5 (all 5:  25%)  score-Pareto   8.8/13  AUC-front 4.75/8  HV 0.989 (p5 0.970)
+shots/circuit=  500 uniform_k         : mu-optima 1.82/5 (all 5:   0%)  score-Pareto   4.5/13  AUC-front 2.92/8  HV 0.983 (p5 0.950)
+shots/circuit= 1000 QAOA_ideal        : mu-optima 4.98/5 (all 5:  98%)  score-Pareto  12.7/13  AUC-front 7.18/8  HV 1.000 (p5 0.998)
+shots/circuit= 1000 QAOA_noisy_forte1 : mu-optima 4.93/5 (all 5:  94%)  score-Pareto  12.4/13  AUC-front 7.29/8  HV 0.999 (p5 0.998)
+shots/circuit= 1000 product_null_k    : mu-optima 4.57/5 (all 5:  62%)  score-Pareto  11.0/13  AUC-front 6.04/8  HV 0.996 (p5 0.984)
+shots/circuit= 1000 uniform_k         : mu-optima 3.07/5 (all 5:  10%)  score-Pareto   7.6/13  AUC-front 4.76/8  HV 0.993 (p5 0.982)

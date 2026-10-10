@@ -9,3 +9,88 @@ n=8 rep=3 fold=0 done 57s
 n=8 rep=1 fold=0 done 57s
 n=4 rep=2 fold=0 done 57s
 n=4 rep=1 fold=1 done 82s
+n=4 rep=3 fold=1 done 88s
+n=4 rep=0 fold=1 done 89s
+n=4 rep=4 fold=1 done 102s
+n=8 rep=1 fold=1 done 124s
+n=8 rep=4 fold=1 done 127s
+n=4 rep=2 fold=1 done 129s
+n=8 rep=0 fold=1 done 132s
+n=8 rep=2 fold=1 done 133s
+n=8 rep=3 fold=1 done 138s
+n=4 rep=1 fold=2 done 156s
+n=4 rep=3 fold=2 done 170s
+n=4 rep=0 fold=2 done 171s
+n=8 rep=4 fold=2 done 174s
+n=8 rep=2 fold=2 done 175s
+n=4 rep=4 fold=2 done 182s
+n=4 rep=2 fold=2 done 184s
+n=8 rep=1 fold=2 done 190s
+n=4 rep=1 fold=3 done 197s
+n=8 rep=3 fold=2 done 205s
+n=8 rep=0 fold=2 done 206s
+n=4 rep=3 fold=3 done 236s
+n=4 rep=0 fold=3 done 262s
+n=4 rep=4 fold=3 done 263s
+n=8 rep=2 fold=3 done 274s
+n=8 rep=4 fold=3 done 279s
+n=8 rep=1 fold=3 done 286s
+n=4 rep=2 fold=3 done 294s
+n=8 rep=3 fold=3 done 304s
+n=4 rep=1 fold=4 done 320s
+n=8 rep=0 fold=3 done 365s
+n=4 rep=3 fold=4 done 389s
+n=4 rep=4 fold=4 done 416s
+n=4 rep=0 fold=4 done 427s
+n=8 rep=2 fold=4 done 466s
+n=4 rep=2 fold=4 done 466s
+n=8 rep=4 fold=4 done 471s
+n=8 rep=1 fold=4 done 481s
+n=8 rep=3 fold=4 done 488s
+n=8 rep=0 fold=4 done 535s
+n=12 rep=4 fold=0 done 1044s
+n=12 rep=0 fold=0 done 1061s
+n=12 rep=1 fold=0 done 1116s
+n=12 rep=2 fold=0 done 1120s
+n=12 rep=3 fold=0 done 1282s
+n=12 rep=1 fold=1 done 1902s
+n=12 rep=0 fold=1 done 1905s
+n=12 rep=4 fold=1 done 1909s
+n=12 rep=2 fold=1 done 1920s
+n=12 rep=3 fold=1 done 1974s
+n=12 rep=4 fold=2 done 2179s
+n=12 rep=1 fold=2 done 2191s
+n=12 rep=0 fold=2 done 2192s
+n=12 rep=2 fold=2 done 2202s
+n=12 rep=3 fold=2 done 2232s
+n=12 rep=4 fold=3 done 2427s
+n=12 rep=0 fold=3 done 2437s
+n=12 rep=1 fold=3 done 2438s
+n=12 rep=2 fold=3 done 2445s
+n=12 rep=3 fold=3 done 2485s
+n=12 rep=0 fold=4 done 2718s
+n=12 rep=4 fold=4 done 2723s
+n=12 rep=2 fold=4 done 2739s
+n=12 rep=1 fold=4 done 2740s
+n=12 rep=3 fold=4 done 2768s
+task n=12 rep=0: 2718s
+task n=12 rep=1: 2740s
+task n=12 rep=2: 2739s
+task n=12 rep=3: 2768s
+task n=12 rep=4: 2723s
+task n=8 rep=0: 535s
+task n=8 rep=1: 481s
+task n=8 rep=2: 466s
+task n=8 rep=3: 488s
+task n=8 rep=4: 471s
+task n=4 rep=0: 427s
+task n=4 rep=1: 320s
+task n=4 rep=2: 466s
+task n=4 rep=3: 389s
+task n=4 rep=4: 416s
+task n=30 rep=0: 211s
+task n=30 rep=1: 213s
+task n=30 rep=2: 199s
+task n=30 rep=3: 495s
+task n=30 rep=4: 575s
+saved results/exp1_raw.pkl

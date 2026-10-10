@@ -1,0 +1,99 @@
+cost polynomial == table-driven Turney cost for all 8192 states: True  max |diff| 1.4210854715202004e-14
+shared costs: {'A': 2.0999999999999996, 'B': 101.9, 'C': 86.3}  discount costs: {'age': 1.0, 'sex': 1.0, 'cp': 1.0, 'trestbps': 1.0, 'chol': 5.17, 'fbs': 3.1, 'restecg': 15.5, 'thalach': 1.0, 'exang': 1.0, 'oldpeak': 1.0, 'slope': 1.0, 'ca': 100.9, 'thal': 1.0}
+5-panel cost range $9.20 .. $313.87; cheapest 5-panel ['age', 'sex', 'cp', 'trestbps', 'fbs']
+HUBO terms added by cost: linear 13, quadratic 1 (A) + 1 (B) + 3 (C) = 5 pairs (all already present in the dense c_ij graph), cubic 1 (exang,oldpeak,slope)
+
+mu sweep (lam=0.2): exact optimum over 1287 vs cost-aware greedy
+  mu=0.00: opt=['cp', 'chol', 'slope', 'ca', 'thal'] $299.37 | greedy rank 1 normAR=1.000 ['cp', 'chol', 'slope', 'ca', 'thal'] $299.37
+  mu=0.01: opt=['cp', 'chol', 'slope', 'ca', 'thal'] $299.37 | greedy rank 1 normAR=1.000 ['cp', 'chol', 'slope', 'ca', 'thal'] $299.37
+  mu=0.01: opt=['sex', 'cp', 'chol', 'slope', 'ca'] $197.47 | greedy rank 2 normAR=0.998 ['cp', 'chol', 'slope', 'ca', 'thal'] $299.37
+  mu=0.01: opt=['sex', 'cp', 'chol', 'slope', 'ca'] $197.47 | greedy rank 2 normAR=0.988 ['cp', 'chol', 'slope', 'ca', 'thal'] $299.37
+  mu=0.02: opt=['sex', 'cp', 'chol', 'slope', 'ca'] $197.47 | greedy rank 2 normAR=0.979 ['cp', 'chol', 'slope', 'ca', 'thal'] $299.37
+  mu=0.03: opt=['sex', 'cp', 'chol', 'slope', 'ca'] $197.47 | greedy rank 5 normAR=0.966 ['cp', 'chol', 'fbs', 'ca', 'thal'] $215.17
+  mu=0.04: opt=['sex', 'cp', 'chol', 'slope', 'ca'] $197.47 | greedy rank 2 normAR=0.983 ['cp', 'chol', 'fbs', 'restecg', 'thal'] $129.77
+  mu=0.05: opt=['sex', 'cp', 'chol', 'fbs', 'slope'] $99.67 | greedy rank 4 normAR=0.995 ['cp', 'chol', 'fbs', 'restecg', 'thal'] $129.77
+  mu=0.06: opt=['sex', 'cp', 'chol', 'fbs', 'slope'] $99.67 | greedy rank 3 normAR=0.991 ['cp', 'chol', 'fbs', 'thalach', 'thal'] $115.27
+  mu=0.08: opt=['sex', 'cp', 'chol', 'fbs', 'slope'] $99.67 | greedy rank 3 normAR=0.986 ['cp', 'chol', 'fbs', 'thalach', 'thal'] $115.27
+  mu=0.10: opt=['sex', 'cp', 'chol', 'fbs', 'slope'] $99.67 | greedy rank 1 normAR=1.000 ['sex', 'cp', 'chol', 'fbs', 'slope'] $99.67
+  mu=0.12: opt=['sex', 'cp', 'chol', 'fbs', 'restecg'] $27.87 | greedy rank 1 normAR=1.000 ['sex', 'cp', 'chol', 'fbs', 'restecg'] $27.87
+  mu=0.15: opt=['sex', 'cp', 'chol', 'fbs', 'restecg'] $27.87 | greedy rank 1 normAR=1.000 ['sex', 'cp', 'chol', 'fbs', 'restecg'] $27.87
+  mu=0.20: opt=['sex', 'cp', 'trestbps', 'chol', 'fbs'] $13.37 | greedy rank 1 normAR=1.000 ['sex', 'cp', 'trestbps', 'chol', 'fbs'] $13.37
+  mu=0.30: opt=['sex', 'cp', 'trestbps', 'chol', 'fbs'] $13.37 | greedy rank 1 normAR=1.000 ['sex', 'cp', 'trestbps', 'chol', 'fbs'] $13.37
+  mu=0.50: opt=['sex', 'cp', 'trestbps', 'chol', 'fbs'] $13.37 | greedy rank 1 normAR=1.000 ['sex', 'cp', 'trestbps', 'chol', 'fbs'] $13.37
+  mu=1.00: opt=['sex', 'cp', 'trestbps', 'chol', 'fbs'] $13.37 | greedy rank 1 normAR=1.000 ['sex', 'cp', 'trestbps', 'chol', 'fbs'] $13.37
+  mu=2.00: opt=['sex', 'cp', 'trestbps', 'chol', 'fbs'] $13.37 | greedy rank 3 normAR=0.995 ['age', 'sex', 'cp', 'trestbps', 'chol'] $11.27
+
+Exact cost-vs-CV-AUC Pareto front (size<=5): 15 panels
+   $   1.00  AUC=0.755  ['cp']
+   $   2.00  AUC=0.806  ['sex', 'cp']
+   $   3.00  AUC=0.839  ['age', 'sex', 'cp']
+   $   4.00  AUC=0.841  ['age', 'sex', 'cp', 'trestbps']
+   $  19.50  AUC=0.842  ['age', 'sex', 'cp', 'trestbps', 'restecg']
+   $  89.30  AUC=0.849  ['sex', 'cp', 'oldpeak']
+   $  90.30  AUC=0.869  ['sex', 'cp', 'oldpeak', 'slope']
+   $  91.30  AUC=0.875  ['age', 'sex', 'cp', 'oldpeak', 'slope']
+   $ 105.90  AUC=0.875  ['sex', 'cp', 'thalach', 'thal']
+   $ 106.90  AUC=0.878  ['sex', 'cp', 'trestbps', 'thalach', 'thal']
+   $ 190.20  AUC=0.891  ['sex', 'cp', 'slope', 'ca']
+   $ 191.20  AUC=0.902  ['sex', 'cp', 'trestbps', 'slope', 'ca']
+   $ 206.80  AUC=0.904  ['sex', 'cp', 'thalach', 'ca', 'thal']
+   $ 292.10  AUC=0.906  ['cp', 'slope', 'ca', 'thal']
+   $ 293.10  AUC=0.911  ['sex', 'cp', 'slope', 'ca', 'thal']
+
+Exact cost-vs-CV-AUC Pareto front (size==5): 8 panels
+   $   9.20  AUC=0.838  ['age', 'sex', 'cp', 'trestbps', 'fbs']
+   $  11.27  AUC=0.839  ['age', 'sex', 'cp', 'trestbps', 'chol']
+   $  19.50  AUC=0.842  ['age', 'sex', 'cp', 'trestbps', 'restecg']
+   $  91.30  AUC=0.875  ['age', 'sex', 'cp', 'oldpeak', 'slope']
+   $ 106.90  AUC=0.878  ['sex', 'cp', 'trestbps', 'thalach', 'thal']
+   $ 191.20  AUC=0.902  ['sex', 'cp', 'trestbps', 'slope', 'ca']
+   $ 206.80  AUC=0.904  ['sex', 'cp', 'thalach', 'ca', 'thal']
+   $ 293.10  AUC=0.911  ['sex', 'cp', 'slope', 'ca', 'thal']
+
+QUBO(mu) optimum vs AUC:
+   mu=0.00 $ 299.37 AUC=0.904 ['cp', 'chol', 'slope', 'ca', 'thal']
+   mu=0.01 $ 299.37 AUC=0.904 ['cp', 'chol', 'slope', 'ca', 'thal']
+   mu=0.01 $ 197.47 AUC=0.894 ['sex', 'cp', 'chol', 'slope', 'ca']
+   mu=0.01 $ 197.47 AUC=0.894 ['sex', 'cp', 'chol', 'slope', 'ca']
+   mu=0.02 $ 197.47 AUC=0.894 ['sex', 'cp', 'chol', 'slope', 'ca']
+   mu=0.03 $ 197.47 AUC=0.894 ['sex', 'cp', 'chol', 'slope', 'ca']
+   mu=0.04 $ 197.47 AUC=0.894 ['sex', 'cp', 'chol', 'slope', 'ca']
+   mu=0.05 $  99.67 AUC=0.846 ['sex', 'cp', 'chol', 'fbs', 'slope']
+   mu=0.06 $  99.67 AUC=0.846 ['sex', 'cp', 'chol', 'fbs', 'slope']
+   mu=0.08 $  99.67 AUC=0.846 ['sex', 'cp', 'chol', 'fbs', 'slope']
+   mu=0.10 $  99.67 AUC=0.846 ['sex', 'cp', 'chol', 'fbs', 'slope']
+   mu=0.12 $  27.87 AUC=0.814 ['sex', 'cp', 'chol', 'fbs', 'restecg']
+   mu=0.15 $  27.87 AUC=0.814 ['sex', 'cp', 'chol', 'fbs', 'restecg']
+   mu=0.20 $  13.37 AUC=0.817 ['sex', 'cp', 'trestbps', 'chol', 'fbs']
+   mu=0.30 $  13.37 AUC=0.817 ['sex', 'cp', 'trestbps', 'chol', 'fbs']
+   mu=0.50 $  13.37 AUC=0.817 ['sex', 'cp', 'trestbps', 'chol', 'fbs']
+   mu=1.00 $  13.37 AUC=0.817 ['sex', 'cp', 'trestbps', 'chol', 'fbs']
+   mu=2.00 $  13.37 AUC=0.817 ['sex', 'cp', 'trestbps', 'chol', 'fbs']
+   budget $10: best AUC=0.841 with ['age', 'sex', 'cp', 'trestbps'] ($4.00)
+   budget $20: best AUC=0.842 with ['age', 'sex', 'cp', 'trestbps', 'restecg'] ($19.50)
+   budget $50: best AUC=0.842 with ['age', 'sex', 'cp', 'trestbps', 'restecg'] ($19.50)
+   budget $110: best AUC=0.878 with ['sex', 'cp', 'trestbps', 'thalach', 'thal'] ($106.90)
+   budget $200: best AUC=0.902 with ['sex', 'cp', 'trestbps', 'slope', 'ca'] ($191.20)
+   budget $400: best AUC=0.911 with ['sex', 'cp', 'slope', 'ca', 'thal'] ($293.10)
+
+QAOA on cost-aware instance mu=0.02
+  greedy optimal on held-out resamples: 0.33
+  ring     init=dicke  p=1: P(opt)=0.0053 vs product-null|k 0.0044 vs uniform 0.00078; meanAR 0.740 (null 0.731); P(better than greedy)=0.0053 (null 0.0044); held-out mean P(opt)=0.0048 min 0.0017
+  ring     init=dicke  p=2: P(opt)=0.0292 vs product-null|k 0.0097 vs uniform 0.00078; meanAR 0.749 (null 0.740); P(better than greedy)=0.0292 (null 0.0097); held-out mean P(opt)=0.0146 min 0.0006
+  ring     init=greedy p=1: P(opt)=0.0000 vs product-null|k 0.0000 vs uniform 0.00078; meanAR 0.979 (null 0.979); P(better than greedy)=0.0000 (null 0.0000); held-out mean P(opt)=0.3333 min 0.0000
+  ring     init=greedy p=2: P(opt)=0.0000 vs product-null|k 0.0000 vs uniform 0.00078; meanAR 0.979 (null 0.979); P(better than greedy)=0.0000 (null 0.0000); held-out mean P(opt)=0.3333 min 0.0000
+  complete init=dicke  p=1: P(opt)=0.0200 vs product-null|k 0.0080 vs uniform 0.00078; meanAR 0.803 (null 0.794); P(better than greedy)=0.0200 (null 0.0080); held-out mean P(opt)=0.0201 min 0.0114
+  complete init=dicke  p=2: P(opt)=0.0606 vs product-null|k 0.0155 vs uniform 0.00078; meanAR 0.845 (null 0.843); P(better than greedy)=0.0606 (null 0.0155); held-out mean P(opt)=0.0668 min 0.0308
+  complete init=greedy p=1: P(opt)=0.0000 vs product-null|k 0.0000 vs uniform 0.00078; meanAR 0.979 (null 0.979); P(better than greedy)=0.0000 (null 0.0000); held-out mean P(opt)=0.3333 min 0.0000
+  complete init=greedy p=2: P(opt)=0.0000 vs product-null|k 0.0000 vs uniform 0.00078; meanAR 0.979 (null 0.979); P(better than greedy)=0.0000 (null 0.0000); held-out mean P(opt)=0.3333 min 0.0000
+
+QAOA on cost-aware instance mu=0.05
+  greedy optimal on held-out resamples: 0.50
+  ring     init=dicke  p=1: P(opt)=0.0035 vs product-null|k 0.0035 vs uniform 0.00078; meanAR 0.750 (null 0.740); P(better than greedy)=0.0125 (null 0.0102); held-out mean P(opt)=0.0045 min 0.0032
+  ring     init=dicke  p=2: P(opt)=0.0149 vs product-null|k 0.0095 vs uniform 0.00078; meanAR 0.785 (null 0.773); P(better than greedy)=0.0438 (null 0.0243); held-out mean P(opt)=0.0124 min 0.0032
+  ring     init=greedy p=1: P(opt)=0.0000 vs product-null|k 0.0000 vs uniform 0.00078; meanAR 0.995 (null 0.995); P(better than greedy)=0.0000 (null 0.0000); held-out mean P(opt)=0.5000 min 0.0000
+  ring     init=greedy p=2: P(opt)=0.0000 vs product-null|k 0.0000 vs uniform 0.00078; meanAR 0.995 (null 0.995); P(better than greedy)=0.0000 (null 0.0000); held-out mean P(opt)=0.5000 min 0.0000
+  complete init=dicke  p=1: P(opt)=0.0206 vs product-null|k 0.0104 vs uniform 0.00078; meanAR 0.813 (null 0.805); P(better than greedy)=0.0506 (null 0.0247); held-out mean P(opt)=0.0175 min 0.0078
+  complete init=dicke  p=2: P(opt)=0.0453 vs product-null|k 0.0307 vs uniform 0.00078; meanAR 0.859 (null 0.856); P(better than greedy)=0.1142 (null 0.0582); held-out mean P(opt)=0.0542 min 0.0132
+  complete init=greedy p=1: P(opt)=0.0000 vs product-null|k 0.0000 vs uniform 0.00078; meanAR 0.995 (null 0.995); P(better than greedy)=0.0000 (null 0.0000); held-out mean P(opt)=0.5000 min 0.0000
+  complete init=greedy p=2: P(opt)=0.0000 vs product-null|k 0.0000 vs uniform 0.00078; meanAR 0.995 (null 0.995); P(better than greedy)=0.0000 (null 0.0000); held-out mean P(opt)=0.5000 min 0.0000

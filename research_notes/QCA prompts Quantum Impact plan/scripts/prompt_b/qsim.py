@@ -129,10 +129,13 @@ def product_dist(m):
 class Inst:
     """QUBO instance (prompt's objective) with exact enumeration."""
 
-    def __init__(self, r, C, lam, P=0.0, k=K):
+    def __init__(self, r, C, lam, P=0.0, k=K, extra=None):
+        """extra: optional additional energy vector over all 2^13 states (e.g. mu * test cost, incl. cubic terms)."""
         self.r, self.C, self.lam, self.P = r, C, lam, P
         Xb = BITS.astype(float)
         self.f0 = -(Xb @ r) + lam * 0.5 * np.einsum("si,ij,sj->s", Xb, C, Xb)
+        if extra is not None:
+            self.f0 = self.f0 + extra
         self.E = self.f0 + P * (HW - k) ** 2
         ff = self.f0[FEAS_IDX]
         self.ff = ff

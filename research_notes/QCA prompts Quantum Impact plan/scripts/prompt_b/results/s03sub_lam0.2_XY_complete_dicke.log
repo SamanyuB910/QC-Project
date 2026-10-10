@@ -1,0 +1,25 @@
+lambda=0.2; built 24 bootstrap instances in 24.8s
+full-data optimum: ['cp', 'chol', 'slope', 'ca', 'thal'] greedy: ['cp', 'chol', 'slope', 'ca', 'thal'] topk: ['cp', 'exang', 'oldpeak', 'ca', 'thal']
+greedy optimal on held-out resamples: 0.5833333333333334  top-k optimal: 0.0
+[XY_complete_dicke     ] tuned-on=E    p=1: FULL P(opt)=0.0151 (15/1000 shots, CI 0.0091-0.0246) P(feas)=1.000 meanAR|feas=0.794 | product-null P(opt)=0.0026 P(feas)=0.243; null|k P(opt)=0.0108 | held-out mean P(opt)=0.0144 (min 0.0082) | uniform-k 0.00078
+[XY_complete_dicke     ] tuned-on=E    p=2: FULL P(opt)=0.0512 (37/1000 shots, CI 0.0270-0.0506) P(feas)=1.000 meanAR|feas=0.869 | product-null P(opt)=0.0118 P(feas)=0.272; null|k P(opt)=0.0433 | held-out mean P(opt)=0.0433 (min 0.0205) | uniform-k 0.00078
+[XY_complete_dicke     ] tuned-on=Popt p=1: FULL P(opt)=0.0194 (16/1000 shots, CI 0.0099-0.0258) P(feas)=1.000 meanAR|feas=0.782 | product-null P(opt)=0.0035 P(feas)=0.246; null|k P(opt)=0.0144 | held-out mean P(opt)=0.0175 (min 0.0074) | uniform-k 0.00078
+[XY_complete_dicke     ] tuned-on=Popt p=2: FULL P(opt)=0.0816 (78/1000 shots, CI 0.0629-0.0963) P(feas)=1.000 meanAR|feas=0.837 | product-null P(opt)=0.0171 P(feas)=0.271; null|k P(opt)=0.0629 | held-out mean P(opt)=0.0633 (min 0.0222) | uniform-k 0.00078
+   (247s)
+Traceback (most recent call last):
+  File "C:\VS Code Projects\QC Hackathon\research_notes\QCA prompts Quantum Impact plan\scripts\prompt_b\s03_qaoa.py", line 188, in <module>
+    save_json(f"s03_qaoa_lam{LAM}{'_' + '_'.join(only) if only else ''}{'' if SCHEME == 'bootstrap' else '_' + SCHEME}.json", results)
+  File "C:\VS Code Projects\QC Hackathon\research_notes\QCA prompts Quantum Impact plan\scripts\prompt_b\common.py", line 123, in save_json
+    json.dump(obj, f, indent=1, default=conv)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 179, in dump
+    for chunk in iterable:
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 432, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "C:\VS Code Projects\QC Hackathon\research_notes\QCA prompts Quantum Impact plan\scripts\prompt_b\common.py", line 121, in conv
+    raise TypeError(type(o))
+TypeError: <class 'numpy.bool_'>

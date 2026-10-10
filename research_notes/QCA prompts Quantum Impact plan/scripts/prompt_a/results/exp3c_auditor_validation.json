@@ -1,0 +1,114 @@
+{
+ "HUANG-lin(c=0.35)": {
+  "A_C": 0.06774805037331037,
+  "A_C_kernel": "RBF g=10.0",
+  "A_Q": 0.3760144610321992,
+  "A_Q_kernel": "FQK-linear c=0.35",
+  "predicted": "quantum-favourable",
+  "acc": {
+   "LR": 0.5237385499146094,
+   "RBF": 0.5799099518708275,
+   "FQK-full": 0.6116441546343736,
+   "FQK-linear": 0.8013041453190498,
+   "PQK": 0.5466387206955441
+  },
+  "observed(5pt rule)": "quantum-favourable",
+  "match": true
+ },
+ "HUANG(c=0.1)": {
+  "A_C": 0.06326515121136646,
+  "A_C_kernel": "RBF g=10.0",
+  "A_Q": 0.7002709205082545,
+  "A_Q_kernel": "FQK c=0.1",
+  "predicted": "quantum-favourable",
+  "acc": {
+   "LR": 0.47621487346685304,
+   "RBF": 0.4605030274802049,
+   "FQK-full": 0.9226828132277596,
+   "FQK-linear": 0.5045955596956995,
+   "PQK": 0.5781710914454278
+  },
+  "observed(5pt rule)": "quantum-favourable",
+  "match": true
+ },
+ "OBS-1q5(c=0.35)": {
+  "A_C": 0.06509439913949343,
+  "A_C_kernel": "RBF g=10.0",
+  "A_Q": 0.3684174480396971,
+  "A_Q_kernel": "PQK c=0.35 g=3.0",
+  "predicted": "quantum-favourable",
+  "acc": {
+   "LR": 0.49040521658127617,
+   "RBF": 0.5026238161776122,
+   "FQK-full": 0.5027480204937121,
+   "FQK-linear": 0.4937897841950008,
+   "PQK": 0.7733115975780158
+  },
+  "observed(5pt rule)": "quantum-favourable",
+  "match": true
+ },
+ "OBS-2(c=0.1)": {
+  "A_C": 0.2944694743671045,
+  "A_C_kernel": "RBF g=1.0",
+  "A_Q": 0.3039564607642771,
+  "A_Q_kernel": "FQK c=0.02",
+  "predicted": "no clear edge",
+  "acc": {
+   "LR": 0.6257413445117219,
+   "RBF": 0.8488588728458314,
+   "FQK-full": 0.8330849247011333,
+   "FQK-linear": 0.7750659835429282,
+   "PQK": 0.8137245769290484
+  },
+  "observed(5pt rule)": "no clear edge",
+  "match": true
+ },
+ "REVERSE-HUANG": {
+  "A_C": 0.7568816847350058,
+  "A_C_kernel": "RBF g=1.0",
+  "A_Q": 0.7514258599416582,
+  "A_Q_kernel": "FQK c=0.05",
+  "predicted": "no clear edge",
+  "acc": {
+   "LR": 0.8365781710914455,
+   "RBF": 0.9613414066138798,
+   "FQK-full": 0.9543083372147182,
+   "FQK-linear": 0.9366713243285203,
+   "PQK": 0.943735444806707
+  },
+  "observed(5pt rule)": "no clear edge",
+  "match": true
+ },
+ "SHUFFLED": {
+  "A_C": 0.047186032839943,
+  "A_C_kernel": "Linear",
+  "A_Q": 0.07645217812195865,
+  "A_Q_kernel": "FQK c=0.35",
+  "predicted": "unlearnable",
+  "acc": {
+   "LR": 0.6274025772395591,
+   "RBF": 0.6274181027790715,
+   "FQK-full": 0.6221549448843346,
+   "FQK-linear": 0.6221549448843346,
+   "PQK": 0.6186461729545101
+  },
+  "observed(5pt rule)": "no clear edge",
+  "match": false
+ },
+ "REAL+20%flip": {
+  "A_C": 0.3216184081619918,
+  "A_C_kernel": "RBF g=0.3",
+  "A_Q": 0.29944358977211105,
+  "A_Q_kernel": "PQK c=0.02 g=0.3",
+  "predicted": "no clear edge",
+  "acc": {
+   "LR": 0.7820369507840397,
+   "RBF": 0.7679863375252289,
+   "FQK-full": 0.7538891476478808,
+   "FQK-linear": 0.7661853749417793,
+   "PQK": 0.7345909020338457
+  },
+  "observed(5pt rule)": "no clear edge",
+  "match": true
+ }
+}

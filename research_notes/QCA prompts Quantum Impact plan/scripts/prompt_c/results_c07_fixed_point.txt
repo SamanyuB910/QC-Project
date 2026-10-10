@@ -1,0 +1,24 @@
+[check] N=64 M=1 l=6 delta=0.5: simulated 0.918695  closed-form 0.918695
+[check] N=64 M=3 l=6 delta=0.5: simulated 0.835169  closed-form 0.835169
+[check] N=32 M=2 l=4 delta=0.3: simulated 0.994339  closed-form 0.994339
+[check] N=16 M=1 l=3 delta=0.5: simulated 0.966546  closed-form 0.966546
+
+n=4 N=16: FPAA l=3 iterations (L=7, delta=0.5) vs Grover k=3 (tuned for M=1)
+   M      :     1     2     3     4     5     6     7     8     9    10    11    12
+   FPAA P : 0.967 0.919 0.769 0.772 0.884 0.983 0.990 0.906 0.799 0.750 0.802 0.921
+   Grover : 0.961 0.330 0.000 0.250 0.718 0.990 0.885 0.500 0.115 0.010 0.282 0.750
+   real slices (M>=1): P_fpaa mean 0.951 (min 0.769); P_grover(k=3) mean 0.785 (min 0.000); mean expected evals with restarts: FPAA 4.2, Grover 1846.2
+
+n=5 N=32: FPAA l=4 iterations (L=9, delta=0.5) vs Grover k=4 (tuned for M=1)
+   M      :     1     2     3     4     5     6     7     8     9    10    11    12
+   FPAA P : 0.908 0.979 0.844 0.756 0.770 0.850 0.939 0.993 0.993 0.946 0.874 0.803
+   Grover : 0.999 0.582 0.112 0.012 0.243 0.603 0.894 1.000 0.902 0.656 0.361 0.119
+   real slices (M>=1): P_fpaa mean 0.924 (min 0.756); P_grover(k=4) mean 0.720 (min 0.012); mean expected evals with restarts: FPAA 5.4, Grover 16.6
+
+n=6 N=64: FPAA l=6 iterations (L=13, delta=0.5) vs Grover k=6 (tuned for M=1)
+   M      :     1     2     3     4     5     6     7     8     9    10    11    12
+   FPAA P : 0.919 0.973 0.835 0.754 0.772 0.851 0.937 0.991 0.997 0.960 0.897 0.830
+   Grover : 0.997 0.546 0.090 0.020 0.265 0.617 0.895 1.000 0.921 0.708 0.441 0.198
+   real slices (M>=1): P_fpaa mean 0.844 (min 0.754); P_grover(k=6) mean 0.224 (min 0.020); mean expected evals with restarts: FPAA 8.4, Grover 134.0
+[circuit] FPAA n=4 M=1 l=3: statevector P=0.966546 vs formula 0.966546; IonQ-like 2Q=102 (plain Grover k=3 list oracle M=1: 78)
+[circuit] FPAA n=4 M=3 l=3: statevector P=0.768602 vs formula 0.768602; IonQ-like 2Q=204 (plain Grover k=3 list oracle M=3: 156)

@@ -1,0 +1,5 @@
+mu=0.00: greedy=rank 3 (55 evals) | greedy+1swap LS=OPT (176 evals total) | RR-LS 44 evals: P(opt)=0.07 | RR-LS 111 evals: P(opt)=0.48 | RR-LS 222 evals: P(opt)=0.97
+mu=0.02: greedy=rank 7 (55 evals) | greedy+1swap LS=OPT (176 evals total) | RR-LS 44 evals: P(opt)=0.06 | RR-LS 111 evals: P(opt)=0.39 | RR-LS 222 evals: P(opt)=0.72
+mu=0.05: greedy=OPT (55 evals) | greedy+1swap LS=OPT (96 evals total) | RR-LS 44 evals: P(opt)=0.05 | RR-LS 111 evals: P(opt)=0.36 | RR-LS 222 evals: P(opt)=0.57
+mu=0.10: greedy=rank 26 (55 evals) | greedy+1swap LS=not opt (96 evals total) | RR-LS 44 evals: P(opt)=0.05 | RR-LS 111 evals: P(opt)=0.31 | RR-LS 222 evals: P(opt)=0.52
+mu=0.20: greedy=OPT (55 evals) | greedy+1swap LS=OPT (96 evals total) | RR-LS 44 evals: P(opt)=0.07 | RR-LS 111 evals: P(opt)=0.29 | RR-LS 222 evals: P(opt)=0.50

@@ -1,2 +1,5 @@
+lam=0.2: auto penalty chosen by LinearEqualityToPenalty = 4.349349173722215
 WARNING:qiskit_optimization.converters.linear_equality_to_penalty:Warning: Using 100000.000000 for the penalty coefficient because a float coefficient exists in constraints. 
 The value could be too small. If so, set the penalty coefficient manually.
+   same constraint written as sum(0.2 x_i) == 1  -> auto penalty = 100000.0
+   exact (enumeration): ['cp', 'chol', 'slope', 'ca', 'thal']

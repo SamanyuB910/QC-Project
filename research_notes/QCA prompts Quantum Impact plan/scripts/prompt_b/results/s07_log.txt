@@ -1,0 +1,41 @@
+Relevance estimator sensitivity (lambda=0.2, k=5):
+  kNN-MI k=3 (prompt default, 20 seeds)  top-5=['thal', 'cp', 'ca', 'oldpeak', 'exang']  QUBO opt=['cp', 'chol', 'slope', 'ca', 'thal']  r_chol=0.082 r_fbs=0.000
+  kNN-MI k=5                             top-5=['thal', 'cp', 'ca', 'exang', 'oldpeak']  QUBO opt=['cp', 'chol', 'slope', 'ca', 'thal']  r_chol=0.023 r_fbs=0.000
+  kNN-MI k=10                            top-5=['thal', 'cp', 'ca', 'oldpeak', 'thalach']  QUBO opt=['sex', 'cp', 'trestbps', 'slope', 'ca']  r_chol=0.009 r_fbs=0.000
+  quantile-binned MI (5 bins)            top-5=['thal', 'cp', 'ca', 'thalach', 'oldpeak']  QUBO opt=['sex', 'cp', 'trestbps', 'slope', 'ca']  r_chol=0.008 r_fbs=0.000
+  quantile-binned MI (10 bins)           top-5=['thal', 'cp', 'ca', 'oldpeak', 'thalach']  QUBO opt=['sex', 'cp', 'trestbps', 'slope', 'ca']  r_chol=0.019 r_fbs=0.000
+  binned MI (5) minus permutation null   top-5=['thal', 'cp', 'ca', 'thalach', 'oldpeak']  QUBO opt=['sex', 'cp', 'restecg', 'slope', 'ca']  null MI per feature mean=0.004 (chol null 0.007)
+  kNN MI k=3 minus permutation null      top-5=['thal', 'cp', 'ca', 'exang', 'oldpeak']  QUBO opt=['cp', 'chol', 'slope', 'ca', 'thal']  null mean=0.006
+  univariate |AUC-0.5|: {'thal': 0.266, 'ca': 0.252, 'cp': 0.25, 'thalach': 0.248, 'oldpeak': 0.234, 'exang': 0.198, 'slope': 0.185, 'age': 0.139, 'sex': 0.131, 'restecg': 0.084, 'trestbps': 0.076, 'chol': 0.067, 'fbs': 0.001}
+
+[bootstrap, kNN k=3] QUBO optimum (lambda=0.2) over 200 resamples: 44 distinct; full-data optimum ['cp', 'chol', 'slope', 'ca', 'thal'] recovered in 1.0%
+   15.5%  ['trestbps', 'chol', 'thalach', 'ca', 'thal']  $213.07
+   13.5%  ['cp', 'trestbps', 'chol', 'thalach', 'thal']  $113.17
+    9.5%  ['cp', 'trestbps', 'chol', 'thalach', 'ca']  $213.07
+    7.0%  ['cp', 'trestbps', 'chol', 'thalach', 'oldpeak']  $199.47
+   per-feature selection frequency: {'chol': 1.0, 'thalach': 0.78, 'cp': 0.68, 'trestbps': 0.64, 'thal': 0.62, 'ca': 0.44, 'oldpeak': 0.4, 'age': 0.1, 'fbs': 0.1, 'sex': 0.09, 'slope': 0.08, 'restecg': 0.05, 'exang': 0.01}
+   cost-aware mu=0.05: 38 distinct; top: [(['cp', 'trestbps', 'chol', 'thalach', 'thal'], 0.46, 113.17), (['sex', 'cp', 'trestbps', 'chol', 'thalach'], 0.075, 113.17), (['cp', 'chol', 'fbs', 'thalach', 'thal'], 0.065, 115.27)]
+
+[bootstrap, kNN k=10] QUBO optimum (lambda=0.2) over 200 resamples: 59 distinct; full-data optimum ['sex', 'cp', 'trestbps', 'slope', 'ca'] recovered in 9.5%
+    9.5%  ['sex', 'cp', 'trestbps', 'slope', 'ca']  $191.20
+    6.5%  ['age', 'cp', 'chol', 'oldpeak', 'thal']  $199.47
+    6.0%  ['cp', 'chol', 'slope', 'ca', 'thal']  $299.37
+    5.5%  ['cp', 'trestbps', 'chol', 'ca', 'thal']  $213.07
+   per-feature selection frequency: {'cp': 0.89, 'chol': 0.7, 'ca': 0.62, 'trestbps': 0.56, 'thal': 0.54, 'oldpeak': 0.38, 'sex': 0.34, 'thalach': 0.33, 'slope': 0.26, 'fbs': 0.14, 'age': 0.12, 'restecg': 0.1, 'exang': 0.03}
+   cost-aware mu=0.05: 67 distinct; top: [(['cp', 'trestbps', 'chol', 'thalach', 'thal'], 0.21, 113.17), (['sex', 'cp', 'trestbps', 'slope', 'ca'], 0.05, 191.2), (['sex', 'cp', 'trestbps', 'chol', 'oldpeak'], 0.045, 97.57)]
+
+[subsample80, kNN k=3] QUBO optimum (lambda=0.2) over 200 resamples: 14 distinct; full-data optimum ['cp', 'chol', 'slope', 'ca', 'thal'] recovered in 46.0%
+   46.0%  ['cp', 'chol', 'slope', 'ca', 'thal']  $299.37
+   18.0%  ['sex', 'cp', 'chol', 'slope', 'ca']  $197.47
+    8.0%  ['cp', 'chol', 'fbs', 'oldpeak', 'thal']  $201.57
+    6.5%  ['sex', 'cp', 'restecg', 'slope', 'ca']  $205.70
+   per-feature selection frequency: {'cp': 1.0, 'chol': 0.86, 'ca': 0.83, 'slope': 0.82, 'thal': 0.68, 'sex': 0.32, 'fbs': 0.21, 'restecg': 0.09, 'oldpeak': 0.09, 'trestbps': 0.06, 'thalach': 0.03, 'age': 0.0, 'exang': 0.0}
+   cost-aware mu=0.05: 22 distinct; top: [(['cp', 'chol', 'fbs', 'thalach', 'thal'], 0.225, 115.27), (['sex', 'cp', 'chol', 'slope', 'ca'], 0.155, 197.47), (['sex', 'cp', 'chol', 'fbs', 'oldpeak'], 0.125, 99.67)]
+
+[subsample80, kNN k=10] QUBO optimum (lambda=0.2) over 200 resamples: 20 distinct; full-data optimum ['sex', 'cp', 'trestbps', 'slope', 'ca'] recovered in 42.0%
+   42.0%  ['sex', 'cp', 'trestbps', 'slope', 'ca']  $191.20
+   16.5%  ['cp', 'chol', 'fbs', 'oldpeak', 'thal']  $201.57
+   10.0%  ['cp', 'chol', 'slope', 'ca', 'thal']  $299.37
+    9.5%  ['sex', 'cp', 'restecg', 'slope', 'ca']  $205.70
+   per-feature selection frequency: {'cp': 1.0, 'ca': 0.79, 'slope': 0.72, 'sex': 0.68, 'trestbps': 0.42, 'chol': 0.33, 'thal': 0.32, 'fbs': 0.29, 'oldpeak': 0.24, 'restecg': 0.17, 'thalach': 0.02, 'age': 0.0, 'exang': 0.0}
+   cost-aware mu=0.05: 23 distinct; top: [(['sex', 'cp', 'trestbps', 'slope', 'ca'], 0.25, 191.2), (['sex', 'cp', 'fbs', 'restecg', 'oldpeak'], 0.225, 110.0), (['cp', 'chol', 'fbs', 'thalach', 'thal'], 0.18, 115.27)]

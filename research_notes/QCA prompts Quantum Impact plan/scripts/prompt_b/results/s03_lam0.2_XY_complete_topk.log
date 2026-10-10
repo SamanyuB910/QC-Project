@@ -1,0 +1,8 @@
+lambda=0.2; built 24 bootstrap instances in 31.6s
+full-data optimum: ['cp', 'chol', 'slope', 'ca', 'thal'] greedy: ['cp', 'chol', 'slope', 'ca', 'thal'] topk: ['cp', 'exang', 'oldpeak', 'ca', 'thal']
+greedy optimal on held-out resamples: 0.8333333333333334  top-k optimal: 0.0
+[XY_complete_topk      ] tuned-on=E    p=1: FULL P(opt)=0.0000 (0/1000 shots, CI 0.0000-0.0038) P(feas)=1.000 meanAR|feas=0.610 | product-null P(opt)=0.0000 P(feas)=1.000; null|k P(opt)=0.0000 | held-out mean P(opt)=0.0000 (min 0.0000) | uniform-k 0.00078
+[XY_complete_topk      ] tuned-on=E    p=2: FULL P(opt)=0.0000 (0/1000 shots, CI 0.0000-0.0038) P(feas)=1.000 meanAR|feas=0.610 | product-null P(opt)=0.0000 P(feas)=1.000; null|k P(opt)=0.0000 | held-out mean P(opt)=0.0000 (min 0.0000) | uniform-k 0.00078
+[XY_complete_topk      ] tuned-on=E    p=3: FULL P(opt)=0.0000 (0/1000 shots, CI 0.0000-0.0038) P(feas)=1.000 meanAR|feas=0.610 | product-null P(opt)=0.0000 P(feas)=1.000; null|k P(opt)=0.0000 | held-out mean P(opt)=0.0000 (min 0.0000) | uniform-k 0.00078
+[XY_complete_topk      ] tuned-on=Popt p=1: FULL P(opt)=0.0004 (1/1000 shots, CI 0.0002-0.0056) P(feas)=1.000 meanAR|feas=0.614 | product-null P(opt)=0.0001 P(feas)=0.328; null|k P(opt)=0.0004 | held-out mean P(opt)=0.0045 (min 0.0005) | uniform-k 0.00078
+[XY_complete_topk      ] tuned-on=Popt p=2: FULL P(opt)=0.0003 (0/1000 shots, CI 0.0000-0.0038) P(feas)=1.000 meanAR|feas=0.608 | product-null P(opt)=0.0001 P(feas)=0.325; null|k P(opt)=0.0004 | held-out mean P(opt)=0.0063 (min 0.0002) | uniform-k 0.00078

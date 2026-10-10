@@ -1,0 +1,10 @@
+n= 3 N=    8 k_opt=  2 | qiskit: 2Q/iter=  10 P(k_opt)=0.872 vs cl 0.375; best k= 1 E=    2.7 vs cl     4.5 | ionq_billed: 2Q/iter=  12 P(k_opt)=0.859 vs cl 0.375; best k= 1 E=    2.7 vs cl     4.5 | 
+n= 4 N=   16 k_opt=  3 | qiskit: 2Q/iter=  26 P(k_opt)=0.688 vs cl 0.250; best k= 2 E=    4.1 vs cl     8.5 | ionq_billed: 2Q/iter=  24 P(k_opt)=0.706 vs cl 0.250; best k= 2 E=    4.1 vs cl     8.5 | 
+n= 5 N=   32 k_opt=  4 | qiskit: 2Q/iter=  54 P(k_opt)=0.386 vs cl 0.156; best k= 2 E=    8.0 vs cl    16.5 | ionq_billed: 2Q/iter=  36 P(k_opt)=0.527 vs cl 0.156; best k= 2 E=    6.8 vs cl    16.5 | 
+n= 6 N=   64 k_opt=  6 | qiskit: 2Q/iter= 146 P(k_opt)=0.032 vs cl 0.109; best k= 1 E=   26.3 vs cl    32.5 | ionq_billed: 2Q/iter=  48 P(k_opt)=0.273 vs cl 0.109; best k= 3 E=   12.9 vs cl    32.5 | 
+n= 7 N=  128 k_opt=  8 | qiskit: 2Q/iter= 226 P(k_opt)=0.008 vs cl 0.070; best k= 1 E=   68.6 vs cl    64.5 | ionq_billed: 2Q/iter=  60 P(k_opt)=0.114 vs cl 0.070; best k= 3 E=   26.6 vs cl    64.5 | 
+n= 8 N=  256 k_opt= 12 | qiskit: 2Q/iter= 330 P(k_opt)=0.004 vs cl 0.051; best k= 1 E=  189.4 vs cl   128.5 | ionq_billed: 2Q/iter=  72 P(k_opt)=0.022 vs cl 0.051; best k= 3 E=   58.6 vs cl   128.5 | 
+n= 9 N=  512 k_opt= 17 | qiskit: 2Q/iter= 462 P(k_opt)=0.002 vs cl 0.035; best k= 0 E=  512.0 vs cl   256.5 | ionq_billed: 2Q/iter=  84 P(k_opt)=0.003 vs cl 0.035; best k= 2 E=  130.1 vs cl   256.5 | 
+n=10 N= 1024 k_opt= 25 | qiskit: 2Q/iter= 610 P(k_opt)=0.001 vs cl 0.025; best k= 0 E= 1024.0 vs cl   512.5 | ionq_billed: 2Q/iter=  96 P(k_opt)=0.001 vs cl 0.025; best k= 2 E=  285.9 vs cl   512.5 | 
+n=11 N= 2048 k_opt= 35 | ionq_billed: 2Q/iter= 108 P(k_opt)=0.000 vs cl 0.018; best k= 2 E=  630.0 vs cl  1024.5 | 
+n=12 N= 4096 k_opt= 50 | ionq_billed: 2Q/iter= 120 P(k_opt)=0.000 vs cl 0.012; best k= 2 E= 1389.5 vs cl  2048.5 | 

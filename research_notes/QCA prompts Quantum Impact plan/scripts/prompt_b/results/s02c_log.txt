@@ -1,0 +1,7 @@
+raw        p=1: mean P(opt)/shot=0.00024  mean P(feas)=0.302  mean AR|feas=0.576  best-of-1024 sample == optimum in 4/10 runs (feasible best in 10/10)
+raw        p=2: mean P(opt)/shot=0.00030  mean P(feas)=0.338  mean AR|feas=0.587  best-of-1024 sample == optimum in 2/10 runs (feasible best in 10/10)
+raw        p=3: mean P(opt)/shot=0.00019  mean P(feas)=0.232  mean AR|feas=0.552  best-of-1024 sample == optimum in 0/10 runs (feasible best in 10/10)
+normalised p=1: mean P(opt)/shot=0.00030  mean P(feas)=0.381  mean AR|feas=0.575  best-of-1024 sample == optimum in 6/10 runs (feasible best in 10/10)
+normalised p=2: mean P(opt)/shot=0.00037  mean P(feas)=0.468  mean AR|feas=0.575  best-of-1024 sample == optimum in 3/10 runs (feasible best in 10/10)
+normalised p=3: mean P(opt)/shot=0.00035  mean P(feas)=0.443  mean AR|feas=0.575  best-of-1024 sample == optimum in 2/10 runs (feasible best in 10/10)
+uniform over all 8192: P(opt)=0.00012, P(feas)=0.157; best-of-1024 uniform hits optimum w.p. 0.118

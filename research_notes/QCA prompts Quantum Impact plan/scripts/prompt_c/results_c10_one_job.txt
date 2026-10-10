@@ -1,0 +1,8 @@
+(a1) one job = 21 circuits (Grover sweep k=0..8 + 12 pre-drawn BBHT rounds j=[0, 1, 1, 1, 1, 2, 2, 0, 0, 1, 1, 5]); n=5, M=2
+     2Q per circuit (IonQ-like): [0, 81, 162, 243, 324, 405, 486, 567, 648, 0, 81, 81, 81, 81, 162, 162, 0, 0, 81, 81, 405]; total 2Q in job 4131; transpile 0.8s
+     shots=256: StatevectorSampler 0.81s, BasicSimulator 11.30s (local CPython; browser Pyodide slower)
+     shots=1024: StatevectorSampler 17.34s, BasicSimulator 11.68s (local CPython; browser Pyodide slower)
+     BBHT post-processed: success at round 6, oracle calls 6, verification checks 6
+(a2) packed 4x(n=6) Grover k=0..3 on 24 qubits, M=2: decoded P(success) per register = [0.031, 0.26, 0.607, 0.891] vs theory [0.031, 0.258, 0.602, 0.897] (5.7s Aer MPS)
+(b) honest oracle n=3: 18 qubits, 1133 u/cx gates; quantum_info.Statevector 45.4s; P(success)=0.9453
+(b) honest oracle n=4: 19 qubits, 2397 u/cx gates; quantum_info.Statevector 420.2s; P(success)=0.9613

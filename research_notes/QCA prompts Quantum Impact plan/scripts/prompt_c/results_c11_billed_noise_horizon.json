@@ -1,0 +1,196 @@
+[
+ {
+  "n": 3,
+  "N": 8,
+  "k_opt": 2,
+  "qiskit": {
+   "twoq_per_iter": 10,
+   "p_at_kopt": 0.8724420989284358,
+   "p_classical_same_budget": 0.375,
+   "best_k": 1,
+   "best_cost": 2.661612940826697,
+   "classical_cost": 4.5
+  },
+  "ionq_billed": {
+   "twoq_per_iter": 12,
+   "p_at_kopt": 0.8586639853123069,
+   "p_classical_same_budget": 0.375,
+   "best_k": 1,
+   "best_cost": 2.682318707361014,
+   "classical_cost": 4.5
+  }
+ },
+ {
+  "n": 4,
+  "N": 16,
+  "k_opt": 3,
+  "qiskit": {
+   "twoq_per_iter": 26,
+   "p_at_kopt": 0.6878243077948781,
+   "p_classical_same_budget": 0.25,
+   "best_k": 2,
+   "best_cost": 4.128252672098745,
+   "classical_cost": 8.5
+  },
+  "ionq_billed": {
+   "twoq_per_iter": 24,
+   "p_at_kopt": 0.7055220168045016,
+   "p_classical_same_budget": 0.25,
+   "best_k": 2,
+   "best_cost": 4.058588216802012,
+   "classical_cost": 8.5
+  }
+ },
+ {
+  "n": 5,
+  "N": 32,
+  "k_opt": 4,
+  "qiskit": {
+   "twoq_per_iter": 54,
+   "p_at_kopt": 0.385659887985352,
+   "p_classical_same_budget": 0.15625,
+   "best_k": 2,
+   "best_cost": 7.96029693110725,
+   "classical_cost": 16.5
+  },
+  "ionq_billed": {
+   "twoq_per_iter": 36,
+   "p_at_kopt": 0.5266456817263221,
+   "p_classical_same_budget": 0.15625,
+   "best_k": 2,
+   "best_cost": 6.820154618062702,
+   "classical_cost": 16.5
+  }
+ },
+ {
+  "n": 6,
+  "N": 64,
+  "k_opt": 6,
+  "qiskit": {
+   "twoq_per_iter": 146,
+   "p_at_kopt": 0.0322995413951748,
+   "p_classical_same_budget": 0.109375,
+   "best_k": 1,
+   "best_cost": 26.29210405530231,
+   "classical_cost": 32.5
+  },
+  "ionq_billed": {
+   "twoq_per_iter": 48,
+   "p_at_kopt": 0.27258531402151615,
+   "p_classical_same_budget": 0.109375,
+   "best_k": 3,
+   "best_cost": 12.890701100719648,
+   "classical_cost": 32.5
+  }
+ },
+ {
+  "n": 7,
+  "N": 128,
+  "k_opt": 8,
+  "qiskit": {
+   "twoq_per_iter": 226,
+   "p_at_kopt": 0.00803246414201688,
+   "p_classical_same_budget": 0.0703125,
+   "best_k": 1,
+   "best_cost": 68.6163285477347,
+   "classical_cost": 64.5
+  },
+  "ionq_billed": {
+   "twoq_per_iter": 60,
+   "p_at_kopt": 0.11374511270533438,
+   "p_classical_same_budget": 0.0703125,
+   "best_k": 3,
+   "best_cost": 26.59866664865869,
+   "classical_cost": 64.5
+  }
+ },
+ {
+  "n": 8,
+  "N": 256,
+  "k_opt": 12,
+  "qiskit": {
+   "twoq_per_iter": 330,
+   "p_at_kopt": 0.003906259970705056,
+   "p_classical_same_budget": 0.05078125,
+   "best_k": 1,
+   "best_cost": 189.38068487004585,
+   "classical_cost": 128.5
+  },
+  "ionq_billed": {
+   "twoq_per_iter": 72,
+   "p_at_kopt": 0.02180903051994702,
+   "p_classical_same_budget": 0.05078125,
+   "best_k": 3,
+   "best_cost": 58.58149160006431,
+   "classical_cost": 128.5
+  }
+ },
+ {
+  "n": 9,
+  "N": 512,
+  "k_opt": 17,
+  "qiskit": {
+   "twoq_per_iter": 462,
+   "p_at_kopt": 0.0019531250000001357,
+   "p_classical_same_budget": 0.03515625,
+   "best_k": 0,
+   "best_cost": 512.0000000000001,
+   "classical_cost": 256.5
+  },
+  "ionq_billed": {
+   "twoq_per_iter": 84,
+   "p_at_kopt": 0.0032539654098469395,
+   "p_classical_same_budget": 0.03515625,
+   "best_k": 2,
+   "best_cost": 130.08035246767207,
+   "classical_cost": 256.5
+  }
+ },
+ {
+  "n": 10,
+  "N": 1024,
+  "k_opt": 25,
+  "qiskit": {
+   "twoq_per_iter": 610,
+   "p_at_kopt": 0.0009765625,
+   "p_classical_same_budget": 0.025390625,
+   "best_k": 0,
+   "best_cost": 1024.0,
+   "classical_cost": 512.5
+  },
+  "ionq_billed": {
+   "twoq_per_iter": 96,
+   "p_at_kopt": 0.0009907246283051895,
+   "p_classical_same_budget": 0.025390625,
+   "best_k": 2,
+   "best_cost": 285.88051222576127,
+   "classical_cost": 512.5
+  }
+ },
+ {
+  "n": 11,
+  "N": 2048,
+  "k_opt": 35,
+  "ionq_billed": {
+   "twoq_per_iter": 108,
+   "p_at_kopt": 0.0004883043627292264,
+   "p_classical_same_budget": 0.017578125,
+   "best_k": 2,
+   "best_cost": 630.0292399504366,
+   "classical_cost": 1024.5
+  }
+ },
+ {
+  "n": 12,
+  "N": 4096,
+  "k_opt": 50,
+  "ionq_billed": {
+   "twoq_per_iter": 120,
+   "p_at_kopt": 0.0002441406257574222,
+   "p_classical_same_budget": 0.012451171875,
+   "best_k": 2,
+   "best_cost": 1389.505939997668,
+   "classical_cost": 2048.5
+  }
+ }
+]

@@ -1,0 +1,25 @@
+{
+ "numpy_real_1504": 8.375949997571296e-06,
+ "numpy_synth_100000": 0.00019129999564029276,
+ "numpy_synth_1000000": 0.0026881400030106307,
+ "numpy_synth_10000000": 0.03776651999796741,
+ "sqlite_noindex_1e6": 0.48724900000379423,
+ "sqlite_index_1e6": 0.05583417000016198,
+ "sqlite_plan": "[(4, 0, 0, 'SEARCH ev USING INDEX ix_mag (mag>?)')]",
+ "fdsn&minmagnitude=5": {
+  "count": "1507",
+  "seconds": 1.6337171999912243
+ },
+ "fdsn&minmagnitude=6&maxdepth=70": {
+  "count": "72",
+  "seconds": 0.6692077000043355
+ },
+ "fdsn&minmagnitude=7&maxdepth=70": {
+  "count": "8",
+  "seconds": 0.8630919999850448
+ },
+ "fdsn&minmagnitude=5&alertlevel=yellow": {
+  "count": "18",
+  "seconds": 0.8536084000079427
+ }
+}

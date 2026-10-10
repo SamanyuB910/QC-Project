@@ -1,1 +1,32 @@
 2Q per n-qubit MCZ (Qiskit ancilla-free synthesis, rzz basis): {3: 5, 4: 13, 5: 27, 6: 73, 7: 113, 8: 165, 9: 231, 10: 305}
+BBHT stop budget c*sqrt(N) giving P(miss|M=1)<=5%: {3: 1.25, 4: 1.25, 5: 1.75, 6: 1.75, 7: 2.0, 8: 2.25, 9: 2.5, 10: 2.5}
+
+n=3 N=8: P(M=0)=0.669, mean M=0.38
+  M>=1: BBHT ideal evals   3.63 [3.51,3.74] | BBHT noisy   3.71 [3.60,3.83] | classical scan   4.40 [4.26,4.55] (theory 4.30) | indexed   4.27 [4.24,4.30]
+  M=0 : BBHT ideal   8.51 [8.43,8.58] | classical   8.00 [8.00,8.00] | indexed   3.15 [3.14,3.17]
+  correct (find-or-certify-none) rate: ideal 0.997, noisy 0.992; BBHT beats scan on 52.8% of M>=1 slices
+
+n=4 N=16: P(M=0)=0.419, mean M=0.75
+  M>=1: BBHT ideal evals   5.09 [4.96,5.23] | BBHT noisy   5.56 [5.41,5.71] | classical scan   7.68 [7.48,7.89] (theory 7.73) | indexed   5.53 [5.50,5.56]
+  M=0 : BBHT ideal  11.83 [11.74,11.93] | classical  16.00 [16.00,16.00] | indexed   4.30 [4.27,4.33]
+  correct (find-or-certify-none) rate: ideal 0.987, noisy 0.973; BBHT beats scan on 62.9% of M>=1 slices
+
+n=5 N=32: P(M=0)=0.092, mean M=1.50
+  M>=1: BBHT ideal evals   6.93 [6.77,7.08] | BBHT noisy   8.58 [8.38,8.79] | classical scan  13.54 [13.20,13.86] (theory 13.34) | indexed   7.21 [7.17,7.25]
+  M=0 : BBHT ideal  17.12 [16.91,17.34] | classical  32.00 [32.00,32.00] | indexed   6.01 [5.90,6.12]
+  correct (find-or-certify-none) rate: ideal 0.987, noisy 0.895; BBHT beats scan on 70.2% of M>=1 slices
+
+n=6 N=64: P(M=0)=0.003, mean M=3.08
+  M>=1: BBHT ideal evals   7.10 [6.94,7.26] | BBHT noisy  14.66 [14.36,14.98] | classical scan  16.38 [15.93,16.86] (theory 16.99) | indexed  10.22 [10.17,10.27]
+  M=0 : BBHT ideal  22.80 [21.30,24.20] | classical  64.00 [64.00,64.00] | indexed   8.00 [8.00,8.00]
+  correct (find-or-certify-none) rate: ideal 0.997, noisy 0.599; BBHT beats scan on 70.5% of M>=1 slices
+
+Scaling at M=1 (needle): mean total evaluations over 4000 runs (calls + verification checks)
+  n= 3 N=    8: BBHT ideal    3.93 (1.39 sqrtN) | BBHT noisy    3.98 | classical (N+1)/2 = 4.5
+  n= 4 N=   16: BBHT ideal    5.69 (1.42 sqrtN) | BBHT noisy    6.24 | classical (N+1)/2 = 8.5
+  n= 5 N=   32: BBHT ideal    8.55 (1.51 sqrtN) | BBHT noisy   11.64 | classical (N+1)/2 = 16.5
+  n= 6 N=   64: BBHT ideal   12.61 (1.58 sqrtN) | BBHT noisy   58.93 | classical (N+1)/2 = 32.5
+  n= 7 N=  128: BBHT ideal   18.22 (1.61 sqrtN) | BBHT noisy  302.89 | classical (N+1)/2 = 64.5
+  n= 8 N=  256: BBHT ideal   26.16 (1.63 sqrtN) | BBHT noisy  668.98 | classical (N+1)/2 = 128.5
+  n= 9 N=  512: BBHT ideal   37.25 (1.65 sqrtN) | BBHT noisy 1083.04 | classical (N+1)/2 = 256.5
+  n=10 N= 1024: BBHT ideal   51.60 (1.61 sqrtN) | BBHT noisy 1595.81 | classical (N+1)/2 = 512.5

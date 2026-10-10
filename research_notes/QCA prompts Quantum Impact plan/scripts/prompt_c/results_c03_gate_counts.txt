@@ -1,0 +1,54 @@
+
+n=3 N=8 M=1 k_opt=2  (qubits: list 3, honest-ucry 18, honest-select 19) [1.0s]
+  list_oracle            IonQ-like 2Q=     5 (2Q-depth      5) | heavy-hex 2Q=     7 (2Q-depth      7)
+  honest_oracle_ucry     IonQ-like 2Q=   221 (2Q-depth    145) | heavy-hex 2Q=   604 (2Q-depth    366)
+  honest_oracle_select   IonQ-like 2Q=   491 (2Q-depth    359) | heavy-hex 2Q=  1279 (2Q-depth    792)
+  diffusion              IonQ-like 2Q=     5 (2Q-depth      5) | heavy-hex 2Q=     7 (2Q-depth      7)
+  grover_list            IonQ-like 2Q=    20 (2Q-depth     20) | heavy-hex 2Q=    37 (2Q-depth     37)
+  grover_honest_ucry     IonQ-like 2Q=   452 (2Q-depth    298) | heavy-hex 2Q=  1220 (2Q-depth    804)
+  IonQ billed (6(n-2) per MC gate): list oracle 6, diffusion 6, full list-Grover 24
+
+n=4 N=16 M=2 k_opt=2  (qubits: list 4, honest-ucry 19, honest-select 20) [1.5s]
+  list_oracle            IonQ-like 2Q=    26 (2Q-depth     26) | heavy-hex 2Q=    35 (2Q-depth     35)
+  honest_oracle_ucry     IonQ-like 2Q=   409 (2Q-depth    299) | heavy-hex 2Q=  1146 (2Q-depth    649)
+  honest_oracle_select   IonQ-like 2Q=  1657 (2Q-depth   1515) | heavy-hex 2Q=  3836 (2Q-depth   2935)
+  diffusion              IonQ-like 2Q=    13 (2Q-depth     13) | heavy-hex 2Q=    18 (2Q-depth     18)
+  grover_list            IonQ-like 2Q=    78 (2Q-depth     78) | heavy-hex 2Q=   111 (2Q-depth    111)
+  grover_honest_ucry     IonQ-like 2Q=   844 (2Q-depth    624) | heavy-hex 2Q=  2343 (2Q-depth   1422)
+  IonQ billed (6(n-2) per MC gate): list oracle 24, diffusion 12, full list-Grover 72
+
+n=5 N=32 M=2 k_opt=3  (qubits: list 5, honest-ucry 20, honest-select 21) [4.0s]
+  list_oracle            IonQ-like 2Q=    54 (2Q-depth     52) | heavy-hex 2Q=   128 (2Q-depth    114)
+  honest_oracle_ucry     IonQ-like 2Q=   613 (2Q-depth    503) | heavy-hex 2Q=  1659 (2Q-depth    979)
+  honest_oracle_select   IonQ-like 2Q=  4180 (2Q-depth   3963) | heavy-hex 2Q=  9862 (2Q-depth   8039)
+  diffusion              IonQ-like 2Q=    27 (2Q-depth     26) | heavy-hex 2Q=    65 (2Q-depth     61)
+  grover_list            IonQ-like 2Q=   243 (2Q-depth    234) | heavy-hex 2Q=   601 (2Q-depth    530)
+  grover_honest_ucry     IonQ-like 2Q=  1911 (2Q-depth   1561) | heavy-hex 2Q=  5337 (2Q-depth   3626)
+  IonQ billed (6(n-2) per MC gate): list oracle 36, diffusion 18, full list-Grover 162
+
+n=6 N=64 M=3 k_opt=3  (qubits: list 6, honest-ucry 21, honest-select 22) [15.6s]
+  list_oracle            IonQ-like 2Q=   217 (2Q-depth    187) | heavy-hex 2Q=   471 (2Q-depth    400)
+  honest_oracle_ucry     IonQ-like 2Q=  1109 (2Q-depth    997) | heavy-hex 2Q=  2828 (2Q-depth   1831)
+  honest_oracle_select   IonQ-like 2Q= 10430 (2Q-depth  10080) | heavy-hex 2Q= 23866 (2Q-depth  20430)
+  diffusion              IonQ-like 2Q=    73 (2Q-depth     63) | heavy-hex 2Q=   160 (2Q-depth    135)
+  grover_list            IonQ-like 2Q=   870 (2Q-depth    750) | heavy-hex 2Q=  1913 (2Q-depth   1642)
+  grover_honest_ucry     IonQ-like 2Q=  3423 (2Q-depth   3057) | heavy-hex 2Q=  9321 (2Q-depth   6186)
+  IonQ billed (6(n-2) per MC gate): list oracle 72, diffusion 24, full list-Grover 288
+
+QROM(ucry) load+unload 2Q count vs data bits b (IonQ-like basis), random data:
+  n=3 N=  8 b= 1: 2Q=    0  (2bN=16)
+  n=3 N=  8 b= 4: 2Q=    0  (2bN=64)
+  n=3 N=  8 b= 9: 2Q=    0  (2bN=144)
+  n=3 N=  8 b=16: 2Q=    0  (2bN=256)
+  n=4 N= 16 b= 1: 2Q=    0  (2bN=32)
+  n=4 N= 16 b= 4: 2Q=    0  (2bN=128)
+  n=4 N= 16 b= 9: 2Q=    0  (2bN=288)
+  n=4 N= 16 b=16: 2Q=    0  (2bN=512)
+  n=5 N= 32 b= 1: 2Q=    0  (2bN=64)
+  n=5 N= 32 b= 4: 2Q=    0  (2bN=256)
+  n=5 N= 32 b= 9: 2Q=    0  (2bN=576)
+  n=5 N= 32 b=16: 2Q=    0  (2bN=1024)
+  n=6 N= 64 b= 1: 2Q=    0  (2bN=128)
+  n=6 N= 64 b= 4: 2Q=    0  (2bN=512)
+  n=6 N= 64 b= 9: 2Q=    0  (2bN=1152)
+  n=6 N= 64 b=16: 2Q=    0  (2bN=2048)

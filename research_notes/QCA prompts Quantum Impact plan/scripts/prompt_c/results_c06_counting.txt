@@ -1,0 +1,45 @@
+MLAE on real slices (schedule m=0,1,2,4; equal shots), RMSE of M_hat over 200 repeats per slice
+  n=4 N= 16 M=1: budget   22 (>= N) | RMSE(M_hat): MLAE ideal 3.07, noisy-naive 3.53 | classical sampling 0.85 | exact count costs 16
+  n=4 N= 16 M=1: budget   44 (>= N) | RMSE(M_hat): MLAE ideal 2.85, noisy-naive 3.48 | classical sampling 0.55 | exact count costs 16
+  n=4 N= 16 M=1: budget  176 (>= N) | RMSE(M_hat): MLAE ideal 0.14, noisy-naive 2.48, noisy-aware 0.56 | classical sampling 0.28 | exact count costs 16
+  n=4 N= 16 M=1: budget   22 (>= N) | RMSE(M_hat): MLAE ideal 3.21, noisy-naive 2.58 | classical sampling 0.86 | exact count costs 16
+  n=4 N= 16 M=1: budget   44 (>= N) | RMSE(M_hat): MLAE ideal 2.98, noisy-naive 3.00 | classical sampling 0.60 | exact count costs 16
+  n=4 N= 16 M=1: budget  176 (>= N) | RMSE(M_hat): MLAE ideal 0.09, noisy-naive 2.08, noisy-aware 0.31 | classical sampling 0.29 | exact count costs 16
+  n=5 N= 32 M=1: budget   22 (< N) | RMSE(M_hat): MLAE ideal 4.52, noisy-naive 6.32 | classical sampling 1.12 | exact count costs 32
+  n=5 N= 32 M=1: budget   44 (>= N) | RMSE(M_hat): MLAE ideal 3.40, noisy-naive 6.70 | classical sampling 0.89 | exact count costs 32
+  n=5 N= 32 M=1: budget  176 (>= N) | RMSE(M_hat): MLAE ideal 0.13, noisy-naive 4.24, noisy-aware 1.17 | classical sampling 0.42 | exact count costs 32
+  n=5 N= 32 M=1: budget   22 (< N) | RMSE(M_hat): MLAE ideal 4.56, noisy-naive 6.77 | classical sampling 1.23 | exact count costs 32
+  n=5 N= 32 M=1: budget   44 (>= N) | RMSE(M_hat): MLAE ideal 4.43, noisy-naive 7.48 | classical sampling 0.79 | exact count costs 32
+  n=5 N= 32 M=1: budget  176 (>= N) | RMSE(M_hat): MLAE ideal 0.11, noisy-naive 3.58, noisy-aware 0.73 | classical sampling 0.41 | exact count costs 32
+  n=6 N= 64 M=3: budget   22 (< N) | RMSE(M_hat): MLAE ideal 11.38, noisy-naive 17.44 | classical sampling 2.74 | exact count costs 64
+  n=6 N= 64 M=3: budget   44 (< N) | RMSE(M_hat): MLAE ideal 13.22, noisy-naive 12.23 | classical sampling 2.22 | exact count costs 64
+  n=6 N= 64 M=3: budget  176 (>= N) | RMSE(M_hat): MLAE ideal 0.42, noisy-naive 6.23, noisy-aware 1.53 | classical sampling 0.99 | exact count costs 64
+  n=6 N= 64 M=5: budget   22 (< N) | RMSE(M_hat): MLAE ideal 7.67, noisy-naive 17.58 | classical sampling 3.51 | exact count costs 64
+  n=6 N= 64 M=5: budget   44 (< N) | RMSE(M_hat): MLAE ideal 4.70, noisy-naive 14.97 | classical sampling 2.67 | exact count costs 64
+  n=6 N= 64 M=5: budget  176 (>= N) | RMSE(M_hat): MLAE ideal 1.02, noisy-naive 9.15, noisy-aware 2.97 | classical sampling 1.20 | exact count costs 64
+
+Budget (oracle calls + labels) to reach 10% relative RMSE on M, real rate p=M/N (ideal MLAE vs classical sampling)
+  shallow&M>=6 rate    max m=   1: MLAE budget     96 -> rel RMSE 0.230; classical sampling needs       376 for same RMSE
+  shallow&M>=6 rate    max m=   2: MLAE budget    192 -> rel RMSE 0.140; classical sampling needs      1010 for same RMSE
+  shallow&M>=6 rate    max m=   4: MLAE budget    352 -> rel RMSE 0.081; classical sampling needs      2997 for same RMSE
+  shallow&M>=6 rate    max m=   8: MLAE budget    640 -> rel RMSE 0.069; classical sampling needs      4198 for same RMSE
+  shallow&M>=6 rate    max m=  16: MLAE budget   1184 -> rel RMSE 0.021; classical sampling needs     45999 for same RMSE
+  shallow&M>=6 rate    max m=  32: MLAE budget   2240 -> rel RMSE 0.018; classical sampling needs     63096 for same RMSE
+  shallow&M>=6 rate    max m=  64: MLAE budget   4320 -> rel RMSE 0.013; classical sampling needs    113999 for same RMSE
+  shallow&M>=6 rate    max m= 128: MLAE budget   8448 -> rel RMSE 0.005; classical sampling needs    740805 for same RMSE
+  shallow&M>=6 rate    max m= 256: MLAE budget  16672 -> rel RMSE 0.002; classical sampling needs   3784019 for same RMSE
+  shallow&M>=7 rate    max m=   1: MLAE budget     96 -> rel RMSE 0.681; classical sampling needs       404 for same RMSE
+  shallow&M>=7 rate    max m=   2: MLAE budget    192 -> rel RMSE 0.454; classical sampling needs       909 for same RMSE
+  shallow&M>=7 rate    max m=   4: MLAE budget    352 -> rel RMSE 0.232; classical sampling needs      3479 for same RMSE
+  shallow&M>=7 rate    max m=   8: MLAE budget    640 -> rel RMSE 0.138; classical sampling needs      9807 for same RMSE
+  shallow&M>=7 rate    max m=  16: MLAE budget   1184 -> rel RMSE 0.061; classical sampling needs     50783 for same RMSE
+  shallow&M>=7 rate    max m=  32: MLAE budget   2240 -> rel RMSE 0.030; classical sampling needs    207660 for same RMSE
+  shallow&M>=7 rate    max m=  64: MLAE budget   4320 -> rel RMSE 0.010; classical sampling needs   1720186 for same RMSE
+  shallow&M>=7 rate    max m= 128: MLAE budget   8448 -> rel RMSE 0.011; classical sampling needs   1524319 for same RMSE
+  shallow&M>=7 rate    max m= 256: MLAE budget  16672 -> rel RMSE 0.012; classical sampling needs   1265500 for same RMSE
+QPE counting n=4 t=4 N=16 true M=1 [ideal]: 2Q=2346 (depth 2342), controlled-G calls 15; top M_hat [(15.39, 3073), (13.66, 527), (16.0, 148), (11.06, 114)]; P(|M_hat-M|<=0.5)=0.006
+QPE counting n=4 t=4 N=16 true M=1 [noisy_forte1]: 2Q=2346 (depth 2342), controlled-G calls 15; top M_hat [(15.39, 736), (13.66, 637), (11.06, 559), (8.0, 430)]; P(|M_hat-M|<=0.5)=0.085
+QPE counting n=4 t=5 N=16 true M=1 [ideal]: 2Q=4846 (depth 4839), controlled-G calls 31; top M_hat [(14.65, 2147), (15.39, 1168), (13.66, 215), (15.85, 189)]; P(|M_hat-M|<=0.5)=0.004
+QPE counting n=4 t=5 N=16 true M=1 [noisy_forte1]: 2Q=4846 (depth 4839), controlled-G calls 31; top M_hat [(15.39, 390), (15.85, 376), (14.65, 346), (13.66, 319)]; P(|M_hat-M|<=0.5)=0.079
+
+NOTE (added after run): the QPE-counting lines above have a global-phase decode bug (estimates are N-M). Superseded by c06b_qpe_counting_fixed.py / results_c06b_qpe_counting.txt; c06_counting.py now includes the fix.

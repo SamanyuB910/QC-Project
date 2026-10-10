@@ -1,0 +1,28 @@
+lambda=0.2; built 24 bootstrap instances in 29.6s
+full-data optimum: ['cp', 'chol', 'slope', 'ca', 'thal'] greedy: ['cp', 'chol', 'slope', 'ca', 'thal'] topk: ['cp', 'exang', 'oldpeak', 'ca', 'thal']
+greedy optimal on held-out resamples: 0.8333333333333334  top-k optimal: 0.0
+[penalty_X_P0.3xsafe   ] tuned-on=E    p=1: FULL P(opt)=0.0004 (2/1000 shots, CI 0.0005-0.0073) P(feas)=0.480 meanAR|feas=0.584 | product-null P(opt)=0.0002 P(feas)=0.223; null|k P(opt)=0.0009 | held-out mean P(opt)=0.0004 (min 0.0004) | uniform-k 0.00078
+[penalty_X_P0.3xsafe   ] tuned-on=E    p=2: FULL P(opt)=0.0006 (1/1000 shots, CI 0.0002-0.0056) P(feas)=0.599 meanAR|feas=0.595 | product-null P(opt)=0.0002 P(feas)=0.221; null|k P(opt)=0.0009 | held-out mean P(opt)=0.0007 (min 0.0006) | uniform-k 0.00078
+[penalty_X_P0.3xsafe   ] tuned-on=E    p=3: FULL P(opt)=0.0007 (0/1000 shots, CI 0.0000-0.0038) P(feas)=0.622 meanAR|feas=0.608 | product-null P(opt)=0.0002 P(feas)=0.219; null|k P(opt)=0.0010 | held-out mean P(opt)=0.0009 (min 0.0008) | uniform-k 0.00078
+[penalty_X_P0.3xsafe   ] tuned-on=Popt p=1: FULL P(opt)=0.0005 (0/1000 shots, CI 0.0000-0.0038) P(feas)=0.567 meanAR|feas=0.584 | product-null P(opt)=0.0002 P(feas)=0.220; null|k P(opt)=0.0008 | held-out mean P(opt)=0.0005 (min 0.0005) | uniform-k 0.00078
+[penalty_X_P0.3xsafe   ] tuned-on=Popt p=2: FULL P(opt)=0.0008 (2/1000 shots, CI 0.0005-0.0073) P(feas)=0.615 meanAR|feas=0.609 | product-null P(opt)=0.0003 P(feas)=0.223; null|k P(opt)=0.0011 | held-out mean P(opt)=0.0010 (min 0.0009) | uniform-k 0.00078
+[penalty_X_P0.3xsafe   ] tuned-on=Popt p=3: FULL P(opt)=0.0024 (0/1000 shots, CI 0.0000-0.0038) P(feas)=0.506 meanAR|feas=0.678 | product-null P(opt)=0.0006 P(feas)=0.225; null|k P(opt)=0.0025 | held-out mean P(opt)=0.0030 (min 0.0023) | uniform-k 0.00078
+   (1686s)
+Traceback (most recent call last):
+  File "C:\VS Code Projects\QC Hackathon\research_notes\QCA prompts Quantum Impact plan\scripts\prompt_b\s03_qaoa.py", line 183, in <module>
+    f"P(feas)={nullmet['P_feas']:.3f}; null|k P(opt)={nullmet_cond['P_opt']:.4f} | "
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\VS Code Projects\QC Hackathon\research_notes\QCA prompts Quantum Impact plan\scripts\prompt_b\common.py", line 123, in save_json
+    json.dump(obj, f, indent=1, default=conv)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 179, in dump
+    for chunk in iterable:
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 432, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "C:\VS Code Projects\QC Hackathon\research_notes\QCA prompts Quantum Impact plan\scripts\prompt_b\common.py", line 121, in conv
+    raise TypeError(type(o))
+TypeError: <class 'numpy.bool_'>

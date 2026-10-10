@@ -1,0 +1,139 @@
+{
+ "noisy_phw5": {
+  "0.0": 0.221,
+  "0.02": 0.2174,
+  "0.05": 0.2138,
+  "0.1": 0.2097,
+  "0.2": 0.22
+ },
+ "rows": {
+  "QAOA_ideal_100": {
+   "mu_opt_found": 2.495,
+   "all5": 0.08,
+   "pareto_found": 5.65,
+   "auc_front_found": 3.12,
+   "hv": 0.9755642089686318,
+   "hv_p5": 0.9225419375566828
+  },
+  "QAOA_noisy_forte1_100": {
+   "mu_opt_found": 1.79,
+   "all5": 0.025,
+   "pareto_found": 4.04,
+   "auc_front_found": 2.51,
+   "hv": 0.962823425729228,
+   "hv_p5": 0.8584879471493235
+  },
+  "product_null_k_100": {
+   "mu_opt_found": 1.41,
+   "all5": 0.0,
+   "pareto_found": 3.025,
+   "auc_front_found": 2.0,
+   "hv": 0.9107193844042283,
+   "hv_p5": 0.7532531431284395
+  },
+  "uniform_k_100": {
+   "mu_opt_found": 0.445,
+   "all5": 0.0,
+   "pareto_found": 1.145,
+   "auc_front_found": 0.675,
+   "hv": 0.9014558422591256,
+   "hv_p5": 0.7407943687757821
+  },
+  "QAOA_ideal_200": {
+   "mu_opt_found": 3.615,
+   "all5": 0.325,
+   "pareto_found": 8.21,
+   "auc_front_found": 4.615,
+   "hv": 0.9929359315302118,
+   "hv_p5": 0.9796716382145195
+  },
+  "QAOA_noisy_forte1_200": {
+   "mu_opt_found": 3.04,
+   "all5": 0.125,
+   "pareto_found": 6.55,
+   "auc_front_found": 3.845,
+   "hv": 0.9866348113738741,
+   "hv_p5": 0.9510990823720927
+  },
+  "product_null_k_200": {
+   "mu_opt_found": 2.405,
+   "all5": 0.02,
+   "pareto_found": 5.285,
+   "auc_front_found": 3.06,
+   "hv": 0.9637222823756406,
+   "hv_p5": 0.906425240575288
+  },
+  "uniform_k_200": {
+   "mu_opt_found": 0.845,
+   "all5": 0.0,
+   "pareto_found": 2.155,
+   "auc_front_found": 1.395,
+   "hv": 0.9498227626693543,
+   "hv_p5": 0.8528412637123419
+  },
+  "QAOA_ideal_500": {
+   "mu_opt_found": 4.635,
+   "all5": 0.775,
+   "pareto_found": 11.265,
+   "auc_front_found": 6.31,
+   "hv": 0.9980985642855441,
+   "hv_p5": 0.9931383978594126
+  },
+  "QAOA_noisy_forte1_500": {
+   "mu_opt_found": 4.465,
+   "all5": 0.655,
+   "pareto_found": 10.635,
+   "auc_front_found": 5.95,
+   "hv": 0.9976125799762676,
+   "hv_p5": 0.9926398304311937
+  },
+  "product_null_k_500": {
+   "mu_opt_found": 3.78,
+   "all5": 0.25,
+   "pareto_found": 8.76,
+   "auc_front_found": 4.745,
+   "hv": 0.9890109455718792,
+   "hv_p5": 0.9699255032269869
+  },
+  "uniform_k_500": {
+   "mu_opt_found": 1.82,
+   "all5": 0.0,
+   "pareto_found": 4.495,
+   "auc_front_found": 2.925,
+   "hv": 0.9829977710892699,
+   "hv_p5": 0.9500898095534994
+  },
+  "QAOA_ideal_1000": {
+   "mu_opt_found": 4.98,
+   "all5": 0.985,
+   "pareto_found": 12.685,
+   "auc_front_found": 7.185,
+   "hv": 0.99953360760121,
+   "hv_p5": 0.998179154182396
+  },
+  "QAOA_noisy_forte1_1000": {
+   "mu_opt_found": 4.93,
+   "all5": 0.94,
+   "pareto_found": 12.37,
+   "auc_front_found": 7.285,
+   "hv": 0.99944217784689,
+   "hv_p5": 0.9976852559309013
+  },
+  "product_null_k_1000": {
+   "mu_opt_found": 4.57,
+   "all5": 0.625,
+   "pareto_found": 11.035,
+   "auc_front_found": 6.045,
+   "hv": 0.9957268889732538,
+   "hv_p5": 0.9835845342918912
+  },
+  "uniform_k_1000": {
+   "mu_opt_found": 3.07,
+   "all5": 0.095,
+   "pareto_found": 7.56,
+   "auc_front_found": 4.76,
+   "hv": 0.99319272967653,
+   "hv_p5": 0.9817896174961565
+  }
+ }
+}

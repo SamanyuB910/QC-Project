@@ -1,0 +1,4 @@
+QPE counting n=4 t=4 N=16 true M=1 [ideal]: 8 qubits, 2Q=2346, controlled-G calls 15; top M_hat [(0.61, 3087), (2.34, 506), (0.0, 165), (4.94, 108)]; P(|M_hat-M|<=0.5)=0.772; mean M_hat=1.27 [1s]
+QPE counting n=4 t=4 N=16 true M=1 [noisy_forte1]: 8 qubits, 2Q=2346, controlled-G calls 15; top M_hat [(0.61, 750), (2.34, 646), (4.94, 510), (8.0, 428)]; P(|M_hat-M|<=0.5)=0.188; mean M_hat=6.23 [188s]
+QPE counting n=4 t=5 N=16 true M=1 [ideal]: 9 qubits, 2Q=4846, controlled-G calls 31; top M_hat [(1.35, 2176), (0.61, 1130), (0.15, 193), (2.34, 190)]; P(|M_hat-M|<=0.5)=0.827; mean M_hat=1.51 [1s]
+QPE counting n=4 t=5 N=16 true M=1 [noisy_forte1]: 9 qubits, 2Q=4846, controlled-G calls 31; top M_hat [(0.15, 386), (0.61, 379), (1.35, 332), (2.34, 321)]; P(|M_hat-M|<=0.5)=0.178; mean M_hat=6.35 [74s]

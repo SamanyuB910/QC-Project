@@ -1,0 +1,19 @@
+frozen schedule (tuned on 60 training instances = 12 subsamples x 5 mu): gamma=1.7182 beta=0.1676, train mean P(opt|HW5)=0.0251
+exact (cost, score) Pareto set: 13 panels; mu-grid optima: mu=0.0: ['sex', 'cp', 'slope', 'ca', 'thal'] $293.10; mu=0.02: ['cp', 'trestbps', 'thalach', 'ca', 'thal'] $206.80; mu=0.05: ['cp', 'trestbps', 'thalach', 'ca', 'thal'] $206.80; mu=0.1: ['sex', 'cp', 'trestbps', 'thalach', 'thal'] $106.90; mu=0.2: ['age', 'sex', 'cp', 'trestbps', 'fbs'] $9.20
+  mu=0.00: ideal P(opt|HW5)=0.0229  null|k=0.0137  uniform=0.00078
+  mu=0.02: ideal P(opt|HW5)=0.0070  null|k=0.0044  uniform=0.00078
+  mu=0.05: ideal P(opt|HW5)=0.0057  null|k=0.0025  uniform=0.00078
+  mu=0.10: ideal P(opt|HW5)=0.0150  null|k=0.0038  uniform=0.00078
+  mu=0.20: ideal P(opt|HW5)=0.0208  null|k=0.0039  uniform=0.00078
+QAOA_ideal      (1000 raw shots x 5 circuits, ~222 feasible each): mu-optima found 4.98/5 (all 5 in 98% of runs); exact score-Pareto panels found 12.7/13; AUC-front panels 7.18/8; AUC hypervolume ratio 1.000 (5th pct 0.998)
+product_null_k  (1000 raw shots x 5 circuits, ~222 feasible each): mu-optima found 4.57/5 (all 5 in 62% of runs); exact score-Pareto panels found 11.0/13; AUC-front panels 6.04/8; AUC hypervolume ratio 0.996 (5th pct 0.984)
+uniform_k       (1000 raw shots x 5 circuits, ~222 feasible each): mu-optima found 3.07/5 (all 5 in 10% of runs); exact score-Pareto panels found 7.6/13; AUC-front panels 4.76/8; AUC hypervolume ratio 0.993 (5th pct 0.982)
+
+One job = 5 circuits; 2Q (rzz) per circuit: [234, 237, 237, 237, 236]; total 2Q in job 1181; cubic terms per circuit: 1
+Aer noisy run of the whole job: 46.7s
+  noisy mu=0.00: P(HW5)=0.223  P(opt|HW5)=0.0179 (0.006996875025269512, 0.04520519020438854)
+  noisy mu=0.02: P(HW5)=0.228  P(opt|HW5)=0.0000 (0.0, 0.016569933954907145)
+  noisy mu=0.05: P(HW5)=0.225  P(opt|HW5)=0.0044 (0.0007849646791219054, 0.024741862611021147)
+  noisy mu=0.10: P(HW5)=0.200  P(opt|HW5)=0.0050 (0.0008831459893662054, 0.02777439986977148)
+  noisy mu=0.20: P(HW5)=0.208  P(opt|HW5)=0.0048 (0.0008491586222405118, 0.026726161805852935)
+QAOA noisy (forte-1 depolarizing): mu-optima found 5/5; score-Pareto panels 13/13; AUC-front panels 8/8; AUC hypervolume ratio 1.000

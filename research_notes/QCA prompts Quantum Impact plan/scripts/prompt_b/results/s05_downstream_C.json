@@ -1,0 +1,107 @@
+{
+ "C": {
+  "best5": [
+   [
+    "sex",
+    "cp",
+    "slope",
+    "ca",
+    "thal"
+   ],
+   0.9109085648148149
+  ],
+  "median5": 0.847698963844797,
+  "lam0.0": {
+   "spearman_f_vs_negAUC": 0.8016698135102706,
+   "qubo_opt": [
+    "cp",
+    "exang",
+    "oldpeak",
+    "ca",
+    "thal"
+   ],
+   "qubo_opt_auc": 0.902441578483245,
+   "qubo_opt_auc_rank": 15,
+   "top10_qubo_mean_auc": 0.9027002039241621
+  },
+  "lam0.05": {
+   "spearman_f_vs_negAUC": 0.7858565110075579,
+   "qubo_opt": [
+    "cp",
+    "chol",
+    "oldpeak",
+    "ca",
+    "thal"
+   ],
+   "qubo_opt_auc": 0.8987378747795415,
+   "qubo_opt_auc_rank": 23,
+   "top10_qubo_mean_auc": 0.8961301256613756
+  },
+  "lam0.1": {
+   "spearman_f_vs_negAUC": 0.6992223778477343,
+   "qubo_opt": [
+    "cp",
+    "chol",
+    "slope",
+    "ca",
+    "thal"
+   ],
+   "qubo_opt_auc": 0.9042093805114638,
+   "qubo_opt_auc_rank": 9,
+   "top10_qubo_mean_auc": 0.892088844797178
+  },
+  "lam0.2": {
+   "spearman_f_vs_negAUC": 0.4051153284004577,
+   "qubo_opt": [
+    "cp",
+    "chol",
+    "slope",
+    "ca",
+    "thal"
+   ],
+   "qubo_opt_auc": 0.9042093805114638,
+   "qubo_opt_auc_rank": 9,
+   "top10_qubo_mean_auc": 0.8822138172398588
+  },
+  "lam0.3": {
+   "spearman_f_vs_negAUC": 0.17678858413197956,
+   "qubo_opt": [
+    "sex",
+    "cp",
+    "chol",
+    "slope",
+    "ca"
+   ],
+   "qubo_opt_auc": 0.8939139660493827,
+   "qubo_opt_auc_rank": 44,
+   "top10_qubo_mean_auc": 0.8698885306437389
+  },
+  "lam0.5": {
+   "spearman_f_vs_negAUC": -0.048933945071995416,
+   "qubo_opt": [
+    "sex",
+    "cp",
+    "chol",
+    "fbs",
+    "slope"
+   ],
+   "qubo_opt_auc": 0.8464492394179893,
+   "qubo_opt_auc_rank": 669,
+   "top10_qubo_mean_auc": 0.8540403163580246
+  },
+  "lam1.0": {
+   "spearman_f_vs_negAUC": -0.2166847472012465,
+   "qubo_opt": [
+    "sex",
+    "cp",
+    "chol",
+    "fbs",
+    "slope"
+   ],
+   "qubo_opt_auc": 0.8464492394179893,
+   "qubo_opt_auc_rank": 669,
+   "top10_qubo_mean_auc": 0.8359635416666666
+  },
+  "spearman_relsum_auc": 0.8016698135102706
+ }
+}

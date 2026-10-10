@@ -1,0 +1,30 @@
+A n=4 linear {'mean_abs_bloch_err_noise': None, 'bloch_shrink_factor': None, 'bloch_signal_sd': None, 'exact': 0.9419965843813072, 'noise_inf_shots': 0.9419965843813072, 'noise_100shots_all': 0.8523676447756561, 'noise_300shots_all': 0.8716814159292035, 'train_exact_test_noise_300': 0.8401645707188324, 'train_noisesim_test_noise_300': 0.836624747709983, 'noise_1000shots_all': 0.9103865859338611, 'noiseless_1000shots_all': 0.9209129017233348, 'train_exact_test_noise_1000': 0.8945815867101382, 'train_noisesim_test_noise_1000': 0.8980903586399627, 'noise_3000shots_all': 0.9086011488899238} 633s
+  noisy bloch n=4 full c=0.05: 3s
+  noisy bloch n=4 full c=0.1: 2s
+  noisy bloch n=4 full c=0.2: 2s
+  noisy bloch n=4 full c=0.35: 2s
+  noisy bloch n=4 full c=0.5: 2s
+  noisy bloch n=4 full c=0.75: 2s
+A n=4 full {'mean_abs_bloch_err_noise': None, 'bloch_shrink_factor': None, 'bloch_signal_sd': None, 'exact': 0.9314857941313461, 'noise_inf_shots': 0.9332401800962584, 'noise_100shots_all': 0.8278217668063965, 'noise_300shots_all': 0.8963514982145628, 'train_exact_test_noise_300': 0.8822698338767273, 'train_noisesim_test_noise_300': 0.8769911504424778, 'noise_1000shots_all': 0.9156652693681104, 'noiseless_1000shots_all': 0.9104176370128861, 'train_exact_test_noise_1000': 0.8963049215960254, 'train_noisesim_test_noise_1000': 0.8945350100916005, 'noise_3000shots_all': 0.9297314081664337} 881s
+  noisy bloch n=8 linear c=0.1: 7s
+  noisy bloch n=8 linear c=0.2: 6s
+  noisy bloch n=8 linear c=0.35: 6s
+  noisy bloch n=8 linear c=0.5: 4s
+A n=8 linear {'mean_abs_bloch_err_noise': None, 'bloch_shrink_factor': None, 'bloch_signal_sd': None, 'exact': 0.8946126377891632, 'noise_inf_shots': 0.8946126377891632, 'noise_100shots_all': 0.8489365005433939, 'noise_300shots_all': 0.8612016767582673, 'train_exact_test_noise_300': 0.8488588728458314, 'train_noisesim_test_noise_300': 0.8453345753764945, 'noise_1000shots_all': 0.8630026393417172, 'noiseless_1000shots_all': 0.8664337835739792, 'train_exact_test_noise_1000': 0.8700201832013663, 'train_noisesim_test_noise_1000': 0.868265797236454, 'noise_3000shots_all': 0.8875795683900016} 989s
+  noisy bloch n=8 full c=0.1: 15s
+  noisy bloch n=8 full c=0.2: 14s
+  noisy bloch n=8 full c=0.35: 14s
+A n=8 full {'mean_abs_bloch_err_noise': None, 'bloch_shrink_factor': None, 'bloch_signal_sd': None, 'exact': 0.8138177301661234, 'noise_inf_shots': 0.824344045955597, 'noise_100shots_all': 0.7047352895513118, 'noise_300shots_all': 0.7522900170780935, 'train_exact_test_noise_300': 0.6732339698804534, 'train_noisesim_test_noise_300': 0.6732494954199659, 'noise_1000shots_all': 0.7698959788852662, 'noiseless_1000shots_all': 0.7663095792578792, 'train_exact_test_noise_1000': 0.7821456295606272, 'train_noisesim_test_noise_1000': 0.7768669461263779, 'noise_3000shots_all': 0.7786679087098276} 1110s
+B linear 0.35 {'fit_a': 0.9142855187188651, 'fit_b': 0.0003511793992068968, 'resid_sd': 0.00029730244885806974, 'exact_offdiag_sd': 0.011473365804893394, 'noisy_diag_mean': 0.8878504037701943, 'global_depol_pred_F(0.995^n2q)': 0.8702766135707171, 'n2q_fid_circuit': 28, 'aer_dm_seconds_6proc': 7.141838788986206, 'n_circuits': 465}
+B acc linear {'exact': 0.9490296537804689, 'noise_inf_shots': 0.9472752678155565, 'noise_100shots': 0.8980437820214252, 'noise_100shots_mitigated_psd': 0.9138643067846607, 'noise_1000shots': 0.9173575531749728, 'noise_1000shots_mitigated_psd': 0.9191429902189101} 1139s
+B full 0.35 {'fit_a': 0.6035758260305676, 'fit_b': 0.001745036164928771, 'resid_sd': 0.0001884029001211135, 'exact_offdiag_sd': 0.0076405362166499765, 'noisy_diag_mean': 0.6001931946488241, 'global_depol_pred_F(0.995^n2q)': 0.5736265610238195, 'n2q_fid_circuit': 112, 'aer_dm_seconds_6proc': 21.39812994003296, 'n_circuits': 465}
+B acc full {'exact': 0.9051234280391244, 'noise_inf_shots': 0.9051234280391244, 'noise_100shots': 0.8593541375562801, 'noise_100shots_mitigated_psd': 0.8857475547275268, 'noise_1000shots': 0.8963514982145628, 'noise_1000shots_mitigated_psd': 0.8910728147803135} 1186s
+C 4 linear 300 0.17669439315795898
+C 4 linear 1000 0.34815144538879395
+C 8 linear 300 0.2589280605316162
+C 8 linear 1000 0.8208005428314209
+C 8 full 300 0.4090127944946289
+C 8 full 1000 1.6260013580322266
+C 12 linear 300 2.5395431518554688
+C 12 linear 1000 7.894772529602051
+saved 1200.1273732185364

@@ -1,0 +1,5 @@
+Ising terms: 91
+ansatz top-level ops: OrderedDict([('QAOA', 1)])
+decomposed circuit -> StatevectorSampler: 1.13s, python peak alloc 27.4 MB
+naive undecomposed ansatz, 9 qubits: 6.75s per sampler call, python peak alloc 49.3 MB
+naive undecomposed ansatz, 11 qubits: 205.66s per sampler call, python peak alloc 709.0 MB

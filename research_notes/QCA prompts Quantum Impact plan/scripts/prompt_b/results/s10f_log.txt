@@ -1,0 +1,13 @@
+  22 evals per mu (pooled 110): SA (T0=0.1)                mu-optima found 0.96/5, all 5 in 0% of runs
+  22 evals per mu (pooled 110): SA (T0=0.3)                mu-optima found 1.00/5, all 5 in 0% of runs
+  22 evals per mu (pooled 110): random-restart 1-swap LS   mu-optima found 0.38/5, all 5 in 0% of runs
+  44 evals per mu (pooled 220): SA (T0=0.1)                mu-optima found 2.12/5, all 5 in 2% of runs
+  44 evals per mu (pooled 220): SA (T0=0.3)                mu-optima found 2.10/5, all 5 in 3% of runs
+  44 evals per mu (pooled 220): random-restart 1-swap LS   mu-optima found 0.93/5, all 5 in 1% of runs
+ 111 evals per mu (pooled 555): SA (T0=0.1)                mu-optima found 3.92/5, all 5 in 28% of runs
+ 111 evals per mu (pooled 555): SA (T0=0.3)                mu-optima found 3.56/5, all 5 in 24% of runs
+ 111 evals per mu (pooled 555): random-restart 1-swap LS   mu-optima found 3.65/5, all 5 in 20% of runs
+ 222 evals per mu (pooled 1110): SA (T0=0.1)                mu-optima found 4.42/5, all 5 in 48% of runs
+ 222 evals per mu (pooled 1110): SA (T0=0.3)                mu-optima found 4.42/5, all 5 in 55% of runs
+ 222 evals per mu (pooled 1110): random-restart 1-swap LS   mu-optima found 4.58/5, all 5 in 63% of runs
+compare (s10b): QAOA ideal / noisy forte-1 at 100,200,500,1000 raw shots per circuit (~22,44,111,222 feasible): all-5 = 8/2, 32/12, 78/66, 98/94 %; null|k 0/2/25/62 %; uniform 0/0/0/10 %

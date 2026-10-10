@@ -1,0 +1,8 @@
+kNN k= 3 lam=0.2 mu=0.00: AUC=0.891 [0.851,0.924] (per-repeat 0.867) sens=0.745 mean cost=$241.83 distinct panels=8 top=[(['cp', 'chol', 'slope', 'ca', 'thal'], 10), (['cp', 'chol', 'fbs', 'slope', 'thal'], 4)]
+kNN k= 3 lam=0.2 mu=0.05: AUC=0.871 [0.830,0.909] (per-repeat 0.834) sens=0.766 mean cost=$146.14 distinct panels=8 top=[(['cp', 'chol', 'fbs', 'thalach', 'thal'], 8), (['sex', 'cp', 'chol', 'slope', 'ca'], 6)]
+kNN k= 3 lam=0.2 mu=0.10: AUC=0.844 [0.798,0.884] (per-repeat 0.819) sens=0.701 mean cost=$75.61 distinct panels=12 top=[(['sex', 'cp', 'chol', 'fbs', 'restecg'], 5), (['sex', 'cp', 'chol', 'fbs', 'oldpeak'], 4)]
+kNN k=10 lam=0.1 mu=0.00: AUC=0.889 [0.849,0.923] (per-repeat 0.874) sens=0.759 mean cost=$289.94 distinct panels=13 top=[(['cp', 'chol', 'oldpeak', 'ca', 'thal'], 6), (['cp', 'exang', 'slope', 'ca', 'thal'], 3)]
+kNN k=10 lam=0.1 mu=0.02: AUC=0.887 [0.847,0.922] (per-repeat 0.868) sens=0.745 mean cost=$248.93 distinct panels=17 top=[(['sex', 'cp', 'thalach', 'ca', 'thal'], 3), (['cp', 'chol', 'oldpeak', 'ca', 'thal'], 3)]
+kNN k=10 lam=0.1 mu=0.10: AUC=0.868 [0.826,0.905] (per-repeat 0.846) sens=0.723 mean cost=$100.61 distinct panels=11 top=[(['age', 'sex', 'cp', 'exang', 'oldpeak'], 6), (['sex', 'cp', 'trestbps', 'thalach', 'thal'], 5)]
+kNN k=10 lam=0.1 mu=0.20: AUC=0.827 [0.776,0.870] (per-repeat 0.818) sens=0.715 mean cost=$18.95 distinct panels=8 top=[(['age', 'sex', 'cp', 'fbs', 'restecg'], 6), (['age', 'sex', 'cp', 'trestbps', 'fbs'], 6)]
+kNN k=10 lam=0.2 mu=0.00: AUC=0.891 [0.852,0.924] (per-repeat 0.869) sens=0.752 mean cost=$206.20 distinct panels=9 top=[(['sex', 'cp', 'trestbps', 'slope', 'ca'], 10), (['sex', 'cp', 'restecg', 'slope', 'ca'], 4)]

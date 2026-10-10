@@ -1,0 +1,58 @@
+{
+ "gamma": [
+  1.7181724313553923
+ ],
+ "beta": [
+  0.16760994251739314
+ ],
+ "pareto_size": 13,
+ "auc_front_size": 8,
+ "rows": {
+  "QAOA_ideal": {
+   "mu_optima_found_mean": 4.98,
+   "pareto_found_mean": 12.685,
+   "auc_front_found_mean": 7.185,
+   "auc_hv_ratio_mean": 0.99953360760121,
+   "auc_hv_ratio_p5": 0.998179154182396,
+   "all5_mu_optima_rate": 0.985
+  },
+  "product_null_k": {
+   "mu_optima_found_mean": 4.57,
+   "pareto_found_mean": 11.035,
+   "auc_front_found_mean": 6.045,
+   "auc_hv_ratio_mean": 0.9957268889732538,
+   "auc_hv_ratio_p5": 0.9835845342918912,
+   "all5_mu_optima_rate": 0.625
+  },
+  "uniform_k": {
+   "mu_optima_found_mean": 3.07,
+   "pareto_found_mean": 7.56,
+   "auc_front_found_mean": 4.76,
+   "auc_hv_ratio_mean": 0.99319272967653,
+   "auc_hv_ratio_p5": 0.9817896174961565,
+   "all5_mu_optima_rate": 0.095
+  }
+ },
+ "noisy": {
+  "P_HW5": [
+   0.223,
+   0.228,
+   0.225,
+   0.2,
+   0.208
+  ],
+  "front_quality": [
+   5,
+   13,
+   8,
+   1.0
+  ],
+  "rzz_per_circuit": [
+   234,
+   237,
+   237,
+   237,
+   236
+  ]
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "n4_linear": {
+  "gates_per_pqk_circuit": 36.666666666666664,
+  "gates_per_fid_circuit": 60,
+  "max_patients_pqk_one_job": 1363,
+  "max_fid_circuits_one_job": 2500,
+  "fid_test_patients_one_job_at_60_SV": 41
+ },
+ "n4_full": {
+  "gates_per_pqk_circuit": 42.666666666666664,
+  "gates_per_fid_circuit": 73,
+  "max_patients_pqk_one_job": 1171,
+  "max_fid_circuits_one_job": 2054,
+  "fid_test_patients_one_job_at_60_SV": 34
+ },
+ "n8_linear": {
+  "gates_per_pqk_circuit": 75.33333333333333,
+  "gates_per_fid_circuit": 125,
+  "max_patients_pqk_one_job": 663,
+  "max_fid_circuits_one_job": 1200,
+  "fid_test_patients_one_job_at_60_SV": 20
+ },
+ "n8_full": {
+  "gates_per_pqk_circuit": 117.33333333333333,
+  "gates_per_fid_circuit": 207,
+  "max_patients_pqk_one_job": 426,
+  "max_fid_circuits_one_job": 724,
+  "fid_test_patients_one_job_at_60_SV": 12
+ },
+ "n12_linear": {
+  "gates_per_pqk_circuit": 114.0,
+  "gates_per_fid_circuit": 190,
+  "max_patients_pqk_one_job": 438,
+  "max_fid_circuits_one_job": 789,
+  "fid_test_patients_one_job_at_60_SV": 13
+ },
+ "n12_full": {
+  "gates_per_pqk_circuit": 224.0,
+  "gates_per_fid_circuit": 409,
+  "max_patients_pqk_one_job": 223,
+  "max_fid_circuits_one_job": 366,
+  "fid_test_patients_one_job_at_60_SV": 6
+ },
+ "time_proxy_aer_native_1thread_s": {
+  "PQK test fold n8 linear (114 pts x 3 bases, 1000 shots)": 280.71378564834595,
+  "PQK test fold n8 linear (114 x 3, 300 shots)": 84.21413569450378,
+  "PQK all 569 pts n8 linear (1707 circuits, 300 shots)": 420.33195798397065,
+  "PQK 20-patient demo n8 linear (60 circuits, 1000 shots)": 49.248032569885254,
+  "FQK block n8 linear (16 test x 60 SV = 960 circuits, 300 shots)": 236.39055633544922,
+  "PQK test fold n12 linear (342 circuits, 1000 shots)": 2700.0122051239014
+ },
+ "per_shot_s": {
+  "n4_linear": 0.00034815144538879393,
+  "n8_linear": 0.0008208005428314209,
+  "n8_full": 0.0016260013580322267,
+  "n12_linear": 0.007894772529602051
+ }
+}

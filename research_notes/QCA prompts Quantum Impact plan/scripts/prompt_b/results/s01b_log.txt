@@ -1,0 +1,24 @@
+(i) penalty scale: spread of the 1287 feasible energies and the opt-to-2nd gap, in std units of the full cost Hamiltonian
+  lam=0.1 P*                           P=  -0.0101  feasible spread=5.8338 std  opt-to-2nd gap=1.52e-01 std
+  lam=0.1 0.3xP_safe                   P=   0.1185  feasible spread=0.5246 std  opt-to-2nd gap=1.37e-02 std
+  lam=0.1 P_safe                       P=   0.3949  feasible spread=0.1655 std  opt-to-2nd gap=4.31e-03 std
+  lam=0.1 qiskit auto (lam=0.2 value)  P=   4.3493  feasible spread=0.0153 std  opt-to-2nd gap=3.99e-04 std
+  lam=0.1 1e5 fallback                 P=100000.0000  feasible spread=0.0000 std  opt-to-2nd gap=1.74e-08 std
+  lam=0.2 P*                           P=   0.0346  feasible spread=1.1699 std  opt-to-2nd gap=1.90e-02 std
+  lam=0.2 0.3xP_safe                   P=   0.1932  feasible spread=0.3535 std  opt-to-2nd gap=5.73e-03 std
+  lam=0.2 P_safe                       P=   0.6440  feasible spread=0.1176 std  opt-to-2nd gap=1.91e-03 std
+  lam=0.2 qiskit auto (lam=0.2 value)  P=   4.3493  feasible spread=0.0181 std  opt-to-2nd gap=2.94e-04 std
+  lam=0.2 1e5 fallback                 P=100000.0000  feasible spread=0.0000 std  opt-to-2nd gap=1.29e-08 std
+  lam=0.5 P*                           P=   0.1031  feasible spread=0.8744 std  opt-to-2nd gap=2.51e-02 std
+  lam=0.5 0.3xP_safe                   P=   0.4361  feasible spread=0.3404 std  opt-to-2nd gap=9.78e-03 std
+  lam=0.5 P_safe                       P=   1.4535  feasible spread=0.1176 std  opt-to-2nd gap=3.38e-03 std
+  lam=0.5 qiskit auto (lam=0.2 value)  P=   4.3493  feasible spread=0.0410 std  opt-to-2nd gap=1.18e-03 std
+  lam=0.5 1e5 fallback                 P=100000.0000  feasible spread=0.0000 std  opt-to-2nd gap=5.24e-08 std
+
+(ii) native single-thread timings
+  relevance kNN k=10, 20 seeds: 0.43s
+  enumerate 8192 + sort 1287: 0.003s
+  numpy XY-complete p=1: 0.0020s
+  transpile: 0.09s (234 rzz)
+  Statevector 13q: 0.06s
+  Aer ideal 5 circuits x 1000 shots: 0.24s

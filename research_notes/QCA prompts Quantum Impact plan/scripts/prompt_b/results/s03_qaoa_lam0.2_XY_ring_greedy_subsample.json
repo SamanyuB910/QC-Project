@@ -1,0 +1,262 @@
+{
+ "lambda": 0.2,
+ "methods": {
+  "XY_ring_greedy": {
+   "E_p1": {
+    "gammas": [
+     0.8244164714490572
+    ],
+    "betas": [
+     -7.131893232337372e-09
+    ],
+    "train_loss": -2.381120185333464,
+    "full": {
+     "P_opt": 0.9999999999999999,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 0.9999999999999999,
+     "P_top1pct": 0.9999999999999999,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product": {
+     "P_opt": 0.9999999999870003,
+     "P_feas": 0.9999999999870003,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 0.9999999999870003,
+     "P_top1pct": 0.9999999999870003,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product_conditioned_k": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "shots": 1000,
+    "hits_opt": 1000,
+    "wilson95": [
+     0.9961731014136095,
+     1.0
+    ],
+    "test_mean": {
+     "P_opt": 0.5833333333333333,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9923981016135018,
+     "best_of_1000_normAR": 0.9923981016135018
+    },
+    "test_min_Popt": 0.0
+   },
+   "E_p2": {
+    "gammas": [
+     1.6719909319480721,
+     4.485949929899705
+    ],
+    "betas": [
+     2.216073483329208e-07,
+     4.29189635866571e-06
+    ],
+    "train_loss": -2.3811201852334856,
+    "full": {
+     "P_opt": 0.9999999998880271,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9999999999801196,
+     "P_top5": 0.9999999998880271,
+     "P_top1pct": 0.9999999999053797,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product": {
+     "P_opt": 0.9999999997720551,
+     "P_feas": 0.9999999997720551,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 0.9999999997720551,
+     "P_top1pct": 0.9999999997720551,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product_conditioned_k": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "shots": 1000,
+    "hits_opt": 1000,
+    "wilson95": [
+     0.9961731014136095,
+     1.0
+    ],
+    "test_mean": {
+     "P_opt": 0.5833333332723014,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9923981015960255,
+     "best_of_1000_normAR": 0.9923981016374679
+    },
+    "test_min_Popt": 1.7893959298747618e-35
+   },
+   "Popt_p1": {
+    "gammas": [
+     0.7624999999999991
+    ],
+    "betas": [
+     3.885780586188048e-16
+    ],
+    "train_loss": -0.5,
+    "full": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product": {
+     "P_opt": 0.9999999999870003,
+     "P_feas": 0.9999999999870003,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 0.9999999999870003,
+     "P_top1pct": 0.9999999999870003,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product_conditioned_k": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "shots": 1000,
+    "hits_opt": 1000,
+    "wilson95": [
+     0.9961731014136095,
+     1.0
+    ],
+    "test_mean": {
+     "P_opt": 0.5833333333333334,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9923981016135018,
+     "best_of_1000_normAR": 0.9923981016135018
+    },
+    "test_min_Popt": 0.0
+   },
+   "Popt_p2": {
+    "gammas": [
+     1.7620892409976756,
+     5.478196070996514
+    ],
+    "betas": [
+     -6.515700610345373e-07,
+     -1.2505291097707286e-05
+    ],
+    "train_loss": -0.4999999995071882,
+    "full": {
+     "P_opt": 0.9999999990334569,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.999999999829765,
+     "P_top5": 0.9999999990334569,
+     "P_top1pct": 0.9999999991756402,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product": {
+     "P_opt": 0.9999999980629174,
+     "P_feas": 0.9999999980629174,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 0.9999999980629174,
+     "P_top1pct": 0.9999999980629174,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product_conditioned_k": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "shots": 1000,
+    "hits_opt": 1000,
+    "wilson95": [
+     0.9961731014136095,
+     1.0
+    ],
+    "test_mean": {
+     "P_opt": 0.5833333328114503,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9923981014652591,
+     "best_of_1000_normAR": 0.992398101816569
+    },
+    "test_min_Popt": 1.1004604662097738e-32
+   }
+  }
+ },
+ "full_opt": [
+  "cp",
+  "chol",
+  "slope",
+  "ca",
+  "thal"
+ ]
+}

@@ -1,0 +1,37 @@
+(A) fixed panels, nested CV (outer 5x5, inner 5-fold grid)
+  QUBO_opt_lam0.1                            LR  cost=$299.37 AUC=0.901 [0.864,0.934] acc=0.815 [0.771,0.855] sens=0.693 [0.614,0.768] spec=0.919 | per-repeat mean AUC=0.894 acc=0.820  (0s)
+  QUBO_opt_lam0.1                            SVM cost=$299.37 AUC=0.901 [0.863,0.934] acc=0.828 [0.785,0.869] sens=0.708 [0.630,0.781] spec=0.931 | per-repeat mean AUC=0.882 acc=0.779  (0s)
+  QUBO_opt_lam0.1                            GB  cost=$299.37 AUC=0.900 [0.862,0.934] acc=0.822 [0.774,0.865] sens=0.788 [0.719,0.856] spec=0.850 | per-repeat mean AUC=0.899 acc=0.822  (0s)
+  QUBO_opt_lam0.2                            LR  cost=$299.37 AUC=0.901 [0.864,0.934] acc=0.815 [0.771,0.855] sens=0.693 [0.614,0.768] spec=0.919 | per-repeat mean AUC=0.894 acc=0.820  (0s)
+  QUBO_opt_lam0.2                            SVM cost=$299.37 AUC=0.901 [0.863,0.934] acc=0.828 [0.785,0.869] sens=0.708 [0.630,0.781] spec=0.931 | per-repeat mean AUC=0.882 acc=0.779  (0s)
+  QUBO_opt_lam0.2                            GB  cost=$299.37 AUC=0.900 [0.862,0.934] acc=0.822 [0.774,0.865] sens=0.788 [0.719,0.856] spec=0.850 | per-repeat mean AUC=0.899 acc=0.822  (0s)
+  QUBO_opt_lam0.5                            LR  cost=$ 99.67 AUC=0.836 [0.789,0.878] acc=0.758 [0.710,0.805] sens=0.781 [0.712,0.843] spec=0.738 | per-repeat mean AUC=0.835 acc=0.755  (0s)
+  QUBO_opt_lam0.5                            SVM cost=$ 99.67 AUC=0.835 [0.786,0.878] acc=0.751 [0.700,0.798] sens=0.693 [0.615,0.767] spec=0.800 | per-repeat mean AUC=0.823 acc=0.738  (0s)
+  QUBO_opt_lam0.5                            GB  cost=$ 99.67 AUC=0.839 [0.792,0.881] acc=0.761 [0.714,0.808] sens=0.745 [0.672,0.814] spec=0.775 | per-repeat mean AUC=0.838 acc=0.751  (0s)
+  QUBO_opt_lam0 (=SelectKBest MI)            LR  cost=$293.10 AUC=0.895 [0.858,0.929] acc=0.835 [0.791,0.879] sens=0.781 [0.709,0.848] spec=0.881 | per-repeat mean AUC=0.893 acc=0.830  (0s)
+  QUBO_opt_lam0 (=SelectKBest MI)            SVM cost=$293.10 AUC=0.896 [0.858,0.929] acc=0.822 [0.778,0.862] sens=0.745 [0.669,0.814] spec=0.887 | per-repeat mean AUC=0.891 acc=0.822  (0s)
+  QUBO_opt_lam0 (=SelectKBest MI)            GB  cost=$293.10 AUC=0.900 [0.863,0.934] acc=0.832 [0.788,0.872] sens=0.788 [0.719,0.854] spec=0.869 | per-repeat mean AUC=0.899 acc=0.835  (0s)
+  greedy_mRMR_lam0.5                         LR  cost=$129.77 AUC=0.852 [0.808,0.891] acc=0.764 [0.717,0.808] sens=0.701 [0.622,0.774] spec=0.819 | per-repeat mean AUC=0.840 acc=0.764  (0s)
+  greedy_mRMR_lam0.5                         SVM cost=$129.77 AUC=0.812 [0.762,0.856] acc=0.653 [0.603,0.704] sens=0.321 [0.246,0.400] spec=0.938 | per-repeat mean AUC=0.804 acc=0.634  (0s)
+  greedy_mRMR_lam0.5                         GB  cost=$129.77 AUC=0.849 [0.805,0.888] acc=0.744 [0.694,0.791] sens=0.730 [0.655,0.800] spec=0.756 | per-repeat mean AUC=0.850 acc=0.754  (0s)
+  L1_logistic_5                              LR  cost=$293.10 AUC=0.898 [0.860,0.931] acc=0.828 [0.785,0.869] sens=0.766 [0.694,0.833] spec=0.881 | per-repeat mean AUC=0.896 acc=0.834  (0s)
+  L1_logistic_5                              SVM cost=$293.10 AUC=0.898 [0.860,0.932] acc=0.838 [0.798,0.879] sens=0.745 [0.669,0.813] spec=0.919 | per-repeat mean AUC=0.894 acc=0.834  (0s)
+  L1_logistic_5                              GB  cost=$293.10 AUC=0.894 [0.855,0.929] acc=0.828 [0.785,0.872] sens=0.759 [0.689,0.828] spec=0.887 | per-repeat mean AUC=0.893 acc=0.829  (0s)
+  routine_cheap (age,sex,trestbps,chol,fbs)  LR  cost=$ 13.37 AUC=0.702 [0.643,0.759] acc=0.650 [0.593,0.700] sens=0.613 [0.525,0.695] spec=0.681 | per-repeat mean AUC=0.695 acc=0.642  (0s)
+  routine_cheap (age,sex,trestbps,chol,fbs)  SVM cost=$ 13.37 AUC=0.704 [0.643,0.758] acc=0.643 [0.589,0.694] sens=0.569 [0.482,0.653] spec=0.706 | per-repeat mean AUC=0.697 acc=0.650  (0s)
+  routine_cheap (age,sex,trestbps,chol,fbs)  GB  cost=$ 13.37 AUC=0.690 [0.631,0.749] acc=0.653 [0.596,0.707] sens=0.569 [0.481,0.654] spec=0.725 | per-repeat mean AUC=0.685 acc=0.647  (0s)
+  no_imaging_best? (age,sex,cp,thalach,exang) LR  cost=$193.20 AUC=0.851 [0.807,0.889] acc=0.774 [0.727,0.818] sens=0.730 [0.655,0.800] spec=0.812 | per-repeat mean AUC=0.844 acc=0.767  (0s)
+  no_imaging_best? (age,sex,cp,thalach,exang) SVM cost=$193.20 AUC=0.837 [0.792,0.877] acc=0.731 [0.680,0.778] sens=0.635 [0.554,0.710] spec=0.812 | per-repeat mean AUC=0.819 acc=0.702  (0s)
+  no_imaging_best? (age,sex,cp,thalach,exang) GB  cost=$193.20 AUC=0.848 [0.803,0.887] acc=0.747 [0.697,0.791] sens=0.715 [0.638,0.788] spec=0.775 | per-repeat mean AUC=0.843 acc=0.753  (0s)
+  all_13                                     LR  cost=$323.97 AUC=0.902 [0.865,0.934] acc=0.855 [0.811,0.896] sens=0.803 [0.732,0.866] spec=0.900 | per-repeat mean AUC=0.897 acc=0.840  (0s)
+  all_13                                     SVM cost=$323.97 AUC=0.906 [0.871,0.936] acc=0.852 [0.811,0.889] sens=0.781 [0.709,0.847] spec=0.912 | per-repeat mean AUC=0.900 acc=0.830  (0s)
+  all_13                                     GB  cost=$323.97 AUC=0.901 [0.865,0.933] acc=0.838 [0.798,0.879] sens=0.781 [0.709,0.848] spec=0.887 | per-repeat mean AUC=0.899 acc=0.831  (0s)
+
+(B) honest pipelines: selection inside each outer training fold; LR downstream (inner C grid)
+  QUBO_exact_lam0.1    AUC=0.887 [0.849,0.923] acc=0.815 [0.771,0.855] sens=0.730 (per-repeat mean AUC 0.872) | distinct panels across 25 folds=5; most common [(['cp', 'chol', 'slope', 'ca', 'thal'], 17), (['cp', 'chol', 'exang', 'ca', 'thal'], 3)]
+  QUBO_exact_lam0.2    AUC=0.891 [0.851,0.924] acc=0.815 [0.771,0.855] sens=0.745 (per-repeat mean AUC 0.867) | distinct panels across 25 folds=8; most common [(['cp', 'chol', 'slope', 'ca', 'thal'], 10), (['cp', 'chol', 'fbs', 'slope', 'thal'], 4)]
+  QUBO_exact_lam0.5    AUC=0.844 [0.798,0.885] acc=0.751 [0.700,0.801] sens=0.737 (per-repeat mean AUC 0.825) | distinct panels across 25 folds=6; most common [(['sex', 'cp', 'chol', 'fbs', 'slope'], 14), (['sex', 'cp', 'fbs', 'restecg', 'slope'], 7)]
+  greedy_mRMR_lam0.5   AUC=0.872 [0.828,0.909] acc=0.795 [0.747,0.838] sens=0.752 (per-repeat mean AUC 0.832) | distinct panels across 25 folds=11; most common [(['cp', 'chol', 'fbs', 'restecg', 'thal'], 8), (['sex', 'cp', 'fbs', 'restecg', 'slope'], 3)]
+  SelectKBest_MI       AUC=0.895 [0.857,0.928] acc=0.825 [0.781,0.865] sens=0.766 (per-repeat mean AUC 0.887) | distinct panels across 25 folds=7; most common [(['cp', 'exang', 'oldpeak', 'ca', 'thal'], 9), (['cp', 'thalach', 'exang', 'ca', 'thal'], 5)]
+  L1_logistic_5        AUC=0.890 [0.852,0.924] acc=0.832 [0.788,0.872] sens=0.788 (per-repeat mean AUC 0.884) | distinct panels across 25 folds=4; most common [(['thalach', 'exang', 'oldpeak', 'ca', 'thal'], 11), (['cp', 'thalach', 'exang', 'ca', 'thal'], 6)]
+  all_13               AUC=0.902 [0.865,0.934] acc=0.855 [0.811,0.896] sens=0.803 (per-repeat mean AUC 0.897) | distinct panels across 25 folds=1; most common [(['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal'], 25)]

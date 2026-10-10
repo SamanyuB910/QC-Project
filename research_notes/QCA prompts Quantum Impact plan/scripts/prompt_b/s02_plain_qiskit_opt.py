@@ -17,7 +17,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 d = json.load(open(os.path.join(HERE, "results", "s01_data_qubo.json")))
 r = np.array(d["r"]); C = np.array(d["C"]); F = d["features"]; n = len(F); k = 5
 out = {}
-for lam in [0.2, 0.1, 0.5]:
+for lam in [0.2]:
     qp = QuadraticProgram("heart_k5")
     for f in F:
         qp.binary_var(f)
@@ -30,7 +30,7 @@ for lam in [0.2, 0.1, 0.5]:
     lep = LinearEqualityToPenalty()
     _ = lep.convert(qp)
     pen = lep.penalty
-    print(f"lam={lam}: auto penalty chosen by LinearEqualityToPenalty = {pen}")
+    print(f"lam={lam}: auto penalty chosen by LinearEqualityToPenalty = {pen}", flush=True)
     # also: what if the constraint had a fractional coefficient (e.g. a normalised constraint sum x_i/5 == 1)?
     qp2 = QuadraticProgram("frac")
     for f in F:
@@ -39,9 +39,11 @@ for lam in [0.2, 0.1, 0.5]:
     qp2.linear_constraint(linear={f: 0.2 for f in F}, sense="==", rhs=1.0, name="k_frac")
     lep2 = LinearEqualityToPenalty(); _ = lep2.convert(qp2)
     print(f"   same constraint written as sum(0.2 x_i) == 1  -> auto penalty = {lep2.penalty}")
-    exact = MinimumEigenOptimizer(NumPyMinimumEigensolver()).solve(qp)
-    xopt = tuple(int(v) for v in exact.x)
-    print(f"   exact: {[F[i] for i in range(n) if xopt[i]]} fval={exact.fval:.4f}")
+    # exact optimum by enumerating the 1287 feasible subsets (NumPyMinimumEigensolver builds an 8192x8192 matrix: slow, 1+ GB)
+    from itertools import combinations
+    best = min(combinations(range(n), k), key=lambda S: -sum(r[i] for i in S) + lam * sum(C[i, j] for a, i in enumerate(S) for j in S[a + 1:]))
+    xopt = tuple(1 if i in best else 0 for i in range(n))
+    print(f"   exact (enumeration): {[F[i] for i in range(n) if xopt[i]]}", flush=True)
     res = {"auto_penalty": pen, "frac_penalty": lep2.penalty, "exact": [F[i] for i in range(n) if xopt[i]], "runs": []}
     for reps in [1, 2, 3]:
         for seed in range(5):
@@ -55,8 +57,9 @@ for lam in [0.2, 0.1, 0.5]:
             hit = tuple(int(v) for v in rr.x) == xopt
             nfev = qaoa.optimizer  # placeholder
             print(f"   QAOA reps={reps} seed={seed}: returned={[F[i] for i in range(n) if rr.x[i]]} hit_opt={hit} "
-                  f"P(opt in samples)={p_opt:.4f} P(feasible)={p_feas:.3f} time={dt:.1f}s")
+                  f"P(opt in samples)={p_opt:.4f} P(feasible)={p_feas:.3f} time={dt:.1f}s", flush=True)
             res["runs"].append({"reps": reps, "seed": seed, "hit": hit, "p_opt": p_opt, "p_feas": p_feas, "time": dt,
                                 "returned": [F[i] for i in range(n) if rr.x[i]]})
+        json.dump(out | {str(lam): res}, open(os.path.join(HERE, "results", "s02_plain_qiskit_opt.json"), "w"), indent=1)
     out[str(lam)] = res
 json.dump(out, open(os.path.join(HERE, "results", "s02_plain_qiskit_opt.json"), "w"), indent=1)

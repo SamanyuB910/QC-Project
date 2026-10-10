@@ -61,13 +61,14 @@ for regime in ("A_needle_M1", "B_real_rate"):
         M = len(mk); kopt = G.k_opt(N, M)
         K = min(max(kopt + 3, 4), 2 * kopt + 2)
         O = G.list_oracle(n, mk)
-        t0 = time.time(); rec = dict(n=n, N=N, M=M, mag_thr=thr, k_opt=kopt, ks=[], p_ideal=[], p_noisy=[], p_analytic=[], F=[], G2=[], G1=[], p_classical_k1=[])
+        t0 = time.time(); rec = dict(method=('density_matrix' if n <= (8 if regime=='A_needle_M1' else 7) else 'analytic_global_depolarizing'), n=n, N=N, M=M, mag_thr=thr, k_opt=kopt, ks=[], p_ideal=[], p_noisy=[], p_analytic=[], F=[], G2=[], G1=[], p_classical_k1=[])
         for k in range(0, K + 1):
             qc = G.grover_circuit(n, O, k, measure=False)
             tq = G.to_ionq(qc)
             g2 = G.twoq(tq); g1 = sum(1 for i in tq.data if i.operation.name == "rx")
-            pn = probs_marked(tq, n, mk, sim_dm)
             pa, F = analytic(N, M, k, g1, g2)
+            dm_max = 8 if regime == "A_needle_M1" else 7
+            pn = probs_marked(tq, n, mk, sim_dm) if n <= dm_max else pa   # DM exact up to dm_max, validated analytic beyond
             rec["ks"].append(k); rec["p_ideal"].append(G.p_success_theory(N, M, k)); rec["p_noisy"].append(pn)
             rec["p_analytic"].append(pa); rec["F"].append(F); rec["G2"].append(g2); rec["G1"].append(g1)
             rec["p_classical_k1"].append(p_classical(N, M, k + 1))
@@ -83,7 +84,7 @@ for regime in ("A_needle_M1", "B_real_rate"):
         print(f"[{regime}] n={n:2d} N={N:5d} M={M:2d} k_opt={kopt:2d} 2Q@kopt={rec['G2'][kopt]:6d} "
               f"P_ideal={rec['p_ideal'][kopt]:.3f} P_noisy={pn[kopt]:.3f} (analytic {rec['p_analytic'][kopt]:.3f}) "
               f"M/N={M/N:.4f} P_cl(k+1 checks)={rec['p_classical_same_budget']:.3f} | "
-              f"noise-aware k={kb}: E[calls+checks]={cost[kb]:.1f} vs classical {(N+1)/(M+1):.1f} [{rec['sec']:.0f}s]", flush=True)
+              f"[{rec['method'][:3]}] noise-aware k={kb}: E[calls+checks]={cost[kb]:.1f} vs classical {(N+1)/(M+1):.1f} [{rec['sec']:.0f}s]", flush=True)
 
 json.dump(out, open(os.path.join(G.HERE, "results_c04_noise.json"), "w"), indent=1)
 

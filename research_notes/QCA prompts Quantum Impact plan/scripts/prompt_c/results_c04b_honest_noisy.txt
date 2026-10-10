@@ -1,0 +1,3 @@
+honest oracle n=3 M=1 k=0: 2Q=   0 P_noisy=0.117+-0.007 (analytic 0.125, ideal 0.125) | classical with k+1=1 checks 0.125 | 0s
+honest oracle n=3 M=1 k=1: 2Q= 226 P_noisy=0.417+-0.011 (analytic 0.354, ideal 0.781) | classical with k+1=2 checks 0.250 | 311s
+honest oracle n=3 M=1 k=2: 2Q= 452 P_noisy=0.318+-0.010 (analytic 0.225, ideal 0.945) | classical with k+1=3 checks 0.375 | 501s

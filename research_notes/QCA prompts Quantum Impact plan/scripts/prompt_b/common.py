@@ -112,6 +112,8 @@ def wilson(k, n, z=1.96):
 
 def save_json(name, obj):
     def conv(o):
+        if isinstance(o, (np.bool_,)):
+            return bool(o)
         if isinstance(o, (np.integer,)):
             return int(o)
         if isinstance(o, (np.floating,)):

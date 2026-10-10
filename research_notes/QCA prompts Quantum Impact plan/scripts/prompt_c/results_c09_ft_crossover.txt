@@ -1,0 +1,35 @@
+A) Cheap check (depth/mag compare on data in memory). Quantum/classical time ratio (M=1):
+  N=           64 unary: T_quantum(170us Toffoli)= 1.880e-01 s | classical scan  9.75e-08 s | indexed  2.10e-08 s | ratio q/scan= 1.93e+06
+  N=           64 qroam: T_quantum(170us Toffoli)= 1.538e-01 s | classical scan  9.75e-08 s | indexed  2.10e-08 s | ratio q/scan= 1.58e+06
+  N=        1,504 unary: T_quantum(170us Toffoli)= 1.588e+01 s | classical scan  2.26e-06 s | indexed  3.47e-08 s | ratio q/scan= 7.03e+06
+  N=        1,504 qroam: T_quantum(170us Toffoli)= 2.710e+00 s | classical scan  2.26e-06 s | indexed  3.47e-08 s | ratio q/scan= 1.20e+06
+  N=      155,899 unary: T_quantum(170us Toffoli)= 1.644e+04 s | classical scan  2.34e-04 s | indexed  5.48e-08 s | ratio q/scan= 7.03e+07
+  N=      155,899 qroam: T_quantum(170us Toffoli)= 2.536e+02 s | classical scan  2.34e-04 s | indexed  5.48e-08 s | ratio q/scan= 1.08e+06
+  N=   10,000,000 unary: T_quantum(170us Toffoli)= 8.444e+06 s | classical scan  1.50e-02 s | indexed  7.28e-08 s | ratio q/scan= 5.63e+08
+  N=   10,000,000 qroam: T_quantum(170us Toffoli)= 1.606e+04 s | classical scan  1.50e-02 s | indexed  7.28e-08 s | ratio q/scan= 1.07e+06
+  N=1,000,000,000 unary: T_quantum(170us Toffoli)= 8.444e+09 s | classical scan  1.50e+00 s | indexed  9.27e-08 s | ratio q/scan= 5.63e+09
+  N=1,000,000,000 qroam: T_quantum(170us Toffoli)= 1.603e+06 s | classical scan  1.50e+00 s | indexed  9.27e-08 s | ratio q/scan= 1.07e+06
+
+B) Expensive black-box check: crossover N* where (pi/4)sqrt(N)(W*t_toff + lookup) = (N/2) W t_op  (M=1, 1 classical core)
+  1 s of CPU (3e9 ops)                   | SC surface code 170us (Babbush'21): N* =  6.55e+11 events; classical time at N* =  1.03e+04 core-years
+  1 s of CPU (3e9 ops)                   | ion trap 17ms (Babbush'21 10kHz)  : N* =  6.55e+15 events; classical time at N* =  1.03e+08 core-years
+  1 s of CPU (3e9 ops)                   | 100x faster distillation 1.7us    : N* =  6.55e+07 events; classical time at N* =  1.03e+00 core-years
+  1 core-hour (1.1e13 ops)               | SC surface code 170us (Babbush'21): N* =  6.55e+11 events; classical time at N* =  3.70e+07 core-years
+  1 core-hour (1.1e13 ops)               | ion trap 17ms (Babbush'21 10kHz)  : N* =  6.55e+15 events; classical time at N* =  3.70e+11 core-years
+  1 core-hour (1.1e13 ops)               | 100x faster distillation 1.7us    : N* =  6.55e+07 events; classical time at N* =  3.70e+03 core-years
+  CyberShake-site 55k core-h (6e17 ops)  | SC surface code 170us (Babbush'21): N* =  6.55e+11 events; classical time at N* =  2.04e+12 core-years
+  CyberShake-site 55k core-h (6e17 ops)  | ion trap 17ms (Babbush'21 10kHz)  : N* =  6.55e+15 events; classical time at N* =  2.04e+16 core-years
+  CyberShake-site 55k core-h (6e17 ops)  | 100x faster distillation 1.7us    : N* =  6.55e+07 events; classical time at N* =  2.04e+08 core-years
+
+  (N* is independent of W when the check dominates; parallel classical with P cores multiplies N* by ~P^2.)
+  Reference sizes: 2024 USGS ComCat all magnitudes = 155,899 events (FDSN count, fetched 2026-10-10); M>=5: 1,507.
+
+C) Honest-oracle logical cost at catalog sizes (b=9 bits/event, M = real shallow&M>=6 rate 4.8% and M=1):
+  N=  1,504 M=    1: k=  30 iterations x       3066 Toffoli/iter (unary) =  9.198e+04 Toffolis = 1.564e+01 s at 170us | classical scan ~   752.5 checks x 3 ns =  2.3e-06 s
+  N=  1,504 M=    1: k=  30 iterations x        523 Toffoli/iter (qroam) =  1.570e+04 Toffolis = 2.669e+00 s at 170us | classical scan ~   752.5 checks x 3 ns =  2.3e-06 s
+  N=  1,504 M=   72: k=   3 iterations x       3066 Toffoli/iter (unary) =  9.198e+03 Toffolis = 1.564e+00 s at 170us | classical scan ~    20.6 checks x 3 ns =  6.2e-08 s
+  N=  1,504 M=   72: k=   3 iterations x        523 Toffoli/iter (qroam) =  1.570e+03 Toffolis = 2.669e-01 s at 170us | classical scan ~    20.6 checks x 3 ns =  6.2e-08 s
+  N=155,899 M=    1: k= 310 iterations x     311870 Toffoli/iter (unary) =  9.668e+07 Toffolis = 1.644e+04 s at 170us | classical scan ~ 77950.0 checks x 3 ns =  2.3e-04 s
+  N=155,899 M=    1: k= 310 iterations x       4810 Toffoli/iter (qroam) =  1.491e+06 Toffolis = 2.535e+02 s at 170us | classical scan ~ 77950.0 checks x 3 ns =  2.3e-04 s
+  N=155,899 M= 7468: k=   3 iterations x     311870 Toffoli/iter (unary) =  9.356e+05 Toffolis = 1.591e+02 s at 170us | classical scan ~    20.9 checks x 3 ns =  6.3e-08 s
+  N=155,899 M= 7468: k=   3 iterations x       4810 Toffoli/iter (qroam) =  1.443e+04 Toffolis = 2.453e+00 s at 170us | classical scan ~    20.9 checks x 3 ns =  6.3e-08 s

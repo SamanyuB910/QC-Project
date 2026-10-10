@@ -1,0 +1,130 @@
+{
+ "cheap": [
+  {
+   "N": 64,
+   "lookup": "unary",
+   "Tq_s": 0.1879929043908132,
+   "T_scan_s": 9.749999999999999e-08,
+   "T_index_s": 2.1e-08
+  },
+  {
+   "N": 64,
+   "lookup": "qroam",
+   "Tq_s": 0.15381237631975628,
+   "T_scan_s": 9.749999999999999e-08,
+   "T_index_s": 2.1e-08
+  },
+  {
+   "N": 1504,
+   "lookup": "unary",
+   "Tq_s": 15.875772666536848,
+   "T_scan_s": 2.2575e-06,
+   "T_index_s": 3.4663766555032914e-08
+  },
+  {
+   "N": 1504,
+   "lookup": "qroam",
+   "Tq_s": 2.7100516956302383,
+   "T_scan_s": 2.2575e-06,
+   "T_index_s": 3.4663766555032914e-08
+  },
+  {
+   "N": 155899,
+   "lookup": "unary",
+   "Tq_s": 16441.221024892853,
+   "T_scan_s": 0.00023385,
+   "T_index_s": 5.4750756445396976e-08
+  },
+  {
+   "N": 155899,
+   "lookup": "qroam",
+   "Tq_s": 253.57899755645334,
+   "T_scan_s": 0.00023385,
+   "T_index_s": 5.4750756445396976e-08
+  },
+  {
+   "N": 10000000,
+   "lookup": "unary",
+   "Tq_s": 8444435.492406795,
+   "T_scan_s": 0.0150000015,
+   "T_index_s": 7.27604899926346e-08
+  },
+  {
+   "N": 10000000,
+   "lookup": "qroam",
+   "Tq_s": 16057.589013416838,
+   "T_scan_s": 0.0150000015,
+   "T_index_s": 7.27604899926346e-08
+  },
+  {
+   "N": 1000000000,
+   "lookup": "unary",
+   "Tq_s": 8444400431.257888,
+   "T_scan_s": 1.5000000015,
+   "T_index_s": 9.269205856195879e-08
+  },
+  {
+   "N": 1000000000,
+   "lookup": "qroam",
+   "Tq_s": 1602617.5845320392,
+   "T_scan_s": 1.5000000015,
+   "T_index_s": 9.269205856195879e-08
+  }
+ ],
+ "expensive": [
+  {
+   "check": "1 s of CPU (3e9 ops)",
+   "t_toff": "SC surface code 170us (Babbush'21)",
+   "N_star": 654801577574.5697,
+   "classical_time_at_crossover_s": 324126780899.412
+  },
+  {
+   "check": "1 s of CPU (3e9 ops)",
+   "t_toff": "ion trap 17ms (Babbush'21 10kHz)",
+   "N_star": 6548015775745696.0,
+   "classical_time_at_crossover_s": 3241267808994120.0
+  },
+  {
+   "check": "1 s of CPU (3e9 ops)",
+   "t_toff": "100x faster distillation 1.7us",
+   "N_star": 65480157.75745696,
+   "classical_time_at_crossover_s": 32412678.089941196
+  },
+  {
+   "check": "1 core-hour (1.1e13 ops)",
+   "t_toff": "SC surface code 170us (Babbush'21)",
+   "N_star": 654801577574.5697,
+   "classical_time_at_crossover_s": 1166856411237883.2
+  },
+  {
+   "check": "1 core-hour (1.1e13 ops)",
+   "t_toff": "ion trap 17ms (Babbush'21 10kHz)",
+   "N_star": 6548015775745696.0,
+   "classical_time_at_crossover_s": 1.166856411237883e+19
+  },
+  {
+   "check": "1 core-hour (1.1e13 ops)",
+   "t_toff": "100x faster distillation 1.7us",
+   "N_star": 65480157.75745696,
+   "classical_time_at_crossover_s": 116685641123.7883
+  },
+  {
+   "check": "CyberShake-site 55k core-h (6e17 ops)",
+   "t_toff": "SC surface code 170us (Babbush'21)",
+   "N_star": 654801577574.5697,
+   "classical_time_at_crossover_s": 6.417710261808357e+19
+  },
+  {
+   "check": "CyberShake-site 55k core-h (6e17 ops)",
+   "t_toff": "ion trap 17ms (Babbush'21 10kHz)",
+   "N_star": 6548015775745696.0,
+   "classical_time_at_crossover_s": 6.417710261808356e+23
+  },
+  {
+   "check": "CyberShake-site 55k core-h (6e17 ops)",
+   "t_toff": "100x faster distillation 1.7us",
+   "N_star": 65480157.75745696,
+   "classical_time_at_crossover_s": 6417710261808357.0
+  }
+ ]
+}

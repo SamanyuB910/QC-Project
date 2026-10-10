@@ -1,0 +1,7 @@
+mu=0.00: SA 22 evals: P(opt)=0.10 [0.07,0.14]  SA 44 evals: P(opt)=0.22 [0.17,0.27]  SA 111 evals: P(opt)=0.60 [0.54,0.65]  SA 222 evals: P(opt)=0.80 [0.75,0.84]
+mu=0.02: SA 22 evals: P(opt)=0.06 [0.04,0.09]  SA 44 evals: P(opt)=0.17 [0.13,0.21]  SA 111 evals: P(opt)=0.44 [0.38,0.50]  SA 222 evals: P(opt)=0.77 [0.72,0.81]
+mu=0.05: SA 22 evals: P(opt)=0.08 [0.06,0.12]  SA 44 evals: P(opt)=0.21 [0.17,0.26]  SA 111 evals: P(opt)=0.42 [0.36,0.47]  SA 222 evals: P(opt)=0.63 [0.57,0.68]
+mu=0.10: SA 22 evals: P(opt)=0.07 [0.05,0.10]  SA 44 evals: P(opt)=0.13 [0.09,0.17]  SA 111 evals: P(opt)=0.28 [0.23,0.33]  SA 222 evals: P(opt)=0.37 [0.31,0.42]
+mu=0.20: SA 22 evals: P(opt)=0.09 [0.07,0.13]  SA 44 evals: P(opt)=0.14 [0.10,0.18]  SA 111 evals: P(opt)=0.34 [0.29,0.40]  SA 222 evals: P(opt)=0.56 [0.51,0.62]
+P(SA finds all 5 mu-optima) assuming independence: {22: 0.0, 44: 0.0, 111: 0.011, 222: 0.08}
+(QAOA 100/200/500/1000 raw shots per circuit ~ 22/44/111/222 feasible evaluations)

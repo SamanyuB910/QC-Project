@@ -1,0 +1,12 @@
+
+(C) all subsets of size 1..5: repeated-CV AUC of logistic regression (C=1), fixed 5x3 folds
+  2379 subsets in 913s
+  best 5-panel by CV AUC: ['sex', 'cp', 'slope', 'ca', 'thal'] AUC=0.911; median 5-panel AUC=0.848
+  lam=0.00: Spearman(QUBO f, -AUC)=+0.802; QUBO optimum ['cp', 'exang', 'oldpeak', 'ca', 'thal'] AUC=0.902 (rank 15/1287); mean AUC of QUBO top-10=0.903
+  lam=0.05: Spearman(QUBO f, -AUC)=+0.786; QUBO optimum ['cp', 'chol', 'oldpeak', 'ca', 'thal'] AUC=0.899 (rank 23/1287); mean AUC of QUBO top-10=0.896
+  lam=0.10: Spearman(QUBO f, -AUC)=+0.699; QUBO optimum ['cp', 'chol', 'slope', 'ca', 'thal'] AUC=0.904 (rank 9/1287); mean AUC of QUBO top-10=0.892
+  lam=0.20: Spearman(QUBO f, -AUC)=+0.405; QUBO optimum ['cp', 'chol', 'slope', 'ca', 'thal'] AUC=0.904 (rank 9/1287); mean AUC of QUBO top-10=0.882
+  lam=0.30: Spearman(QUBO f, -AUC)=+0.177; QUBO optimum ['sex', 'cp', 'chol', 'slope', 'ca'] AUC=0.894 (rank 44/1287); mean AUC of QUBO top-10=0.870
+  lam=0.50: Spearman(QUBO f, -AUC)=-0.049; QUBO optimum ['sex', 'cp', 'chol', 'fbs', 'slope'] AUC=0.846 (rank 669/1287); mean AUC of QUBO top-10=0.854
+  lam=1.00: Spearman(QUBO f, -AUC)=-0.217; QUBO optimum ['sex', 'cp', 'chol', 'fbs', 'slope'] AUC=0.846 (rank 669/1287); mean AUC of QUBO top-10=0.836
+  Spearman(relevance sum, AUC) = +0.802

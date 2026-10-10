@@ -1,0 +1,392 @@
+{
+ "lambda": 0.2,
+ "methods": {
+  "XY_complete_greedy": {
+   "E_p1": {
+    "gammas": [
+     1.2143417231805596
+    ],
+    "betas": [
+     -1.0245323425099299e-08
+    ],
+    "train_loss": -2.819962454051213,
+    "full": {
+     "P_opt": 0.9999999999999962,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9999999999999993,
+     "P_top5": 0.9999999999999964,
+     "P_top1pct": 0.9999999999999971,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product": {
+     "P_opt": 0.9999999999870003,
+     "P_feas": 0.9999999999870003,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 0.9999999999870003,
+     "P_top1pct": 0.9999999999870003,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product_conditioned_k": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "shots": 1000,
+    "hits_opt": 1000,
+    "wilson95": [
+     0.9961731014136095,
+     1.0
+    ],
+    "test_mean": {
+     "P_opt": 0.83333333333333,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9968617397118146,
+     "best_of_1000_normAR": 0.9968617397118154
+    },
+    "test_min_Popt": 4.1634805247167534e-47
+   },
+   "E_p2": {
+    "gammas": [
+     1.8497227055483665,
+     2.224283680405287
+    ],
+    "betas": [
+     1.412262424727074e-06,
+     -9.162919183352596e-06
+    ],
+    "train_loss": -2.819962449951014,
+    "full": {
+     "P_opt": 0.9999999963897444,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9999999993802415,
+     "P_top5": 0.9999999965773221,
+     "P_top1pct": 0.9999999970057286,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product": {
+     "P_opt": 0.9999999927794926,
+     "P_feas": 0.9999999927794926,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 0.9999999927794926,
+     "P_top1pct": 0.9999999927794926,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product_conditioned_k": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "shots": 1000,
+    "hits_opt": 1000,
+    "wilson95": [
+     0.9961731014136095,
+     1.0
+    ],
+    "test_mean": {
+     "P_opt": 0.8333333303930409,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9968617390139155,
+     "best_of_1000_normAR": 0.9968617398852831
+    },
+    "test_min_Popt": 1.3628658290975738e-29
+   },
+   "E_p3": {
+    "gammas": [
+     1.6299957464672126,
+     2.132019922257699,
+     2.5401541129604723
+    ],
+    "betas": [
+     -1.1766791049452832e-05,
+     -7.5040601098490285e-06,
+     1.2390767756110313e-05
+    ],
+    "train_loss": -2.819962438853276,
+    "full": {
+     "P_opt": 0.9999999845906241,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9999999978461973,
+     "P_top5": 0.9999999850953619,
+     "P_top1pct": 0.999999988041146,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product": {
+     "P_opt": 0.9999999691811619,
+     "P_feas": 0.9999999691811619,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 0.9999999691811619,
+     "P_top1pct": 0.9999999691811619,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product_conditioned_k": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "shots": 1000,
+    "hits_opt": 1000,
+    "wilson95": [
+     0.9961731014136095,
+     1.0
+    ],
+    "test_mean": {
+     "P_opt": 0.8333333198745255,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9968617369073645,
+     "best_of_1000_normAR": 0.9968617399640234
+    },
+    "test_min_Popt": 1.0014526751750837e-27
+   },
+   "Popt_p1": {
+    "gammas": [
+     0.3337499999999995
+    ],
+    "betas": [
+     4.189357194483989e-16
+    ],
+    "train_loss": -0.75,
+    "full": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product": {
+     "P_opt": 0.9999999999870003,
+     "P_feas": 0.9999999999870003,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 0.9999999999870003,
+     "P_top1pct": 0.9999999999870003,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product_conditioned_k": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "shots": 1000,
+    "hits_opt": 1000,
+    "wilson95": [
+     0.9961731014136095,
+     1.0
+    ],
+    "test_mean": {
+     "P_opt": 0.8333333333333334,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.996861739711815,
+     "best_of_1000_normAR": 0.996861739711815
+    },
+    "test_min_Popt": 1.9461972127392897e-91
+   },
+   "Popt_p2": {
+    "gammas": [
+     0.5059616990780283,
+     0.0006047835531968748
+    ],
+    "betas": [
+     0.00022745146903443303,
+     -0.00022786836479647574
+    ],
+    "train_loss": -0.7499999999928345,
+    "full": {
+     "P_opt": 0.9999999999923415,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9999999999987351,
+     "P_top5": 0.9999999999928683,
+     "P_top1pct": 0.999999999994009,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product": {
+     "P_opt": 0.9999999999842467,
+     "P_feas": 0.9999999999842467,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 0.9999999999842467,
+     "P_top1pct": 0.9999999999842467,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product_conditioned_k": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "shots": 1000,
+    "hits_opt": 1000,
+    "wilson95": [
+     0.9961731014136095,
+     1.0
+    ],
+    "test_mean": {
+     "P_opt": 0.8333333333252638,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9968617397096152,
+     "best_of_1000_normAR": 0.9968617397123972
+    },
+    "test_min_Popt": 1.4913967148450988e-31
+   },
+   "Popt_p3": {
+    "gammas": [
+     0.4284860530715249,
+     0.042479574538687316,
+     1.7479823428945038
+    ],
+    "betas": [
+     -3.097381034159236e-07,
+     -8.48635532961926e-07,
+     -7.458515594251469e-07
+    ],
+    "train_loss": -0.74999999994884,
+    "full": {
+     "P_opt": 0.9999999999246469,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.99999999999101,
+     "P_top5": 0.9999999999352153,
+     "P_top1pct": 0.9999999999540353,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product": {
+     "P_opt": 0.9999999998492975,
+     "P_feas": 0.9999999998492975,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 0.9999999998492975,
+     "P_top1pct": 0.9999999998492975,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "null_product_conditioned_k": {
+     "P_opt": 1.0,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 1.0,
+     "P_top5": 1.0,
+     "P_top1pct": 1.0,
+     "best_of_100_normAR": 1.0,
+     "best_of_100_promptAR": 1.0,
+     "P_opt_in_100": 1.0,
+     "best_of_1000_normAR": 1.0,
+     "best_of_1000_promptAR": 1.0,
+     "P_opt_in_1000": 1.0
+    },
+    "shots": 1000,
+    "hits_opt": 1000,
+    "wilson95": [
+     0.9961731014136095,
+     1.0
+    ],
+    "test_mean": {
+     "P_opt": 0.8333333332709852,
+     "P_feas": 1.0,
+     "mean_normAR_feas": 0.9968617397016697,
+     "best_of_1000_normAR": 0.9968617397220535
+    },
+    "test_min_Popt": 1.3650465786373535e-33
+   }
+  }
+ },
+ "full_opt": [
+  "cp",
+  "chol",
+  "slope",
+  "ca",
+  "thal"
+ ]
+}
