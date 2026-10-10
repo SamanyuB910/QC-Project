@@ -90,6 +90,58 @@ def sentinel_circuit():
     return qc
 
 
+PROBE_TESTS = [
+    # (label, qubits, expected probability, how the probability is read)
+    ("RZZ(pi/3) between H layers: P(both qubits 1)", (0, 1), 0.25, "both"),
+    ("RZZ(pi/2) between H layers: P(both qubits 1)", (2, 3), 0.50, "both"),
+    ("RY(pi/3): P(1)", (4,), 0.25, "one"),
+    ("RX(pi/3): P(1)", (5,), 0.25, "one"),
+    ("RZ(pi/3) between H gates: P(1)", (6,), 0.25, "one"),
+    ("X: P(1)", (7,), 1.00, "one"),
+    ("idle qubits 8-12: P(1) (readout error)", (8, 9, 10, 11, 12), 0.00, "mean"),
+]
+
+
+def probe_circuit():
+    """One shallow 13-qubit circuit with known answers for every gate type the project submits (rz, ry, rx, rzz,
+    x). If a backend read an angle with a different convention (e.g. RZZ(theta) as exp(-i theta ZZ)), these
+    probabilities would move far from their expected values; noise only nudges them."""
+    from math import pi
+
+    from qiskit import ClassicalRegister, QuantumCircuit, QuantumRegister
+    q, c = QuantumRegister(N, "q"), ClassicalRegister(N, "c")
+    qc = QuantumCircuit(q, c, name="ftp_probe")
+    for (a, b), th in (((0, 1), pi / 3), ((2, 3), pi / 2)):
+        qc.h([a, b])
+        qc.rzz(th, a, b)
+        qc.h([a, b])
+    qc.ry(pi / 3, 4)
+    qc.rx(pi / 3, 5)
+    qc.h(6)
+    qc.rz(pi / 3, 6)
+    qc.h(6)
+    qc.x(7)
+    qc.measure(q, c)
+    return qc
+
+
+def probe_readout(counts):
+    """Measured probability for each PROBE_TESTS row from raw counts {key: count}."""
+    tot, acc = 0, [0.0] * len(PROBE_TESTS)
+    for key, v in counts.items():
+        s, _ = key_to_state(key)
+        tot += v
+        for i, (_, qs, _, how) in enumerate(PROBE_TESTS):
+            bits = [(s >> qq) & 1 for qq in qs]
+            if how == "both":
+                acc[i] += v * (bits[0] & bits[1])
+            elif how == "one":
+                acc[i] += v * bits[0]
+            else:
+                acc[i] += v * sum(bits) / len(bits)
+    return [a / max(tot, 1) for a in acc], tot
+
+
 def portable(circuits, seed):
     """Transpile once, with no backend, to gates every simulator here accepts. The same circuits go to the built-in
     simulator, IonQ, Braket and Aer, and the equivalence check runs on exactly what is submitted."""

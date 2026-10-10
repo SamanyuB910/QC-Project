@@ -30,7 +30,7 @@ import ftp_core as core
 import ftp_quantum as quantum
 import ftp_report as rep
 
-BUILD = "v1.1 2026-10-10"
+BUILD = "v1.2 2026-10-10"
 ATTRIBUTION = "This effort is supported by Qollab & IonQ."
 
 
@@ -49,6 +49,33 @@ def _load_json(which):
     except Exception as e:  # noqa: BLE001
         print(f"  (could not read results/{which}.json: {type(e).__name__})")
         return None
+
+
+def _run_probe(be, kind, S, seed):
+    """circuits = "probe": one shallow circuit with known answers for every gate type we submit. Tells a gate-angle
+    convention mismatch (large deviations) apart from noise (small deviations). Exactly one job."""
+    print("  gate-convention probe: one shallow circuit, known answers for rz, ry, rx, rzz and x.")
+    circ = quantum.portable([quantum.probe_circuit()], seed)[0]
+    from qiskit.quantum_info import Statevector
+    exact = Statevector(circ.remove_final_measurements(inplace=False)).probabilities_dict()
+    exact_vals, _ = quantum.probe_readout({k: v for k, v in exact.items()})
+    print(f"  submitting ONE job: 1 circuit x {S} shots ...", flush=True)
+    try:
+        result, elapsed = quantum.submit_once(be, circ, S, quantum.OneJobGuard(), seed, kind)
+    except Exception as e:  # noqa: BLE001
+        print(f"  JOB FAILED: {type(e).__name__}: {e}")
+        return
+    vals, tot = quantum.probe_readout(quantum.counts_for(result, circ.name, 0))
+    rows = []
+    for (label, _, expected, _), ex, got in zip(quantum.PROBE_TESTS, exact_vals, vals):
+        sd = (max(expected * (1 - expected), 0.01) / max(tot, 1)) ** 0.5
+        rows.append([label, f"{expected:.3f}", f"{got:.3f}",
+                     "yes" if abs(got - expected) < max(4 * sd, 0.06) else "NO (convention mismatch or heavy noise)"])
+        assert abs(ex - expected) < 1e-9, "probe expectations are wrong"
+    rep.table(["test", "expected", f"measured ({tot} shots, {kind})", "consistent?"], rows,
+              note=f"job finished in {elapsed:.1f}s; tolerance max(4 standard errors, 0.06). A wrong angle convention "
+                   f"would move the RZZ rows to about 0.75 / 1.00 (angle doubled) or 0.07 / 0.15 (halved).")
+    print(f"Done. {ATTRIBUTION}")
 
 
 def _print_evidence(pre, show_figures):
@@ -196,6 +223,9 @@ def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: i
     kind, desc = quantum.classify_backend(be)
     print(f"  backend: {desc}  ->  treated as '{kind}'")
     mode = circuits.strip().lower()
+    if mode == "probe":
+        _run_probe(be, kind, int(shots) if shots > 0 else 1000, seed)
+        return
     if mode not in ("auto", "all", "single"):
         print(f"  unknown circuits={circuits!r}; using auto")
         mode = "auto"
@@ -252,10 +282,13 @@ def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: i
                    f"optimal panel(s) at least once (exact formula; noise lowers the QAOA row)")
     if show_figures:
         sgrid = [25, 50, 100, 200, 300, 500, 750, 1000, 1500, 2000]
+        cf = {name: [core.closed_form_all_found(d, targets, s) for s in (500, 1000)]
+              for name, d in (("ideal", dists_ideal), ("null", dists_null), ("unif", unif))}
         rep.describe("three curves of the chance that one job finds every optimal panel versus shots per circuit "
-                     "(log scale). The ideal circuit rises fastest (about 83% at 500 shots, 98% at 1,000), the "
-                     "independent-choice sampler slower (26%, 63%), uniform panels slowest (2%, 11%). "
-                     "The numbers are the table above.")
+                     f"(log scale). The ideal circuit rises fastest (about {rep.pct(cf['ideal'][0])} at 500 shots, "
+                     f"{rep.pct(cf['ideal'][1])} at 1,000), the independent-choice sampler slower "
+                     f"({rep.pct(cf['null'][0])}, {rep.pct(cf['null'][1])}), uniform panels slowest "
+                     f"({rep.pct(cf['unif'][0])}, {rep.pct(cf['unif'][1])}). The numbers are the table above.")
         try:
             rep.recovery_figure(sgrid, {
                 "ideal QAOA circuit": [core.closed_form_all_found(dists_ideal, targets, s) for s in sgrid],

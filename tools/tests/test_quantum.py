@@ -116,6 +116,16 @@ def test_exactly_one_job(circuits_mode, capsys):
     assert "This effort is supported by Qollab & IonQ." in out and "JOB FAILED" not in out
 
 
+def test_probe_mode_one_job_and_consistent(capsys):
+    be = CountingSim()
+    _run_main(be, circuits="probe", shots=4000)
+    out = capsys.readouterr().out
+    assert be.calls == 1
+    probe_rows = [ln for ln in out.splitlines() if "|" in ln and ("RZZ" in ln or "RY(" in ln or "RX(" in ln
+                                                                  or "RZ(" in ln or "X: P" in ln or "idle" in ln)]
+    assert len(probe_rows) == 7 and all(ln.rstrip().endswith("yes") for ln in probe_rows)
+
+
 def test_failed_job_shows_labelled_fallback(capsys):
     be = CountingSim(fail=True)
     _run_main(be, shots=200, run_baselines=False)
