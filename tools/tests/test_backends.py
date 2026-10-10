@@ -32,6 +32,20 @@ def test_device_path_reports_gate_ledger(capsys):
     assert "routed to this device's coupling map" in out and "more two-qubit gates on this lattice" in out
 
 
+def test_ionq_is_single_circuit_and_never_routed():
+    """Qollab's IonQ path rejects multi-circuit jobs; IonQ is all-to-all, so no lattice routing either."""
+    import ftp_quantum as quantum
+
+    FakeIonQ = type("IonQSimulatorBackend", (), {"__module__": "qiskit_ionq.ionq_backend"})
+    be = FakeIonQ()
+    be.name, be.coupling_map, be.num_qubits = "ionq_simulator", object(), 29
+    kind, _ = quantum.classify_backend(be)
+    assert kind == "ionq"
+    assert quantum.LIST_JOBS_OK[kind] is False
+    assert quantum.needs_routing(be, kind) is False
+    assert quantum.needs_routing(be, "ibm_fake") is True
+
+
 def test_importing_main_stays_light():
     """A default import must not pull in heavy optional packages (they cost seconds in the browser)."""
     code = ("import sys, os; os.chdir(r'%s'); sys.path.insert(0, '.'); import main; "

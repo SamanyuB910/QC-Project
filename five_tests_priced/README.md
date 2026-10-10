@@ -60,7 +60,7 @@ Press **Run**. It needs no setup: the defaults are chosen per simulator, and the
 | Simulator | What happens | Typical time |
 |---|---|---|
 | Built-in | 6 circuits × 1,000 shots, one job | seconds |
-| IonQ Forte 1 / Forte Enterprise 1 (noise models) | Same circuits, **one job**, 500 shots each (IonQ simulates each shot) | a few minutes with queueing |
+| IonQ Forte 1 / Forte Enterprise 1 (noise models) | **One circuit** (price weight μ = 0.2) × 1,000 shots in one job: Qollab's IonQ path accepts one circuit per job | seconds to minutes |
 | IBM noise models | Routed to the device lattice; 8 shots each, because per-shot noise is slow in a browser | about 1 minute |
 | AWS Braket local | Same as built-in | seconds |
 

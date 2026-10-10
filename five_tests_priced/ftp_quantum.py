@@ -19,10 +19,11 @@ from ftp_core import FEAS_IDX, K, N, complete_pairs
 SENTINEL_STATE = 0b0000000101111   # age, sex, cp, trestbps, fbs -> reversed bit order would read as thal, ca, ...
 
 # How many shots per circuit each backend kind gets by default (per-shot noisy simulators are slow in a browser).
-SHOT_POLICY = {"basic": 1000, "braket": 1000, "aer": 1000, "ionq": 500, "ibm_fake": 8, "aer_noise": 100,
+SHOT_POLICY = {"basic": 1000, "braket": 1000, "aer": 1000, "ionq": 1000, "ibm_fake": 8, "aer_noise": 100,
                "unknown": 100}
-# Whether a list of circuits may be sent as ONE job. Confirmed per backend kind by the Phase 0 smoke test.
-LIST_JOBS_OK = {"basic": True, "braket": True, "aer": True, "aer_noise": True, "ibm_fake": True, "ionq": True,
+# Whether a list of circuits may be sent as ONE job. IonQ through Qollab: NO -- tested on Qollab, Oct 10 2026, the
+# IonQ API answered "Only job type ionq.circuit.v1 is supported" to a multi-circuit job, so IonQ runs one circuit.
+LIST_JOBS_OK = {"basic": True, "braket": True, "aer": True, "aer_noise": True, "ibm_fake": True, "ionq": False,
                 "unknown": True}
 
 
@@ -135,18 +136,27 @@ def classify_backend(be):
             method = ""
         if "density" in method:
             return "unknown", desc + " (density-matrix method: refused, 13 qubits needs ~1 GB)"
+        if _has_lattice(be):        # Aer built from a device (e.g. AerSimulator.from_backend): treat like IBM
+            return "ibm_fake", desc
         return ("aer_noise" if noisy else "aer"), desc
     return "unknown", desc
 
 
-def needs_routing(be):
-    """True for coupling-map devices (IBM fake backends): they must be transpiled against the device."""
+def _has_lattice(be):
     try:
         cmap = getattr(be, "coupling_map", None)
         nq = getattr(be, "num_qubits", None)
         return cmap is not None and nq is not None and nq > N
     except Exception:  # noqa: BLE001
         return False
+
+
+def needs_routing(be, kind):
+    """True for lattice devices (IBM fake backends, device-derived Aer), which must be transpiled against their
+    coupling map. Trapped ions (IonQ) are all-to-all; plain simulators accept the portable circuit as it is."""
+    if kind in ("ionq", "basic", "braket"):
+        return False
+    return kind == "ibm_fake" or _has_lattice(be)
 
 
 class OneJobGuard:

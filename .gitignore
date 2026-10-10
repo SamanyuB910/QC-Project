@@ -17,3 +17,6 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# Qollab upload archive (built by tools/make_upload_zip.py)
+qollab_upload.zip

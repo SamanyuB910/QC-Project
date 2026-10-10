@@ -30,7 +30,7 @@ import ftp_core as core
 import ftp_quantum as quantum
 import ftp_report as rep
 
-BUILD = "v1 2026-10-10"
+BUILD = "v1.1 2026-10-10"
 ATTRIBUTION = "This effort is supported by Qollab & IonQ."
 
 
@@ -202,6 +202,11 @@ def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: i
     if mode == "auto":
         mode = "all" if quantum.LIST_JOBS_OK.get(kind, True) else "single"
     mus = core.MU_GRID if mode == "all" else [min(core.MU_GRID, key=lambda m: abs(m - single_mu))]
+    if mode == "single":
+        why = ("IonQ through Qollab accepts one circuit per job" if kind == "ionq" and circuits.strip().lower() == "auto"
+               else "circuits = single")
+        print(f"  single-circuit mode ({why}): this run uses one price weight, mu = {mus[0]}. "
+              f"Run on the built-in simulator to see all five in one job.")
     S = int(shots) if shots > 0 else quantum.SHOT_POLICY.get(kind, 100)
 
     t = time.time()
@@ -218,7 +223,7 @@ def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: i
           f"(P(five tests) = {p5:.4f}, expected {core.P_HW5:.4f})")
     if tvd > 1e-6:
         print("  WARNING: the circuit does not match the model (gate convention changed?). Results below are suspect.")
-    if quantum.needs_routing(be):
+    if quantum.needs_routing(be, kind):
         from qiskit import transpile
         t = time.time()
         circs = transpile(circs, backend=be, optimization_level=1, seed_transpiler=seed)
