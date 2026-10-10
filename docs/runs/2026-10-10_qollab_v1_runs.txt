@@ -95,3 +95,10 @@ IonQ job 01a12775-ec14-7a0c-919d-84885ab2de1e. Circuit execution 13.0 s; job 136
   log-likelihood ratio -107.9 (expected +111.8 +- 15.0 if ideal, -119.2 +- 17.0 if independent) -> independent-choice
   -> exactly the same numbers as run 3 (build v1.1): IonQ's noise-model simulator returns rounded expected
      counts, so the same circuit gives the same counts every time.
+
+============================================================================================================
+RUNS 7-8 (final build v1.5, readability rewrite, default settings)
+============================================================================================================
+  Built-in simulator: done in 3.6 s; identical to runs 1 and 5 (4 of 4 optima sampled, checks 2 and 3 PASSED).
+  IonQ Forte 1 simulator (noise model, free): IonQ job 01a1278b-7c1f-7b0f-8c2c-0aaa467e7755, job 22.8 s, run 25.5 s;
+     identical to runs 3 and 6 (193 of 1000 five-test shots, 0 optimal hits, LLR -107.9 -> independent-choice).
