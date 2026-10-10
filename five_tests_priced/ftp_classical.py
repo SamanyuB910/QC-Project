@@ -72,6 +72,37 @@ def sa_pool(f, n_eval, rng, T0=0.1, T1=1e-4):
     return pool
 
 
+CATEGORICAL = {"cp", "restecg", "slope", "thal"}
+
+
+def cv_auc(X, y, state, folds=None):
+    """Cross-validated AUC of logistic regression on one panel: standardise numeric tests, one-hot the categorical
+    ones, 5x3 repeated stratified folds (random_state=7) on all patients. Same protocol as the precomputed table
+    (prompt_b/s05_downstream.py part C). Imports scikit-learn only when called."""
+    from sklearn.compose import ColumnTransformer
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import roc_auc_score
+    from sklearn.model_selection import RepeatedStratifiedKFold
+    from sklearn.pipeline import Pipeline
+    from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+    from ftp_core import FEATURES
+    cols = [i for i in range(N) if (state >> i) & 1]
+    names = [FEATURES[i] for i in cols]
+    cat = [j for j, f in enumerate(names) if f in CATEGORICAL]
+    num = [j for j, f in enumerate(names) if f not in CATEGORICAL]
+    tr = ([("num", StandardScaler(), num)] if num else []) + \
+         ([("cat", OneHotEncoder(handle_unknown="ignore"), cat)] if cat else [])
+    if folds is None:
+        folds = list(RepeatedStratifiedKFold(n_splits=5, n_repeats=3, random_state=7).split(X, y))
+    aucs = []
+    for tr_i, te_i in folds:
+        pipe = Pipeline([("p", ColumnTransformer(tr)), ("m", LogisticRegression(max_iter=2000))])
+        pipe.fit(X[tr_i][:, cols], y[tr_i])
+        aucs.append(roc_auc_score(y[te_i], pipe.predict_proba(X[te_i][:, cols])[:, 1]))
+    return sum(aucs) / len(aucs)
+
+
 def rrls_pool(f, budget, rng):
     """Random-restart 1-swap local search with a fixed evaluation budget. Returns every panel evaluated."""
     pool, used = set(), 0

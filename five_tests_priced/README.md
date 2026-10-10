@@ -6,7 +6,7 @@ This effort is supported by Qollab & IonQ.
 
 *Theme: Quantum Impact · QCA Georgia Tech Qiskit Fall Fest 2026, Prompt B ("Heart Disease Readings") · Code: [github.com/SamanyuB910/QC-Project](https://github.com/SamanyuB910/QC-Project)*
 
-> Build **v0** (safety version, Sat Oct 10). The full write-up, figures and precomputed evidence tables arrive in later builds before the deadline.
+> Build **v1-dev** (Sat Oct 10). Runnable on every free simulator. The full write-up and precomputed evidence tables arrive in later builds before the deadline.
 
 ## The decision
 

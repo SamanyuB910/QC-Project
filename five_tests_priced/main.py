@@ -30,7 +30,7 @@ import ftp_core as core
 import ftp_quantum as quantum
 import ftp_report as rep
 
-BUILD = "v0-safety 2026-10-10"
+BUILD = "v1-dev 2026-10-10 (phase 2)"
 ATTRIBUTION = "This effort is supported by Qollab & IonQ."
 
 
@@ -98,8 +98,26 @@ def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: i
                   [[rep.money(cost[s]), rep.panel(core.state_to_names(s), 70), f"{auc[s]:.3f}"] for s in front],
                   note="[precomputed] cost-vs-accuracy front of all 1,287 five-test panels "
                        "(logistic regression, 5x3 CV, all 297 patients; optimistic: best of many)")
+        if show_figures:
+            rep.describe("a staircase of the best cross-validated AUC reachable at each panel price, from $9.20 "
+                         "(AUC 0.838) to $293.10 (AUC 0.911); diamonds mark the exact optimum at each price weight. "
+                         "The numbers are the table above.")
+            try:
+                short = {s: f"${cost[s]:.0f}: {core.procedures(s)}" for s in front}
+                rep.price_ladder_figure([(cost[s], auc[s], short[s]) for s in front],
+                                        [(cost[o], auc[o], f"mu={mu}") for mu, o in opts.items() if o in auc])
+            except Exception as e:  # noqa: BLE001
+                print(f"  (figure unavailable: {type(e).__name__}: {e})")
     if revalidate_auc:
-        print("  (live AUC re-validation arrives in the next build)\n")
+        t = time.time()
+        rows = []
+        for o in sorted(set(opts.values()), key=lambda s: cost[s]):
+            live = classical.cv_auc(X, y, o)
+            rows.append([rep.panel(core.state_to_names(o)), rep.money(cost[o]), f"{live:.4f}",
+                         f"{auc.get(o, float('nan')):.4f}"])
+        rep.table(["optimal panel", "price", "CV AUC recomputed now", "precomputed"], rows,
+                  note=f"[live] scikit-learn logistic regression, 5x3 repeated stratified CV, random_state=7 "
+                       f"({time.time() - t:.1f}s)")
 
     # ------------------------------------------------------------------------------------------------ 3. quantum
     rep.section("3. The quantum step: one job, 13 qubits, exactly five tests in every sample")
@@ -137,9 +155,16 @@ def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: i
         t = time.time()
         circs = transpile(circs, backend=be, optimization_level=1, seed_transpiler=seed)
         routed = [quantum.two_qubit_count(c) for c in circs if c.name != "ftp_sentinel"]
-        print(f"  routed to this device's coupling map in {time.time() - t:.1f}s: {routed} two-qubit gates per circuit")
+        active = max(len({circ.find_bit(q).index for inst in circ.data for q in inst.qubits}) for circ in circs)
+        print(f"  routed to this device's coupling map in {time.time() - t:.1f}s: {routed} two-qubit gates per circuit "
+              f"(at most {active} physical qubits touched)")
         print(f"  (all-to-all trapped ions need {twoq}: the same circuit costs "
-              f"{np.mean(routed) / np.mean(twoq):.1f}x more two-qubit gates on a heavy-hex lattice)")
+              f"{np.mean(routed) / np.mean(twoq):.1f}x more two-qubit gates on this lattice)")
+    if kind in ("ibm_fake", "aer_noise"):
+        print(f"  note: this simulator applies noise shot by shot in your browser, so the default is {S} shots per "
+              f"circuit (set 'shots' to change it); expect up to a minute or two.")
+    elif kind == "ionq":
+        print("  note: IonQ's cloud simulator runs once per shot; with queueing this can take a few minutes.")
 
     targets = sorted({core.exact_optimum(fs[mu]) for mu in mus})
     dists_ideal = [p_ideal[mu] for mu in mus]
@@ -152,6 +177,21 @@ def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: i
                                ("uniform 5-test panels", unif))],
               note=f"PREDICTION, computed before the job: chance that one job samples all {len(targets)} distinct "
                    f"optimal panel(s) at least once (exact formula; noise lowers the QAOA row)")
+    if show_figures:
+        sgrid = [25, 50, 100, 200, 300, 500, 750, 1000, 1500, 2000]
+        rep.describe("three curves of the chance that one job finds every optimal panel versus shots per circuit "
+                     "(log scale). The ideal circuit rises fastest (about 83% at 500 shots, 98% at 1,000), the "
+                     "independent-choice sampler slower (26%, 63%), uniform panels slowest (2%, 11%). "
+                     "The numbers are the table above.")
+        try:
+            rep.recovery_figure(sgrid, {
+                "ideal QAOA circuit": [core.closed_form_all_found(dists_ideal, targets, s) for s in sgrid],
+                "independent-choice (no correlations)": [core.closed_form_all_found(dists_null, targets, s)
+                                                         for s in sgrid],
+                "uniform five-test panels": [core.closed_form_all_found(unif, targets, s) for s in sgrid]},
+                this_run=S)
+        except Exception as e:  # noqa: BLE001
+            print(f"  (figure unavailable: {type(e).__name__}: {e})")
 
     guard = quantum.OneJobGuard()
     label = f"[live run on {kind}, {S} shots per circuit]"
@@ -261,8 +301,8 @@ def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: i
     print("  * No advantage over exhaustive search: at 13 tests it is exact and takes milliseconds (section 2).")
     print("  * No speedup. The quantum job is compared on sample quality at equal numbers of samples.")
     print("  * Prices are 1992 Ontario fees, used as relative costs; patients are a referral cohort, not screening.")
-    if show_figures:
-        print("  (figures arrive in the next build)")
+    print("  * The AUC front is the best of 1,287 panels on all patients (optimistic); re-selecting the panel")
+    print("    inside each cross-validation fold gives lower, honest numbers (project page, 'Results').")
 
     if dump_counts and per_mu:
         print("\nCOUNTS_JSON " + json.dumps({"build": BUILD, "backend": desc, "shots": S, "label": label,

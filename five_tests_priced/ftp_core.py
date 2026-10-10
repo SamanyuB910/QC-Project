@@ -107,6 +107,23 @@ def objective(r, C, cost, mu, lam=LAM):
     return -(B @ r) + lam * 0.5 * np.einsum("si,ij,sj->s", B, C, B) + mu * cost / 100.0
 
 
+def procedures(state):
+    """Plain-language summary of what a panel costs the clinic, e.g. 'history + treadmill ECG + fluoroscopy'."""
+    names = set(state_to_names(state))
+    out = []
+    if names & {"exang", "oldpeak", "slope"}:
+        out.append("treadmill ECG")
+    if names & {"thalach", "thal"}:
+        out.append("thallium scan")
+    if "ca" in names:
+        out.append("fluoroscopy")
+    if names & {"chol", "fbs"}:
+        out.append("blood test")
+    if "restecg" in names:
+        out.append("resting ECG")
+    return " + ".join(["history"] + out) if out else "history + vitals only"
+
+
 def state_to_names(state):
     return [FEATURES[i] for i in range(N) if (int(state) >> i) & 1]
 
