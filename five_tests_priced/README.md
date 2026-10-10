@@ -139,7 +139,7 @@ This is the chance that **one job** finds **all four** distinct optimal panels. 
 | Method | 100 shots / 22 evals | 200 / 44 | 500 / 111 | 1,000 / 222 |
 |---|---|---|---|---|
 | **QAOA circuit, ideal** (exact formula) | 7% | 30% | 83% | **98%** |
-| **QAOA circuit, IonQ forte-1-rate noise** (10,000-shot reference) | 2% | 12% | 59% | **92%** |
+| **QAOA circuit, IonQ's older published noise rates** (10,000-shot reference) | 2% | 12% | 59% | **92%** |
 | Independent-choice sampler (no correlations) | 0% | 3% | 26% | 63% |
 | Simulated annealing (best of two schedules) | 0% | 3% | 28% | 55% |
 | Random-restart local search | 0% | 1% | 20% | 63% |
@@ -188,7 +188,7 @@ The honest numbers are lower than the optimistic ladder in section 1, as they sh
 1. "Equal budgets" counts evaluated panels. A classical evaluation is a microsecond function call, so this compares **sample quality, not speed**.
 2. The angles were tuned offline (60 small simulations), and that compute is not counted.
 3. "All optimal panels" means four distinct panels, because μ = 0.02 and μ = 0.05 share an optimum.
-4. **Noise hurts some circuits more than others.** Under the noise model, each circuit's chance of hitting its own optimum falls 25–56% below ideal. At μ = 0 and μ = 0.02 it drops *below* the independent-choice sampler built from the ideal circuit's odds: 0.0100 vs 0.0137, and 0.0032 vs 0.0044. Pooling the samples of all five circuits still recovers every optimum in 92% of 1,000-shot jobs.
+4. **Noise hurts some circuits more than others.** Under the older noise rates, each circuit's chance of hitting its own optimum falls 25–56% below ideal. At μ = 0 and μ = 0.02 it drops *below* the independent-choice sampler built from the ideal circuit's odds: 0.0100 vs 0.0137, and 0.0032 vs 0.0044. Pooling the samples of all five circuits still recovers every optimum in 92% of 1,000-shot jobs.
 5. **Two panels share the $206.80 price.** On the AUC ladder the program prints, the $206.80 panel (sex, cp, thalach, ca, thal; AUC 0.904) is not the μ = 0.02 optimum (cp, trestbps, thalach, ca, thal; AUC 0.902). The objective is a proxy for accuracy, not accuracy itself.
 
 ## 7. What this does not claim
