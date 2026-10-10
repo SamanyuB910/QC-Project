@@ -38,3 +38,43 @@ FINDING: Qollab's IonQ path does not accept multi-circuit jobs (a list passed to
 ionq.multi-circuit job, which the API rejects). The one-job guard held (exactly one submission) and the fallback
 was labelled. Fix in build v1.1: on IonQ, `circuits = auto` now sends ONE circuit (price weight mu = 0.2,
 1,000 shots); also IonQ is no longer passed through device routing (it is all-to-all).
+
+============================================================================================================
+RUN 3: IonQ Forte 1 simulator (29q, noise model, free), build v1.1, default settings (auto -> single circuit,
+mu = 0.2, 1000 shots) + dump_counts. IonQ job 01a12765-eba3-7143-8c4e-c19db91ce475. 37.8 s.
+============================================================================================================
+  single-circuit mode (IonQ through Qollab accepts one circuit per job): this run uses one price weight, mu = 0.2.
+  built 1 circuit(s); two-qubit gates (RZZ) per circuit: [238]
+  check: submitted circuit vs exact NumPy model, total-variation distance 1.0e-15
+  PREDICTION (ideal, before the job): one 1000-shot circuit finds the mu=0.2 optimum with prob 99%
+     (independent-choice 58%, uniform 16%)
+  mu  | five-test shots | P(optimal panel) observed [95% CI] | ideal  | independent-choice | uniform | best = optimum?
+  0.2 | 193 of 1000     | 0.0000 [0.0000, 0.0195]            | 0.0208 | 0.0039             | 0.0008  | no
+  log-likelihood ratio (ideal vs independent): -107.9 (expected +111.8 +- 15.0 if ideal, -119.2 +- 17.0 if
+     independent)  -> samples look like the independent-choice sampler
+  Raw five-test counts: docs/runs/2026-10-10_qollab_ionq_forte1_v1.1_counts.json
+
+  Offline diagnosis of these counts:
+    bit order: per-test frequencies correlate 0.66 with the ideal circuit as read, 0.06 if bit-reversed -> order OK
+    per-sample log-likelihood (ideal minus uniform): IonQ run -0.85; ideal circuit +1.10; uniform panels -1.48;
+       our Aer reference with IonQ's legacy forte-1 depolarizing rates +0.27
+    -> IonQ's current Forte 1 noise model leaves roughly a quarter of the ideal circuit's signal among valid
+       samples (mixture estimate), versus about two thirds under the legacy rates.
+
+============================================================================================================
+RUN 4: IonQ Forte 1 simulator, build v1.2, circuits = probe (gate-convention probe), 1000 shots.
+IonQ job 01a1276a-f810-736d-b040-0c991929cc55. 12.0 s.
+============================================================================================================
+  test                                         | expected | measured (1000 shots, ionq) | consistent?
+  RZZ(pi/3) between H layers: P(both qubits 1) | 0.250    | 0.243                       | yes
+  RZZ(pi/2) between H layers: P(both qubits 1) | 0.500    | 0.482                       | yes
+  RY(pi/3): P(1)                               | 0.250    | 0.268                       | yes
+  RX(pi/3): P(1)                               | 0.250    | 0.283                       | yes
+  RZ(pi/3) between H gates: P(1)               | 0.250    | 0.238                       | yes
+  X: P(1)                                      | 1.000    | 1.000                       | yes
+  idle qubits 8-12: P(1) (readout error)       | 0.000    | 0.000                       | yes
+
+CONCLUSION (pre-registered claim 4, reported as-is): IonQ executes every gate type we submit with Qiskit's
+conventions (run 4), so the weak result of run 3 is the noise of IonQ's current (post-September-2025,
+undocumented) Forte 1 noise model acting on a 238-two-qubit-gate circuit -- not a bug in the circuit or the
+pipeline. On the built-in (ideal) simulator the same circuits behave exactly as the exact model predicts.

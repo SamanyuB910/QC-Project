@@ -14,12 +14,12 @@
 ## In 30 seconds
 
 - **Problem.** A chest-pain clinic can collect only **5 of 13** measurements. Tests have **real prices** (Turney 1995), and some share one procedure: one treadmill ECG gives three readings. Price is therefore not a simple sum, and greedy selection is **wrong at 3 of 5 budgets**.
-- **Quantum step.** There is one qubit per test and one circuit per budget. An XY mixer swaps a test in for a test out, so **every sample has exactly five tests**. There is no penalty term: every penalty value you can choose without knowing the answer made QAOA random-level. All five circuits run as **one job** on any simulator, IonQ's included.
-- **Result.** At equal numbers of evaluated panels, one 1,000-shot job finds every budget's optimal panel **98%** of the time (ideal), or **92%** with IonQ forte-1-rate noise. The comparisons:
+- **Quantum step.** There is one qubit per test and one circuit per budget. An XY mixer swaps a test in for a test out, so **every sample has exactly five tests**. There is no penalty term: every penalty value you can choose without knowing the answer made QAOA random-level. All five circuits run as **one job**. IonQ through Qollab accepts one circuit per job, so there the run sends the μ = 0.2 circuit.
+- **Result.** At equal numbers of evaluated panels, one 1,000-shot job finds every budget's optimal panel **98%** of the time (ideal), or **92%** with IonQ's older published noise rates. The comparisons:
   - independent-choice sampler (same per-test odds, no correlations): **63%**;
   - simulated annealing: **55%**;
   - local search: **63%**.
-- **Pre-registered checks.** Both confirmatory checks **passed**.
+- **Pre-registered checks.** Both confirmatory checks **passed**. The reported-as-is IonQ Forte 1 run **missed**: IonQ's current noise model is much harsher than the older rates. A probe job showed IonQ runs our gates correctly, so the cause is noise, not a bug.
 - **What we don't claim.** No speedup: at 13 tests exhaustive search is exact and instant.
 
 | Price | Best five-test panel | AUC* |
@@ -67,7 +67,7 @@ py -3.12 -m venv .venv
 | 1 | **Replication** (already seen during exploration, so not confirmatory). At 1,000 raw shots per circuit, the share of 200 simulated jobs that recover every μ-optimum exceeds the best classical heuristic at matched pooled evaluations by ≥ 20 percentage points. | 98% vs 63%: **met** |
 | 2 | **Confirmatory.** On 50 fresh 80% subsamples of the patients (new seed 20261010, never used before), the mean ideal QAOA P(optimum given five tests) exceeds the independent-choice sampler at **every** μ. | **Passed.** 1.33×, 1.42×, 1.91×, 2.20×, 3.78×; QAOA higher in 48–50 of 50 subsamples per μ |
 | 3 | **Confirmatory.** The pre-declared run is the built-in simulator, `seed = 7`, default shots, run with `tools/run_local.py --backend basic`. For each μ, take its best sampled panel by objective; its cross-validated AUC (logistic regression, 5×3 stratified CV, `random_state = 7`) lies within 0.005 of the best AUC of any five-test panel costing no more than it. | **Passed.** Gaps 0.000, 0.002, 0.002, 0.000, 0.000 |
-| 4 | **Reported as-is.** One run on IonQ's Forte noise-model simulator, with per-μ P(optimum given five tests), the bit-order sentinel, and the closed-form expectation printed *before* the job. A miss is not evidence against the method, and a hit is not evidence of advantage. | Pending (run log will be in [`docs/runs/`](docs/runs/)) |
+| 4 | **Reported as-is.** One run on IonQ's Forte noise-model simulator, with per-μ P(optimum given five tests), the bit-order sentinel, and the closed-form expectation printed *before* the job. A miss is not evidence against the method, and a hit is not evidence of advantage. **Miss.** 0 optimal panels in 193 five-test shots; LLR −107.9, matching the independent-choice sampler. A gate probe on IonQ matched all 7 expected values, so the cause is noise. [Run log](docs/runs/2026-10-10_qollab_v1_runs.txt) |
 | 5 | **No claim** against exhaustive enumeration, which is exact and instant at 13 features. | n/a |
 
 ## Repository map

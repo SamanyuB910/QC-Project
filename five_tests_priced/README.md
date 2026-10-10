@@ -11,13 +11,13 @@ This effort is supported by Qollab & IonQ.
 ## In 30 seconds
 
 - **Problem.** A chest-pain clinic can collect only **5 of 13** measurements. The tests have **real prices**, and some share one procedure: one treadmill ECG gives three readings. Price is therefore not a simple sum, and the obvious greedy choice is **wrong at 3 of 5 budgets**.
-- **Quantum step.** There is one qubit per test and one circuit per budget. The circuit can only swap a test in for a test out, so **every sample has exactly five tests**. All five circuits go in **one job** on any simulator, IonQ's included.
-- **Result.** At equal numbers of evaluated panels, one 1,000-shot job finds every budget's optimal panel **98%** of the time. With IonQ-like noise the figure is **92%**. The comparisons manage less:
+- **Quantum step.** There is one qubit per test and one circuit per budget. The circuit can only swap a test in for a test out, so **every sample has exactly five tests**. All five circuits go in **one job**. On IonQ through Qollab, which accepts one circuit per job, the run sends the μ = 0.2 circuit.
+- **Result.** At equal numbers of evaluated panels, one 1,000-shot job finds every budget's optimal panel **98%** of the time. With IonQ's older published noise rates it is **92%**. The comparisons manage less:
   - a sampler with the same per-test odds but no correlations: **63%**;
   - simulated annealing: **55%**;
   - local search: **63%**.
   
-  Both checks we registered before running **passed**. There is **no speedup claim**: exhaustive search is exact and instant at this size.
+  Both checks we registered before running **passed**. On IonQ's current Forte 1 noise model the 238-gate circuit **missed** (section 6); a probe job showed the gates run correctly there, so the cause is noise. There is **no speedup claim**: exhaustive search is exact and instant at this size.
 
 ---
 
@@ -125,7 +125,7 @@ Probability of the optimal panel per valid sample, at μ = 0, with all angles tu
 γ = 1.7182, β = 0.1676 (one layer, frozen; tuned offline on random 80% patient subsamples, never on the answer)
 ```
 
-- **One job.** The five price-weight circuits and a bit-order check circuit go in a **single `backend.run` call**. A guard object makes a second call impossible, so the run respects IonQ's one-job-per-run rule.
+- **One job.** The five price-weight circuits and a bit-order check circuit go in a **single `backend.run` call**. A guard object makes a second call impossible, so the run respects IonQ's one-job-per-run rule. IonQ through Qollab also rejects jobs with more than one circuit, so there the run sends one circuit (μ = 0.2).
 - **Checked against an exact model on every Run.** The submitted circuit's distribution matches an exact NumPy model of the same algorithm to a total-variation distance of about 10⁻¹⁵, so a changed gate convention would be caught immediately.
 - **Trapped ions vs a lattice.** On IonQ's all-to-all connectivity each circuit needs **234–238** native two-qubit gates. The same circuit routed onto a heavy-hex lattice (IBM-style) needs **750–775** CZ gates, about 3.2× more.
 - **The comparison that matters.** The *independent-choice* sampler gives every test the same probability as the circuit but draws tests independently. Beating it shows the circuit's **correlations between qubits** do work, not just its per-test biases.
@@ -154,7 +154,22 @@ This is the chance that **one job** finds **all four** distinct optimal panels. 
 | 1 | *(replication)* At 1,000 shots the QAOA job beats the best classical heuristic by ≥ 20 points | **98% vs 63%**: met |
 | 2 | On 50 fresh 80% patient subsamples, QAOA's P(optimal panel) beats the independent-choice sampler at every price weight | **Passed.** 1.3–3.8× higher; QAOA higher in 48–50 of 50 subsamples at each μ |
 | 3 | In the declared built-in run, each budget's best sampled panel is within 0.005 AUC of the best panel at that price | **Passed.** Gaps 0.000–0.002 |
-| 4 | One IonQ Forte simulator run, reported as-is | See the run log in the GitHub repo (`docs/runs/`) |
+| 4 | One IonQ Forte simulator run, reported as-is | **Miss.** 0 optimal panels in 193 five-test shots; the samples look like the independent-choice sampler. See below |
+
+### IonQ Forte 1 noise-model simulator (claim 4, reported as-is)
+
+One circuit (μ = 0.2) × 1,000 shots through Qollab, Sat Oct 10, 2026. IonQ job `01a12765-eba3-7143-8c4e-c19db91ce475`.
+
+| | IonQ run | Ideal circuit | Independent-choice | Uniform |
+|---|---|---|---|---|
+| Shots with exactly five tests | 193 of 1,000 | 223 expected | n/a | n/a |
+| P(optimal panel given five tests) [95% CI] | **0.000** [0.000, 0.020] | 0.021 | 0.004 | 0.0008 |
+| Log-likelihood ratio, ideal vs independent | **−107.9** | +111.8 ± 15.0 | −119.2 ± 17.0 | n/a |
+
+- **A miss.** The optimal panel never appeared, and the samples look like the independent-choice sampler, not the ideal circuit.
+- **Not a bug.** A second IonQ job ran a shallow probe with known answers for every gate type we submit. All seven readings matched within noise; for example RZZ(π/2) gave 0.482 against 0.500. The main run's per-test frequencies correlate 0.66 with the ideal circuit's, and only 0.06 if the bit order were reversed. IonQ runs our gates with Qiskit's conventions.
+- **The cause is noise.** Each circuit has 238 two-qubit gates. By per-sample log-likelihood, the IonQ run sits about a quarter of the way from random panels to the ideal circuit. Our Aer reference with IonQ's older published rates sits about two thirds of the way. The 92% row above is therefore optimistic for IonQ's current model.
+- Raw counts and both run logs are in the GitHub repo (`docs/runs/`). If a later IonQ job fails, the program shows these counts, labelled as a cached run.
 
 ### Honest accuracy (panel re-selected on training patients, scored on unseen patients)
 
@@ -180,7 +195,7 @@ The honest numbers are lower than the optimistic ladder in section 1, as they sh
 
 - **No quantum advantage and no speedup.** With 13 tests, exhaustive search is exact and instant.
 - **No clinical recommendation.** The prices are 1992 and relative, and the cohort is a referral population.
-- **Not IonQ's current noise model.** The noisy figures use IonQ's documented legacy depolarizing rates. A live IonQ simulator run is reported as-is.
+- **Not IonQ's current noise model.** The 92% figure uses IonQ's documented legacy depolarizing rates. IonQ's current Forte 1 model is harsher, and our live run there missed (section 6).
 
 ## 8. What would have to change for this to matter
 

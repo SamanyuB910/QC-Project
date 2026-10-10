@@ -30,7 +30,7 @@ import ftp_core as core
 import ftp_quantum as quantum
 import ftp_report as rep
 
-BUILD = "v1.2 2026-10-10"
+BUILD = "v1.3 2026-10-10"
 ATTRIBUTION = "This effort is supported by Qollab & IonQ."
 
 
