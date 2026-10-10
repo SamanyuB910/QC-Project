@@ -30,7 +30,7 @@ import ftp_core as core
 import ftp_quantum as quantum
 import ftp_report as rep
 
-BUILD = "v1-dev 2026-10-10 (phase 2)"
+BUILD = "v1 2026-10-10"
 ATTRIBUTION = "This effort is supported by Qollab & IonQ."
 
 
@@ -49,6 +49,74 @@ def _load_json(which):
     except Exception as e:  # noqa: BLE001
         print(f"  (could not read results/{which}.json: {type(e).__name__})")
         return None
+
+
+def _print_evidence(pre, show_figures):
+    """Section 5: the evidence that cannot be recomputed in a few seconds, read from results/precomputed.json."""
+    ev = pre.get("evidence", {})
+    if not ev:
+        return
+    prov = pre.get("provenance", {})
+    rep.section("5. Precomputed evidence (offline runs; file results/precomputed.json)")
+
+    rec = ev.get("recovery")
+    if rec:
+        cols = ["100", "200", "500", "1000"]
+        rows = [[name] + [rep.pct(rec["quantum_exact"][c][name]) for c in cols]
+                for name in ("ideal QAOA circuit", "independent-choice", "uniform five-test panels")]
+        noisy = ev.get("noisy")
+        if noisy:
+            rows.insert(1, ["QAOA circuit, IonQ forte-1-rate noise"] +
+                        [rep.pct(noisy["closed_form_all_found"][c]) for c in cols])
+        for name, d in rec["classical_pooled_200_jobs"].items():
+            rows.append([name] + [rep.pct(d[str(rec["shots_to_evals"][c])]["all_found_rate"]) for c in cols])
+        rep.table(["method", "100 shots (22 evals)", "200 (44)", "500 (111)", "1000 (222)"], rows,
+                  note="chance ONE job finds all 4 optimal panels. Quantum rows: exact formula (noisy row from a "
+                       "10,000-shot noisy reference); classical rows: 200 seeded jobs with the same number of "
+                       f"evaluated panels per price weight [precomputed {prov.get('baselines', {}).get('created', '?')}]")
+
+    pen = ev.get("penalty")
+    if pen:
+        rows = [[r["method"], r["p"], r["two_qubit_gates"], f"{r['P_opt_given_five']:.4f}",
+                 f"{r['P_opt_per_raw_shot']:.5f}"] for r in pen["rows"]]
+        rep.table(["formulation (mu = 0)", "layers p", "2-qubit gates", "P(optimum | 5 tests)",
+                   "P(optimum) per raw shot"], rows,
+                  note=f"QCA's penalty term vs the XY mixer, all angles tuned without knowing the answer. Penalty "
+                       f"values: Qiskit automatic {pen['P_auto']:.3f}, textbook bound {pen['P_bound']:.3f}, "
+                       f"smallest valid {pen['P_min']:.4f} (finding it requires solving the problem). "
+                       f"Random 5-test panel: 0.00078.")
+
+    hc = ev.get("honest_cv")
+    if hc:
+        rows = [[r["selection"], f"{r['AUC']:.3f} [{r['AUC_ci'][0]:.3f}, {r['AUC_ci'][1]:.3f}]",
+                 f"{r['per_repeat_AUC']:.3f}", rep.money(r["mean_cost"]) if r["mean_cost"] else "n/a"]
+                for r in hc["rows"]]
+        rep.table(["panel chosen inside each training fold by", "held-out AUC [95% CI]", "per-repeat AUC",
+                   "mean panel price"], rows,
+                  note="honest numbers: the panel is re-selected on training patients only, then scored on unseen "
+                       "patients (lower than the optimistic price ladder in section 2)")
+
+    gt = ev.get("gates")
+    if gt:
+        rows = [[mu, a, b, c] for mu, a, b, c in zip(gt["mu"], gt["ionq_native_zz"], gt["cz_all_to_all"],
+                                                    gt["cz_heavy_hex"])]
+        rep.table(["mu", "IonQ native ZZ (all-to-all)", "IBM CZ, all-to-all", "IBM CZ, heavy-hex routed"], rows,
+                  note="the same circuit on trapped ions vs a superconducting heavy-hex lattice")
+
+    for key, title in (("confirm2", "pre-registered check 2"), ("confirm3", "pre-registered check 3")):
+        c = ev.get(key)
+        if not c:
+            continue
+        print(f"  {title}: {'PASSED' if c['passed'] else 'NOT PASSED'} -- {c['claim']}")
+        if key == "confirm2":
+            for r in c["rows"]:
+                print(f"    mu={r['mu']}: QAOA {r['mean_qaoa']:.4f} vs independent-choice {r['mean_independent']:.4f} "
+                      f"({r['ratio']:.2f}x; QAOA higher in {r['subsamples_qaoa_higher']} of 50 subsamples)")
+        else:
+            for r in c["rows"]:
+                print(f"    mu={r['mu']}: best sampled panel ${r['cost']:.2f} AUC {r['auc']:.3f}; best possible "
+                      f"at that price {r['best_auc_at_or_below_cost']:.3f} (gap {r['gap']:.3f})")
+        print()
 
 
 def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: int = 7, run_baselines: bool = True, revalidate_auc: bool = False, show_figures: bool = True, dump_counts: bool = False):
@@ -297,7 +365,9 @@ def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: i
                     f"{sum(t_ in ls_pool for t_ in targets)} of {len(targets)}"]],
                   note="classical evaluations are microsecond function calls: this compares sample quality, not speed")
 
-    rep.section("5. What this does not claim")
+    _print_evidence(pre, show_figures)
+
+    rep.section("6. What this does not claim")
     print("  * No advantage over exhaustive search: at 13 tests it is exact and takes milliseconds (section 2).")
     print("  * No speedup. The quantum job is compared on sample quality at equal numbers of samples.")
     print("  * Prices are 1992 Ontario fees, used as relative costs; patients are a referral cohort, not screening.")

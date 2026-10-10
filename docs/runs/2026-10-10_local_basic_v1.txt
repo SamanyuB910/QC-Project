@@ -1,0 +1,174 @@
+Five Tests, Priced   [build v1 2026-10-10]
+This effort is supported by Qollab & IonQ.
+Theme: Quantum Impact. QCA Prompt B: pick 5 of 13 heart-disease measurements, now with real prices.
+
+
+1. The decision
+---------------
+  297 Cleveland chest-pain patients (137 with heart disease), 13 possible measurements.
+  The clinic can collect only 5. Tests have real prices (Turney 1995, Ontario fee schedule 1992, CAD),
+  and some share one procedure: pay for the procedure once, the extra readings are almost free.
+  shared procedure     | tests                 | paid once
+  ---------------------+-----------------------+----------
+  blood draw           | chol, fbs             | $2.10    
+  thallium stress test | thalach, thal         | $101.90  
+  treadmill ECG        | exang, oldpeak, slope | $86.30   
+  price self-test: polynomial vs table on all 8,192 subsets, max difference 1.4e-14
+
+
+2. Classical first: exhaustive search is exact and instant at 13 tests
+----------------------------------------------------------------------
+  price weight mu | exact best 5-test panel          | price   | CV AUC | greedy          | greedy + 1-swap
+  ----------------+----------------------------------+---------+--------+-----------------+----------------
+  0.0             | sex, cp, slope, ca, thal         | $293.10 | 0.911  | rank 3 of 1287  | optimal        
+  0.02            | cp, trestbps, thalach, ca, thal  | $206.80 | 0.902  | rank 7 of 1287  | optimal        
+  0.05            | cp, trestbps, thalach, ca, thal  | $206.80 | 0.902  | optimal         | optimal        
+  0.1             | sex, cp, trestbps, thalach, thal | $106.90 | 0.878  | rank 26 of 1287 | rank 26        
+  0.2             | age, sex, cp, trestbps, fbs      | $9.20   | 0.838  | optimal         | optimal        
+  exhaustive search over all 1,287 panels x 5 price weights took 0.00s; greedy misses the optimum at 3 of 5 price weights
+
+  price   | panel (cheapest way to reach this AUC) | CV AUC
+  --------+----------------------------------------+-------
+  $9.20   | age, sex, cp, trestbps, fbs            | 0.838 
+  $11.27  | age, sex, cp, trestbps, chol           | 0.839 
+  $19.50  | age, sex, cp, trestbps, restecg        | 0.842 
+  $91.30  | age, sex, cp, oldpeak, slope           | 0.875 
+  $106.90 | sex, cp, trestbps, thalach, thal       | 0.878 
+  $191.20 | sex, cp, trestbps, slope, ca           | 0.902 
+  $206.80 | sex, cp, thalach, ca, thal             | 0.904 
+  $293.10 | sex, cp, slope, ca, thal               | 0.911 
+  [precomputed] cost-vs-accuracy front of all 1,287 five-test panels (logistic regression, 5x3 CV, all 297 patients; optimistic: best of many)
+
+  Figure description: a staircase of the best cross-validated AUC reachable at each panel price, from $9.20 (AUC 0.838) to $293.10 (AUC 0.911); diamonds mark the exact optimum at each price weight. The numbers are the table above.
+C:\VS Code Projects\QC Hackathon\five_tests_priced\ftp_report.py:76: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+
+3. The quantum step: one job, 13 qubits, exactly five tests in every sample
+---------------------------------------------------------------------------
+  backend: qiskit.providers.basic_provider.basic_simulator.BasicSimulator name='basic_simulator'  ->  treated as 'basic'
+  built 6 circuit(s) in 0.3s; two-qubit gates (RZZ) per circuit: [234, 238, 238, 238, 238]
+  check: submitted circuit vs exact NumPy model, total-variation distance 9.3e-16 (P(five tests) = 0.2228, expected 0.2228)
+  sampler (same shots)  | 100 shots | 200 shots | 500 shots | 1000 shots <- this run
+  ----------------------+-----------+-----------+-----------+-----------------------
+  ideal QAOA circuit    | 7%        | 30%       | 83%       | 98%                   
+  independent-choice    | 0%        | 3%        | 26%       | 63%                   
+  uniform 5-test panels | 0%        | 0%        | 2%        | 11%                   
+  PREDICTION, computed before the job: chance that one job samples all 4 distinct optimal panel(s) at least once (exact formula; noise lowers the QAOA row)
+
+  Figure description: three curves of the chance that one job finds every optimal panel versus shots per circuit (log scale). The ideal circuit rises fastest (about 83% at 500 shots, 98% at 1,000), the independent-choice sampler slower (26%, 63%), uniform panels slowest (2%, 11%). The numbers are the table above.
+C:\VS Code Projects\QC Hackathon\five_tests_priced\ftp_report.py:99: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+  submitting ONE job: 6 circuit(s) x 1000 shots ...
+  job submitted (id 86901c2d-847e-4946-92ae-61c1a891b0e8); waiting for results ...
+  job finished in 0.6s
+  bit-order check: yes (100% of shots read the expected panel age, sex, cp, trestbps, fbs; readout noise explains the rest)
+
+4. What the samples show [live run on basic, 1000 shots per circuit]
+--------------------------------------------------------------------
+  mu   | five-test shots | P(optimal panel) observed [95% CI] | ideal circuit | independent-choice | uniform | best sample = optimum?
+  -----+-----------------+------------------------------------+---------------+--------------------+---------+-----------------------
+  0.0  | 230 of 1000     | 0.0174 [0.0068, 0.0439]            | 0.0229        | 0.0137             | 0.0008  | yes                   
+  0.02 | 207 of 1000     | 0.0145 [0.0049, 0.0417]            | 0.0070        | 0.0044             | 0.0008  | yes                   
+  0.05 | 244 of 1000     | 0.0041 [0.0007, 0.0228]            | 0.0057        | 0.0025             | 0.0008  | yes                   
+  0.1  | 224 of 1000     | 0.0045 [0.0008, 0.0249]            | 0.0150        | 0.0038             | 0.0008  | yes                   
+  0.2  | 216 of 1000     | 0.0185 [0.0072, 0.0466]            | 0.0208        | 0.0039             | 0.0008  | yes                   
+  independent-choice = same per-test odds as the circuit, tests drawn independently (isolates what correlations between qubits add)
+
+  pooled over the job: 4 of 4 distinct optimal panels sampled
+    yes     $9.20  age, sex, cp, trestbps, fbs
+    yes   $106.90  sex, cp, trestbps, thalach, thal
+    yes   $206.80  cp, trestbps, thalach, ca, thal
+    yes   $293.10  sex, cp, slope, ca, thal
+
+  mu   | log-likelihood ratio (ideal vs independent) | expected if ideal | expected if independent | samples look like
+  -----+---------------------------------------------+-------------------+-------------------------+------------------
+  0.0  | +77.7                                       | +66.1 +- 13.4     | -75.8 +- 15.5           | ideal circuit    
+  0.02 | +65.7                                       | +51.7 +- 10.8     | -63.1 +- 14.5           | ideal circuit    
+  0.05 | +64.3                                       | +72.7 +- 11.6     | -85.4 +- 14.9           | ideal circuit    
+  0.1  | +76.2                                       | +92.2 +- 13.1     | -108.9 +- 17.1          | ideal circuit    
+  0.2  | +131.1                                      | +125.1 +- 15.9    | -133.4 +- 18.0          | ideal circuit    
+  a per-run test that the samples carry the circuit's correlations, not just its per-test odds
+
+  method (same number of evaluated panels per price weight) | distinct optima found
+  ----------------------------------------------------------+----------------------
+  QAOA job (this run)                                       | 4 of 4               
+  simulated annealing (one seeded run)                      | 4 of 4               
+  random-restart local search (one seeded run)              | 4 of 4               
+  classical evaluations are microsecond function calls: this compares sample quality, not speed
+
+
+5. Precomputed evidence (offline runs; file results/precomputed.json)
+---------------------------------------------------------------------
+  method                                | 100 shots (22 evals) | 200 (44) | 500 (111) | 1000 (222)
+  --------------------------------------+----------------------+----------+-----------+-----------
+  ideal QAOA circuit                    | 7%                   | 30%      | 83%       | 98%       
+  QAOA circuit, IonQ forte-1-rate noise | 2%                   | 12%      | 59%       | 92%       
+  independent-choice                    | 0%                   | 3%       | 26%       | 63%       
+  uniform five-test panels              | 0%                   | 0%       | 2%        | 11%       
+  simulated annealing (T0=0.1)          | 0%                   | 2%       | 28%       | 48%       
+  simulated annealing (T0=0.3)          | 0%                   | 3%       | 24%       | 55%       
+  random-restart local search           | 0%                   | 1%       | 20%       | 63%       
+  chance ONE job finds all 4 optimal panels. Quantum rows: exact formula (noisy row from a 10,000-shot noisy reference); classical rows: 200 seeded jobs with the same number of evaluated panels per price weight [precomputed 2026-10-10T15:22:09]
+
+  formulation (mu = 0)                                | layers p | 2-qubit gates | P(optimum | 5 tests) | P(optimum) per raw shot
+  ----------------------------------------------------+----------+---------------+----------------------+------------------------
+  XY mixer (always exactly five tests)                | 1        | 234           | 0.0200               | 0.00446                
+  penalty, Qiskit's automatic value                   | 1        | 78            | 0.0008               | 0.00037                
+  penalty, textbook bound (no answer needed)          | 1        | 78            | 0.0008               | 0.00039                
+  penalty, 2x smallest valid value (needs the answer) | 1        | 78            | 0.0013               | 0.00063                
+  XY mixer (always exactly five tests)                | 2        | 468           | 0.0491               | 0.01095                
+  penalty, Qiskit's automatic value                   | 2        | 156           | 0.0008               | 0.00052                
+  penalty, textbook bound (no answer needed)          | 2        | 156           | 0.0008               | 0.00056                
+  penalty, 2x smallest valid value (needs the answer) | 2        | 156           | 0.0049               | 0.00259                
+  XY mixer (always exactly five tests)                | 3        | 702           | 0.0611               | 0.01361                
+  penalty, Qiskit's automatic value                   | 3        | 234           | 0.0008               | 0.00058                
+  penalty, textbook bound (no answer needed)          | 3        | 234           | 0.0009               | 0.00069                
+  penalty, 2x smallest valid value (needs the answer) | 3        | 234           | 0.0195               | 0.00959                
+  QCA's penalty term vs the XY mixer, all angles tuned without knowing the answer. Penalty values: Qiskit automatic 3.120, textbook bound 0.395, smallest valid 0.0139 (finding it requires solving the problem). Random 5-test panel: 0.00078.
+
+  panel chosen inside each training fold by | held-out AUC [95% CI] | per-repeat AUC | mean panel price
+  ------------------------------------------+-----------------------+----------------+-----------------
+  cost-aware QUBO, mu=0.0                   | 0.889 [0.849, 0.923]  | 0.874          | $289.94         
+  cost-aware QUBO, mu=0.02                  | 0.887 [0.847, 0.922]  | 0.868          | $248.93         
+  cost-aware QUBO, mu=0.1                   | 0.868 [0.826, 0.905]  | 0.846          | $100.61         
+  cost-aware QUBO, mu=0.2                   | 0.827 [0.776, 0.870]  | 0.818          | $18.95          
+  SelectKBest (mutual information), 5 tests | 0.895 [0.857, 0.928]  | 0.887          | n/a             
+  L1-logistic, 5 tests                      | 0.890 [0.852, 0.924]  | 0.884          | n/a             
+  all 13 tests                              | 0.902 [0.865, 0.934]  | 0.897          | n/a             
+  honest numbers: the panel is re-selected on training patients only, then scored on unseen patients (lower than the optimistic price ladder in section 2)
+
+  mu   | IonQ native ZZ (all-to-all) | IBM CZ, all-to-all | IBM CZ, heavy-hex routed
+  -----+-----------------------------+--------------------+-------------------------
+  0.0  | 234                         | 312                | 750                     
+  0.02 | 238                         | 316                | 775                     
+  0.05 | 238                         | 316                | 775                     
+  0.1  | 238                         | 316                | 775                     
+  0.2  | 238                         | 316                | 775                     
+  the same circuit on trapped ions vs a superconducting heavy-hex lattice
+
+  pre-registered check 2: PASSED -- On 50 fresh 80% subsamples (seed 20261010), mean ideal QAOA P(optimum | five tests) exceeds the independent-choice sampler at every price weight.
+    mu=0.0: QAOA 0.0391 vs independent-choice 0.0294 (1.33x; QAOA higher in 48 of 50 subsamples)
+    mu=0.02: QAOA 0.0306 vs independent-choice 0.0215 (1.42x; QAOA higher in 48 of 50 subsamples)
+    mu=0.05: QAOA 0.0170 vs independent-choice 0.0089 (1.91x; QAOA higher in 49 of 50 subsamples)
+    mu=0.1: QAOA 0.0139 vs independent-choice 0.0063 (2.20x; QAOA higher in 48 of 50 subsamples)
+    mu=0.2: QAOA 0.0166 vs independent-choice 0.0044 (3.78x; QAOA higher in 50 of 50 subsamples)
+
+  pre-registered check 3: PASSED -- For each price weight, the best sampled panel's CV AUC lies within 0.005 of the best AUC of any five-test panel costing no more than it (declared run: built-in simulator, seed 7, 1000 shots).
+    mu=0.0: best sampled panel $293.10 AUC 0.911; best possible at that price 0.911 (gap 0.000)
+    mu=0.02: best sampled panel $206.80 AUC 0.902; best possible at that price 0.904 (gap 0.002)
+    mu=0.05: best sampled panel $206.80 AUC 0.902; best possible at that price 0.904 (gap 0.002)
+    mu=0.1: best sampled panel $106.90 AUC 0.878; best possible at that price 0.878 (gap 0.000)
+    mu=0.2: best sampled panel $9.20 AUC 0.838; best possible at that price 0.838 (gap 0.000)
+
+
+6. What this does not claim
+---------------------------
+  * No advantage over exhaustive search: at 13 tests it is exact and takes milliseconds (section 2).
+  * No speedup. The quantum job is compared on sample quality at equal numbers of samples.
+  * Prices are 1992 Ontario fees, used as relative costs; patients are a referral cohort, not screening.
+  * The AUC front is the best of 1,287 panels on all patients (optimistic); re-selecting the panel
+    inside each cross-validation fold gives lower, honest numbers (project page, 'Results').
+
+Done in 1.5s. This effort is supported by Qollab & IonQ.
+
+[run_local] backend=basic run() calls=1 main() wall time=1.5s

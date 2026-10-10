@@ -219,18 +219,20 @@ def independent_choice(p_feas):
     return prod / prod.sum()
 
 
-def closed_form_all_found(dists, targets, shots):
+def closed_form_all_found(dists, targets, shots, p_hw5=None):
     """Exact probability that ONE job (len(dists) circuits x `shots` raw shots each) samples every target panel
     at least once. dists: list of probability vectors over FEAS_IDX (one per circuit); targets: distinct panels.
-    Inclusion-exclusion over missed subsets; each raw shot is a five-test sample with probability P_HW5."""
+    Inclusion-exclusion over missed subsets; each raw shot is a five-test sample with probability p_hw5
+    (P_HW5 = 0.2228 for the ideal circuit; a per-circuit list for noisy reference data)."""
     from itertools import combinations
+    hw5 = [P_HW5] * len(dists) if p_hw5 is None else list(p_hw5)
     pos = [int(POS_IN_FEAS[t]) for t in targets]
     total = 0.0
     for k in range(len(pos) + 1):
         for T in combinations(pos, k):
             term = 1.0
-            for p in dists:
-                term *= (1.0 - P_HW5 * float(sum(p[i] for i in T))) ** shots
+            for p, h in zip(dists, hw5):
+                term *= (1.0 - h * float(sum(p[i] for i in T))) ** shots
             total += (-1) ** k * term
     return max(0.0, min(1.0, total))
 
