@@ -215,6 +215,8 @@ The honest numbers are lower than the optimistic ladder in section 1, as they sh
 | `ftp_report.py` | Tables and accessible figures |
 | `results/precomputed.json` | AUC table, evidence tables, provenance |
 
+**Reading the code:** start at `main()` in `main.py`. It is a table of contents with one function per section of the printed report, and every file opens with a plain-language overview.
+
 **To extend:**
 - **Change prices:** edit `EXPENSE` and `GROUPS` in `ftp_core.py`.
 - **Change k:** set `K`.

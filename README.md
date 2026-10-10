@@ -74,7 +74,7 @@ py -3.12 -m venv .venv
 
 | Path | What it is |
 |---|---|
-| [`five_tests_priced/`](five_tests_priced/) | **The project**: exactly the files uploaded to Qollab. Its README is the project page. |
+| [`five_tests_priced/`](five_tests_priced/) | **The project**: exactly the files uploaded to Qollab. Its README is the project page. To read the code, start at `main()` in `main.py`: one function per section of the output. |
 | [`tools/`](tools/) | Offline only: `precompute.py` (every precomputed number, with provenance), `run_local.py`, the Qollab smoke test, `tests/` |
 | [`docs/`](docs/) | Video script, submission checklist, Qollab steps, [disclosure](docs/DISCLOSURE.md), archived run outputs |
 | `research_notes/`, `reports/`, `ideation/` | Supporting research (Oct 7–10); see [disclosure](docs/DISCLOSURE.md) for what predates the build window |
