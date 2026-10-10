@@ -78,3 +78,20 @@ CONCLUSION (pre-registered claim 4, reported as-is): IonQ executes every gate ty
 conventions (run 4), so the weak result of run 3 is the noise of IonQ's current (post-September-2025,
 undocumented) Forte 1 noise model acting on a 238-two-qubit-gate circuit -- not a bug in the circuit or the
 pipeline. On the built-in (ideal) simulator the same circuits behave exactly as the exact model predicts.
+
+============================================================================================================
+RUN 5 (final build check): built-in simulator, build v1.3, default settings. Done in 3.6 s.
+============================================================================================================
+  Identical to run 1: 6 circuits x 1000 shots in one job, TVD 9.8e-16, bit-order check yes (100%),
+  per-mu P(optimal panel) 0.0174 / 0.0145 / 0.0041 / 0.0045 / 0.0185, 4 of 4 distinct optima sampled,
+  pre-registered checks 2 and 3 PASSED.
+
+============================================================================================================
+RUN 6 (final build check): IonQ Forte 1 simulator (29q, noise model, free), build v1.3, default settings.
+IonQ job 01a12775-ec14-7a0c-919d-84885ab2de1e. Circuit execution 13.0 s; job 136.4 s with queueing; run 139.1 s.
+============================================================================================================
+  single-circuit mode, mu = 0.2, 1 circuit x 1000 shots, 238 RZZ, TVD 1.0e-15
+  0.2 | 193 of 1000 | 0.0000 [0.0000, 0.0195] | ideal 0.0208 | independent-choice 0.0039 | uniform 0.0008 | no
+  log-likelihood ratio -107.9 (expected +111.8 +- 15.0 if ideal, -119.2 +- 17.0 if independent) -> independent-choice
+  -> exactly the same numbers as run 3 (build v1.1): IonQ's noise-model simulator returns rounded expected
+     counts, so the same circuit gives the same counts every time.

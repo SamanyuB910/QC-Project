@@ -5,8 +5,8 @@ This effort is supported by Qollab & IonQ.
 
 Press Run. The runtime calls main() with the settings below and passes in the simulator you picked as `backend`.
 Defaults are chosen per backend; on IonQ the whole run is exactly ONE job.
-  shots          0 = automatic (built-in 1000 per circuit, IonQ 500, IBM noise models 8)
-  circuits       "auto", "all" (5 price points + bit-order check in one job) or "single" (one price point)
+  shots          0 = automatic (built-in and IonQ 1000 per circuit, IBM noise models 8)
+  circuits       "auto", "all" (5 price points + bit-order check in one job) or "single" (one price point; what IonQ through Qollab gets)
   single_mu      price weight used when circuits = "single"
   seed           seed for the simulator and the classical baselines
   run_baselines  also run simulated annealing / local search with the same number of evaluations
@@ -30,7 +30,7 @@ import ftp_core as core
 import ftp_quantum as quantum
 import ftp_report as rep
 
-BUILD = "v1.3 2026-10-10"
+BUILD = "v1.4 2026-10-10"
 ATTRIBUTION = "This effort is supported by Qollab & IonQ."
 
 
@@ -93,7 +93,7 @@ def _print_evidence(pre, show_figures):
                 for name in ("ideal QAOA circuit", "independent-choice", "uniform five-test panels")]
         noisy = ev.get("noisy")
         if noisy:
-            rows.insert(1, ["QAOA circuit, IonQ forte-1-rate noise"] +
+            rows.insert(1, ["QAOA circuit, IonQ older noise rates"] +
                         [rep.pct(noisy["closed_form_all_found"][c]) for c in cols])
         for name, d in rec["classical_pooled_200_jobs"].items():
             rows.append([name] + [rep.pct(d[str(rec["shots_to_evals"][c])]["all_found_rate"]) for c in cols])
@@ -267,7 +267,7 @@ def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: i
         print(f"  note: this simulator applies noise shot by shot in your browser, so the default is {S} shots per "
               f"circuit (set 'shots' to change it); expect up to a minute or two.")
     elif kind == "ionq":
-        print("  note: IonQ's cloud simulator runs once per shot; with queueing this can take a few minutes.")
+        print("  note: IonQ's simulator runs in IonQ's cloud; with queueing this can take a few minutes.")
 
     targets = sorted({core.exact_optimum(fs[mu]) for mu in mus})
     dists_ideal = [p_ideal[mu] for mu in mus]
