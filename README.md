@@ -1,5 +1,7 @@
 # Five Tests, Priced
 
+[![tests](https://github.com/SamanyuB910/QC-Project/actions/workflows/tests.yml/badge.svg)](https://github.com/SamanyuB910/QC-Project/actions/workflows/tests.yml)
+
 **Which five heart tests should a clinic order, and what does each extra dollar buy? A 13-qubit QAOA answers that for five budgets at once, in a single job.**
 
 **This effort is supported by Qollab & IonQ.**

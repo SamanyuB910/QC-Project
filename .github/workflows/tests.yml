@@ -1,0 +1,27 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -r requirements.txt
+      - name: Tests (Qollab rules, model, circuits vs exact model, one-job rule, backends, evidence)
+        env:
+          MPLBACKEND: Agg
+        run: python -m pytest tools/tests -q
+      - name: Run the project like Qollab does (built-in simulator)
+        env:
+          MPLBACKEND: Agg
+        run: python tools/run_local.py --backend basic --set show_figures=false
