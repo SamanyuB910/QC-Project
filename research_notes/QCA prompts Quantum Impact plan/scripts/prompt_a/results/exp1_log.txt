@@ -1,0 +1,11 @@
+n=4 rep=1 fold=0 done 50s
+n=4 rep=0 fold=0 done 54s
+n=4 rep=4 fold=0 done 54s
+n=8 rep=0 fold=0 done 55s
+n=8 rep=2 fold=0 done 55s
+n=4 rep=3 fold=0 done 55s
+n=8 rep=4 fold=0 done 55s
+n=8 rep=3 fold=0 done 57s
+n=8 rep=1 fold=0 done 57s
+n=4 rep=2 fold=0 done 57s
+n=4 rep=1 fold=1 done 82s

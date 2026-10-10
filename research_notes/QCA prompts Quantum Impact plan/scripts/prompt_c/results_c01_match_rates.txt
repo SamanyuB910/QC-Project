@@ -1,0 +1,65 @@
+GeoJSON M>=5 features: 1504  type==earthquake: 1504
+
+N = 1504 (2024, M>=5, earthquakes)
+shallow (<70 km) & M>=7                                 M=    8  M/N= 0.00532  1/rate=   188.0
+M>=7 (any depth)                                        M=   10  M/N= 0.00665  1/rate=   150.4
+shallow (<70 km) & M>=6.5                               M=   18  M/N= 0.01197  1/rate=    83.6
+shallow (<70 km) & M>=6                                 M=   72  M/N= 0.04787  1/rate=    20.9
+shallow (<70 km) & M>=7.5 (tsunamigenic-class)          M=    1  M/N= 0.00066  1/rate=  1504.0
+USGS tsunami flag == 1                                  M=   62  M/N= 0.04122  1/rate=    24.3
+tsunami flag & shallow & M>=6.5                         M=   15  M/N= 0.00997  1/rate=   100.3
+PAGER alert not null                                    M=  533  M/N= 0.35439  1/rate=     2.8
+PAGER alert == green                                    M=  513  M/N= 0.34109  1/rate=     2.9
+PAGER alert == yellow                                   M=   18  M/N= 0.01197  1/rate=    83.6
+PAGER alert == orange                                   M=    0  M/N= 0.00000  1/rate=  1504.0
+PAGER alert == red                                      M=    2  M/N= 0.00133  1/rate=   752.0
+PAGER alert in {yellow,orange,red}                      M=   20  M/N= 0.01330  1/rate=    75.2
+PAGER alert in {orange,red}                             M=    2  M/N= 0.00133  1/rate=   752.0
+felt reports >= 100 (DYFI)                              M=   44  M/N= 0.02926  1/rate=    34.2
+felt reports >= 1000 (DYFI)                             M=    9  M/N= 0.00598  1/rate=   167.1
+significance sig >= 600 (USGS 'significant' feed)       M=   84  M/N= 0.05585  1/rate=    17.9
+deep (>=300 km)                                         M=   60  M/N= 0.03989  1/rate=    25.1
+shallow (<70 km)                                        M= 1218  M/N= 0.80984  1/rate=     1.2
+
+Product types present on events (fraction of N):
+  origin                        1504  1.000
+  phase-data                    1504  1.000
+  internal-moment-tensor         778  0.517
+  moment-tensor                  736  0.489
+  dyfi                           601  0.400
+  shakemap                       559  0.372
+  losspager                      533  0.354
+  internal-origin                228  0.152
+  ground-failure                 124  0.082
+  impact-text                     75  0.050
+  impact-link                     62  0.041
+  oaf                             21  0.014
+  event-sequence                  15  0.010
+  associate                       13  0.009
+  general-text                    12  0.008
+  finite-fault                    10  0.007
+  earthquake-name                  7  0.005
+  shake-alert                      5  0.003
+  nearby-cities                    5  0.003
+  focal-mechanism                  3  0.002
+  scitech-link                     3  0.002
+  general-link                     3  0.002
+  trump-ground-failure             2  0.001
+  trump-origin                     1  0.001
+
+M>=7 events in 2024:
+  M7.5 depth=  10.0 alert=red tsunami=1 felt=422 2024 Noto Peninsula, Japan Earthquake
+  M7.4 depth= 127.3 alert=green tsunami=1 felt=216 41 km ESE of San Pedro de Atacama, Chile
+  M7.4 depth=  40.0 alert=yellow tsunami=1 felt=635 15 km S of Hualien City, Taiwan
+  M7.3 depth=  54.4 alert=yellow tsunami=1 felt=77 24 km WNW of Port-Vila, Vanuatu
+  M7.2 depth=  24.0 alert=yellow tsunami=1 felt=115 10 km WSW of Atiquipa, Peru
+  M7.1 depth=  24.0 alert=yellow tsunami=0 felt=45 2024 Hyuganada Sea, Japan Earthquake
+  M7.1 depth= 639.5 alert=green tsunami=1 felt=29 106 km WSW of Sangay, Philippines
+  M7.0 depth=  10.0 alert=yellow tsunami=1 felt=16883 2024 Offshore Cape Mendocino, California Earthquake
+  M7.0 depth=  29.0 alert=green tsunami=1 felt=18 102 km E of Petropavlovsk-Kamchatsky, Russia
+  M7.0 depth=  13.0 alert=red tsunami=0 felt=471 128 km WNW of Aykol, China
+
+M>=4.5 2024 CSV: N=6397; shallow&M>=7: 8 (rate 0.00125); shallow&M>=6: 72 (rate 0.01126)
+
+Index bits: N=1504 -> n=11 ; N=6397 -> n=13
+wrote data/catalog_2024_m5_slim.json

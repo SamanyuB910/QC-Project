@@ -1,0 +1,176 @@
+{
+ "info": {
+  "R": 1.1,
+  "norb": 12,
+  "qubits": 24,
+  "n_reps": 1,
+  "fci_dim": 627264,
+  "E_FCI": -109.0767063896504,
+  "err_mHa": {
+   "HF": 122.910148759388,
+   "CCSD": 2.505675179392597,
+   "CCSD(T)": 0.805763729530895
+  },
+  "ccsd_converged": true
+ },
+ "results": [
+  {
+   "source": "UCJ_all_to_all F=1.0",
+   "native_ZZ": 484,
+   "cap_strings": 30,
+   "n_strings_used": 16,
+   "dim": 256,
+   "err_mHa": 38.381
+  },
+  {
+   "source": "UCJ_all_to_all F=1.0",
+   "native_ZZ": 484,
+   "cap_strings": 60,
+   "n_strings_used": 16,
+   "dim": 256,
+   "err_mHa": 38.381
+  },
+  {
+   "source": "UCJ_all_to_all F=1.0",
+   "native_ZZ": 484,
+   "cap_strings": 120,
+   "n_strings_used": 16,
+   "dim": 256,
+   "err_mHa": 38.381
+  },
+  {
+   "source": "UCJ_all_to_all F=0.078",
+   "native_ZZ": 484,
+   "cap_strings": 30,
+   "n_strings_used": 30,
+   "dim": 900,
+   "err_mHa": 65.969
+  },
+  {
+   "source": "UCJ_all_to_all F=0.078",
+   "native_ZZ": 484,
+   "cap_strings": 60,
+   "n_strings_used": 60,
+   "dim": 3600,
+   "err_mHa": 58.752
+  },
+  {
+   "source": "UCJ_all_to_all F=0.078",
+   "native_ZZ": 484,
+   "cap_strings": 120,
+   "n_strings_used": 120,
+   "dim": 14400,
+   "err_mHa": 56.793
+  },
+  {
+   "source": "UCJ_all_to_all unique correct-N strings in 20000 ideal shots",
+   "value": 16
+  },
+  {
+   "source": "LUCJ_heavyhex_like F=1.0",
+   "native_ZZ": 378,
+   "cap_strings": 30,
+   "n_strings_used": 6,
+   "dim": 36,
+   "err_mHa": 80.953
+  },
+  {
+   "source": "LUCJ_heavyhex_like F=1.0",
+   "native_ZZ": 378,
+   "cap_strings": 60,
+   "n_strings_used": 6,
+   "dim": 36,
+   "err_mHa": 80.953
+  },
+  {
+   "source": "LUCJ_heavyhex_like F=1.0",
+   "native_ZZ": 378,
+   "cap_strings": 120,
+   "n_strings_used": 6,
+   "dim": 36,
+   "err_mHa": 80.953
+  },
+  {
+   "source": "LUCJ_heavyhex_like F=0.133",
+   "native_ZZ": 378,
+   "cap_strings": 30,
+   "n_strings_used": 30,
+   "dim": 900,
+   "err_mHa": 122.424
+  },
+  {
+   "source": "LUCJ_heavyhex_like F=0.133",
+   "native_ZZ": 378,
+   "cap_strings": 60,
+   "n_strings_used": 60,
+   "dim": 3600,
+   "err_mHa": 100.837
+  },
+  {
+   "source": "LUCJ_heavyhex_like F=0.133",
+   "native_ZZ": 378,
+   "cap_strings": 120,
+   "n_strings_used": 120,
+   "dim": 14400,
+   "err_mHa": 94.702
+  },
+  {
+   "source": "LUCJ_heavyhex_like unique correct-N strings in 20000 ideal shots",
+   "value": 6
+  },
+  {
+   "source": "uniform random strings",
+   "cap_strings": 30,
+   "dim": 900,
+   "err_mHa": 1265.007
+  },
+  {
+   "source": "oracle (exact-FCI marginal ranking)",
+   "cap_strings": 30,
+   "dim": 900,
+   "err_mHa": 12.653
+  },
+  {
+   "source": "classical heuristic (excitation-level ordering)",
+   "cap_strings": 30,
+   "dim": 900,
+   "err_mHa": 34.162
+  },
+  {
+   "source": "uniform random strings",
+   "cap_strings": 60,
+   "dim": 3600,
+   "err_mHa": 2108.187
+  },
+  {
+   "source": "oracle (exact-FCI marginal ranking)",
+   "cap_strings": 60,
+   "dim": 3600,
+   "err_mHa": 3.554
+  },
+  {
+   "source": "classical heuristic (excitation-level ordering)",
+   "cap_strings": 60,
+   "dim": 3600,
+   "err_mHa": 12.942
+  },
+  {
+   "source": "uniform random strings",
+   "cap_strings": 120,
+   "dim": 14400,
+   "err_mHa": 2106.676
+  },
+  {
+   "source": "oracle (exact-FCI marginal ranking)",
+   "cap_strings": 120,
+   "dim": 14400,
+   "err_mHa": 0.951
+  },
+  {
+   "source": "classical heuristic (excitation-level ordering)",
+   "cap_strings": 120,
+   "dim": 14400,
+   "err_mHa": 11.528
+  }
+ ]
+}

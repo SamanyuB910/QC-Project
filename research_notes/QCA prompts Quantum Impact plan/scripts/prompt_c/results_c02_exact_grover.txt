@@ -1,0 +1,39 @@
+[encode] catalog N=1504; bit-level predicate disagreements with float predicate: 0
+[encode] mag code range used 0..25, events clipped at mag code 31: 0
+[slices] n=3 N=8: mean M=0.37, P(M=0)=0.672, P(M=1)=0.286, P(M>=2)=0.042
+[slices] n=4 N=16: mean M=0.75, P(M=0)=0.415, P(M=1)=0.430, P(M>=2)=0.155
+[slices] n=5 N=32: mean M=1.52, P(M=0)=0.088, P(M=1)=0.445, P(M>=2)=0.467
+[slices] n=6 N=64: mean M=3.07, P(M=0)=0.002, P(M=1)=0.051, P(M>=2)=0.947
+
+[grover] n=3 N=8 M=1 k_opt=2 marked=[6]
+   match: M6.2 depth 16 km  40 km WNW of Tamarindo, Costa Rica
+   k :     0     1     2     3     4     5     6     7
+   P : 0.125 0.781 0.945 0.330 0.012 0.548 1.000 0.577
+   th: 0.125 0.781 0.945 0.330 0.012 0.548 1.000 0.577
+   honest oracle: 18 qubits, k=2: P(success)=0.945312 vs list 0.945312; prob mass with dirty ancillas=0.00e+00; sim 0.3s
+
+[grover] n=4 N=16 M=2 k_opt=2 marked=[2, 13]
+   match: M7.0 depth 13 km  128 km WNW of Aykol, China
+   match: M6.3 depth 31 km  39 km SW of Port-Vila, Vanuatu
+   k :     0     1     2     3     4     5     6     7
+   P : 0.125 0.781 0.945 0.330 0.012 0.548 1.000 0.577
+   th: 0.125 0.781 0.945 0.330 0.012 0.548 1.000 0.577
+   honest oracle: 19 qubits, k=2: P(success)=0.945313 vs list 0.945312; prob mass with dirty ancillas=0.00e+00; sim 0.5s
+
+[grover] n=5 N=32 M=2 k_opt=3 marked=[4, 13]
+   match: M6.5 depth 49 km  111 km ESE of Kimbe, Papua New Guinea
+   match: M6.3 depth 32 km  18 km W of Uwajima, Japan
+   k :     0     1     2     3     4     5     6     7     8     9
+   P : 0.062 0.473 0.908 0.961 0.582 0.125 0.020 0.365 0.836 0.992
+   th: 0.062 0.473 0.908 0.961 0.582 0.125 0.020 0.365 0.836 0.992
+   honest oracle: 20 qubits, k=3: P(success)=0.961319 vs list 0.961319; prob mass with dirty ancillas=0.00e+00; sim 5.4s
+
+[grover] n=6 N=64 M=3 k_opt=3 marked=[17, 36, 45]
+   match: M6.4 depth 22 km  150 km NW of Tobelo, Indonesia
+   match: M6.5 depth 49 km  111 km ESE of Kimbe, Papua New Guinea
+   match: M6.3 depth 32 km  18 km W of Uwajima, Japan
+   k :     0     1     2     3     4     5     6     7     8     9
+   P : 0.047 0.371 0.787 0.998 0.853 0.456 0.090 0.017 0.290 0.712
+   th: 0.047 0.371 0.787 0.998 0.853 0.456 0.090 0.017 0.290 0.712
+   honest oracle: 21 qubits, k=3: P(success)=0.998139 vs list 0.998139; prob mass with dirty ancillas=0.00e+00; sim 21.9s
+saved fig_c02_overshoot.png

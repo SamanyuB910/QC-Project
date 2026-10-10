@@ -1,0 +1,5 @@
+[A_needle_M1] n= 3 N=    8 M= 1 k_opt= 2 2Q@kopt=    20 P_ideal=0.945 P_noisy=0.869 (analytic 0.868) M/N=0.1250 P_cl(k+1 checks)=0.375 | noise-aware k=1: E[calls+checks]=2.7 vs classical 4.5 [1s]
+[A_needle_M1] n= 4 N=   16 M= 1 k_opt= 3 2Q@kopt=    78 P_ideal=0.961 P_noisy=0.696 (analytic 0.674) M/N=0.0625 P_cl(k+1 checks)=0.250 | noise-aware k=2: E[calls+checks]=4.1 vs classical 8.5 [1s]
+[A_needle_M1] n= 5 N=   32 M= 1 k_opt= 4 2Q@kopt=   216 P_ideal=0.999 P_noisy=0.407 (analytic 0.369) M/N=0.0312 P_cl(k+1 checks)=0.156 | noise-aware k=2: E[calls+checks]=7.9 vs classical 16.5 [1s]
+[A_needle_M1] n= 6 N=   64 M= 1 k_opt= 6 2Q@kopt=   876 P_ideal=0.997 P_noisy=0.042 (analytic 0.030) M/N=0.0156 P_cl(k+1 checks)=0.109 | noise-aware k=1: E[calls+checks]=26.1 vs classical 32.5 [9s]
+[A_needle_M1] n= 7 N=  128 M= 1 k_opt= 8 2Q@kopt=  1808 P_ideal=0.996 P_noisy=0.009 (analytic 0.008) M/N=0.0078 P_cl(k+1 checks)=0.070 | noise-aware k=1: E[calls+checks]=67.2 vs classical 64.5 [39s]

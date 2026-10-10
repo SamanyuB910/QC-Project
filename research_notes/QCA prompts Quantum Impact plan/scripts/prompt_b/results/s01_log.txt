@@ -1,0 +1,168 @@
+rows 297 positives 137 negatives 160
+raw rows 303 rows with missing 6 missing by col {'ca': 4, 'thal': 2}
+num distribution {0: 164, 1: 55, 2: 36, 3: 35, 4: 13}
+shipped csv bytes 19083
+
+Relevance r_i (MI nats, mean+-sd over 20 seeds):
+  thal      0.1457 +- 0.0000   cost $102.90
+  cp        0.1367 +- 0.0000   cost $1.00
+  ca        0.1280 +- 0.0000   cost $100.90
+  oldpeak   0.0964 +- 0.0147   cost $87.30
+  exang     0.0917 +- 0.0000   cost $87.30
+  chol      0.0818 +- 0.0091   cost $7.27
+  slope     0.0754 +- 0.0000   cost $87.30
+  thalach   0.0693 +- 0.0085   cost $102.90
+  sex       0.0401 +- 0.0000   cost $1.00
+  restecg   0.0163 +- 0.0000   cost $15.50
+  age       0.0103 +- 0.0124   cost $1.00
+  trestbps  0.0043 +- 0.0094   cost $1.00
+  fbs       0.0000 +- 0.0000   cost $5.20
+c_ij stats: mean 0.157 max 0.579 (pair ['oldpeak', 'slope'])
+top redundant pairs [(0.579, 'oldpeak', 'slope'), (0.395, 'age', 'thalach'), (0.389, 'thalach', 'slope'), (0.384, 'thalach', 'exang'), (0.384, 'sex', 'thal'), (0.378, 'cp', 'exang'), (0.362, 'age', 'ca'), (0.348, 'thalach', 'oldpeak')]
+distinct top-5-by-MI sets across 20 seeds: [['cp', 'chol', 'exang', 'ca', 'thal'], ['cp', 'thalach', 'exang', 'ca', 'thal'], ['cp', 'chol', 'oldpeak', 'ca', 'thal'], ['cp', 'exang', 'oldpeak', 'ca', 'thal'], ['cp', 'exang', 'slope', 'ca', 'thal']]
+
+Lambda sweep: exact optimum over C(13,5)=1287
+  lam= 0.00 opt=['cp', 'exang', 'oldpeak', 'ca', 'thal'] f*=-0.5985 gap2=0.0099 spread=0.528 rel=0.599 red=2.745 cost=$293.10
+  lam= 0.02 opt=['cp', 'chol', 'oldpeak', 'ca', 'thal'] f*=-0.5518 gap2=0.0053 spread=0.505 rel=0.589 red=1.841 cost=$299.37
+  lam= 0.05 opt=['cp', 'chol', 'oldpeak', 'ca', 'thal'] f*=-0.4965 gap2=0.0044 spread=0.486 rel=0.589 red=1.841 cost=$299.37
+  lam= 0.10 opt=['cp', 'chol', 'slope', 'ca', 'thal'] f*=-0.4166 gap2=0.0121 spread=0.466 rel=0.568 red=1.509 cost=$299.37
+  lam= 0.15 opt=['cp', 'chol', 'slope', 'ca', 'thal'] f*=-0.3412 gap2=0.0287 spread=0.493 rel=0.568 red=1.509 cost=$299.37
+  lam= 0.20 opt=['cp', 'chol', 'slope', 'ca', 'thal'] f*=-0.2657 gap2=0.0090 spread=0.554 rel=0.568 red=1.509 cost=$299.37
+  lam= 0.30 opt=['sex', 'cp', 'chol', 'slope', 'ca'] f*=-0.1541 gap2=0.0061 spread=0.737 rel=0.462 red=1.026 cost=$197.47
+  lam= 0.50 opt=['sex', 'cp', 'chol', 'fbs', 'slope'] f*=-0.0191 gap2=0.0366 spread=1.274 rel=0.334 red=0.630 cost=$99.67
+  lam= 0.75 opt=['sex', 'cp', 'chol', 'fbs', 'slope'] f*=0.1384 gap2=0.0654 spread=1.983 rel=0.334 red=0.630 cost=$99.67
+  lam= 1.00 opt=['sex', 'cp', 'chol', 'fbs', 'slope'] f*=0.2958 gap2=0.0752 spread=2.692 rel=0.334 red=0.630 cost=$99.67
+  lam= 1.50 opt=['sex', 'cp', 'chol', 'fbs', 'slope'] f*=0.6107 gap2=0.0800 spread=4.111 rel=0.334 red=0.630 cost=$99.67
+  lam= 2.00 opt=['sex', 'cp', 'chol', 'fbs', 'slope'] f*=0.9256 gap2=0.0848 spread=5.529 rel=0.334 red=0.630 cost=$99.67
+  lam= 5.00 opt=['sex', 'cp', 'chol', 'fbs', 'slope'] f*=2.8149 gap2=0.1138 spread=14.040 rel=0.334 red=0.630 cost=$99.67
+
+Penalty sweep: P* = smallest P that makes the global min over 2^13 feasible
+  lam=0.1: P*=-0.0101  feasible-opt-only-if P>P*;  rows:
+     P=0.01     globalmin feasible=True  hw= 5  E_range=1.39  (feasible objective spread / E_range)=3.36e-01
+     P=0.05     globalmin feasible=True  hw= 5  E_range=3.95  (feasible objective spread / E_range)=1.18e-01
+     P=0.1      globalmin feasible=True  hw= 5  E_range=7.15  (feasible objective spread / E_range)=6.52e-02
+     P=0.2      globalmin feasible=True  hw= 5  E_range=13.5  (feasible objective spread / E_range)=3.44e-02
+     P=0.5      globalmin feasible=True  hw= 5  E_range=32.7  (feasible objective spread / E_range)=1.42e-02
+     P=1        globalmin feasible=True  hw= 5  E_range=64.7  (feasible objective spread / E_range)=7.20e-03
+     P=2        globalmin feasible=True  hw= 5  E_range=129  (feasible objective spread / E_range)=3.62e-03
+     P=5        globalmin feasible=True  hw= 5  E_range=321  (feasible objective spread / E_range)=1.45e-03
+     P=10       globalmin feasible=True  hw= 5  E_range=641  (feasible objective spread / E_range)=7.27e-04
+     P=100      globalmin feasible=True  hw= 5  E_range=6.4e+03  (feasible objective spread / E_range)=7.28e-05
+     P=100000.0 globalmin feasible=True  hw= 5  E_range=6.4e+06  (feasible objective spread / E_range)=7.28e-08
+  lam=0.2: P*=0.0346  feasible-opt-only-if P>P*;  rows:
+     P=0.01     globalmin feasible=False hw= 4  E_range=2.49  (feasible objective spread / E_range)=2.23e-01
+     P=0.05     globalmin feasible=True  hw= 5  E_range=5.02  (feasible objective spread / E_range)=1.10e-01
+     P=0.1      globalmin feasible=True  hw= 5  E_range=8.22  (feasible objective spread / E_range)=6.73e-02
+     P=0.2      globalmin feasible=True  hw= 5  E_range=14.6  (feasible objective spread / E_range)=3.79e-02
+     P=0.5      globalmin feasible=True  hw= 5  E_range=33.8  (feasible objective spread / E_range)=1.64e-02
+     P=1        globalmin feasible=True  hw= 5  E_range=65.8  (feasible objective spread / E_range)=8.41e-03
+     P=2        globalmin feasible=True  hw= 5  E_range=130  (feasible objective spread / E_range)=4.27e-03
+     P=5        globalmin feasible=True  hw= 5  E_range=322  (feasible objective spread / E_range)=1.72e-03
+     P=10       globalmin feasible=True  hw= 5  E_range=642  (feasible objective spread / E_range)=8.63e-04
+     P=100      globalmin feasible=True  hw= 5  E_range=6.4e+03  (feasible objective spread / E_range)=8.65e-05
+     P=100000.0 globalmin feasible=True  hw= 5  E_range=6.4e+06  (feasible objective spread / E_range)=8.65e-08
+  lam=0.3: P*=0.0648  feasible-opt-only-if P>P*;  rows:
+     P=0.01     globalmin feasible=False hw= 3  E_range=3.64  (feasible objective spread / E_range)=2.02e-01
+     P=0.05     globalmin feasible=False hw= 4  E_range=6.15  (feasible objective spread / E_range)=1.20e-01
+     P=0.1      globalmin feasible=True  hw= 5  E_range=9.34  (feasible objective spread / E_range)=7.90e-02
+     P=0.2      globalmin feasible=True  hw= 5  E_range=15.7  (feasible objective spread / E_range)=4.68e-02
+     P=0.5      globalmin feasible=True  hw= 5  E_range=34.9  (feasible objective spread / E_range)=2.11e-02
+     P=1        globalmin feasible=True  hw= 5  E_range=66.9  (feasible objective spread / E_range)=1.10e-02
+     P=2        globalmin feasible=True  hw= 5  E_range=131  (feasible objective spread / E_range)=5.63e-03
+     P=5        globalmin feasible=True  hw= 5  E_range=323  (feasible objective spread / E_range)=2.28e-03
+     P=10       globalmin feasible=True  hw= 5  E_range=643  (feasible objective spread / E_range)=1.15e-03
+     P=100      globalmin feasible=True  hw= 5  E_range=6.4e+03  (feasible objective spread / E_range)=1.15e-04
+     P=100000.0 globalmin feasible=True  hw= 5  E_range=6.4e+06  (feasible objective spread / E_range)=1.15e-07
+  lam=0.5: P*=0.1031  feasible-opt-only-if P>P*;  rows:
+     P=0.01     globalmin feasible=False hw= 3  E_range=6.03  (feasible objective spread / E_range)=2.11e-01
+     P=0.05     globalmin feasible=False hw= 4  E_range=8.51  (feasible objective spread / E_range)=1.50e-01
+     P=0.1      globalmin feasible=False hw= 4  E_range=11.7  (feasible objective spread / E_range)=1.09e-01
+     P=0.2      globalmin feasible=True  hw= 5  E_range=18.1  (feasible objective spread / E_range)=7.05e-02
+     P=0.5      globalmin feasible=True  hw= 5  E_range=37.3  (feasible objective spread / E_range)=3.42e-02
+     P=1        globalmin feasible=True  hw= 5  E_range=69.3  (feasible objective spread / E_range)=1.84e-02
+     P=2        globalmin feasible=True  hw= 5  E_range=133  (feasible objective spread / E_range)=9.56e-03
+     P=5        globalmin feasible=True  hw= 5  E_range=325  (feasible objective spread / E_range)=3.92e-03
+     P=10       globalmin feasible=True  hw= 5  E_range=645  (feasible objective spread / E_range)=1.97e-03
+     P=100      globalmin feasible=True  hw= 5  E_range=6.41e+03  (feasible objective spread / E_range)=1.99e-04
+     P=100000.0 globalmin feasible=True  hw= 5  E_range=6.4e+06  (feasible objective spread / E_range)=1.99e-07
+  lam=1.0: P*=0.2391  feasible-opt-only-if P>P*;  rows:
+     P=0.01     globalmin feasible=False hw= 2  E_range=12.1  (feasible objective spread / E_range)=2.22e-01
+     P=0.05     globalmin feasible=False hw= 3  E_range=14.5  (feasible objective spread / E_range)=1.86e-01
+     P=0.1      globalmin feasible=False hw= 4  E_range=17.6  (feasible objective spread / E_range)=1.53e-01
+     P=0.2      globalmin feasible=False hw= 4  E_range=23.9  (feasible objective spread / E_range)=1.13e-01
+     P=0.5      globalmin feasible=True  hw= 5  E_range=43.1  (feasible objective spread / E_range)=6.25e-02
+     P=1        globalmin feasible=True  hw= 5  E_range=75.1  (feasible objective spread / E_range)=3.59e-02
+     P=2        globalmin feasible=True  hw= 5  E_range=139  (feasible objective spread / E_range)=1.94e-02
+     P=5        globalmin feasible=True  hw= 5  E_range=331  (feasible objective spread / E_range)=8.13e-03
+     P=10       globalmin feasible=True  hw= 5  E_range=651  (feasible objective spread / E_range)=4.14e-03
+     P=100      globalmin feasible=True  hw= 5  E_range=6.41e+03  (feasible objective spread / E_range)=4.20e-04
+     P=100000.0 globalmin feasible=True  hw= 5  E_range=6.4e+06  (feasible objective spread / E_range)=4.21e-07
+
+L1-logistic first 5-feature model at C=0.0206 (nonzero=6): ['cp', 'thalach', 'exang', 'ca', 'thal']
+SelectKBest MI: ['cp', 'exang', 'oldpeak', 'ca', 'thal']  F-test: ['thalach', 'exang', 'oldpeak', 'ca', 'thal']  chi2: ['trestbps', 'thalach', 'oldpeak', 'ca', 'thal']
+
+ lam=0.1: f*=-0.4166 (worst feasible 0.0493)
+   exact             rank=   1/1287 AR=1.0000 normAR=1.0000 cost=$ 299.37 ['cp', 'chol', 'slope', 'ca', 'thal']
+   greedy_mrmr       rank=   1/1287 AR=1.0000 normAR=1.0000 cost=$ 299.37 ['cp', 'chol', 'slope', 'ca', 'thal']
+   selectkbest_MI    rank=  45/1287 AR=0.7777 normAR=0.8012 cost=$ 293.10 ['cp', 'exang', 'oldpeak', 'ca', 'thal']
+   selectkbest_F     rank= 361/1287 AR=0.5702 normAR=0.6157 cost=$ 293.10 ['thalach', 'exang', 'oldpeak', 'ca', 'thal']
+   selectkbest_chi2  rank= 476/1287 AR=0.5218 normAR=0.5724 cost=$ 293.10 ['trestbps', 'thalach', 'oldpeak', 'ca', 'thal']
+   l1_logistic       rank= 134/1287 AR=0.6802 normAR=0.7140 cost=$ 293.10 ['cp', 'thalach', 'exang', 'ca', 'thal']
+   SA budget=   10 evals: P(found opt)=0.017 [0.007,0.038]  mean normAR=0.7672
+   SA budget=   25 evals: P(found opt)=0.143 [0.108,0.188]  mean normAR=0.8962
+   SA budget=   50 evals: P(found opt)=0.457 [0.401,0.513]  mean normAR=0.9594
+   SA budget=  100 evals: P(found opt)=0.863 [0.820,0.898]  mean normAR=0.9950
+   SA budget=  200 evals: P(found opt)=0.977 [0.953,0.989]  mean normAR=0.9993
+   SA budget= 1000 evals: P(found opt)=1.000 [0.987,1.000]  mean normAR=1.0000
+   uniform k-subset: P(opt)/draw = 0.00078; mean normAR=0.5079
+   states within 1% of f*: 1, within 5%: 3
+
+ lam=0.2: f*=-0.2657 (worst feasible 0.2881)
+   exact             rank=   1/1287 AR=1.0000 normAR=1.0000 cost=$ 299.37 ['cp', 'chol', 'slope', 'ca', 'thal']
+   greedy_mrmr       rank=   1/1287 AR=1.0000 normAR=1.0000 cost=$ 299.37 ['cp', 'chol', 'slope', 'ca', 'thal']
+   selectkbest_MI    rank= 572/1287 AR=0.1862 normAR=0.6095 cost=$ 293.10 ['cp', 'exang', 'oldpeak', 'ca', 'thal']
+   selectkbest_F     rank=1042/1287 AR=-0.2108 normAR=0.4190 cost=$ 293.10 ['thalach', 'exang', 'oldpeak', 'ca', 'thal']
+   selectkbest_chi2  rank= 869/1287 AR=-0.0337 normAR=0.5040 cost=$ 293.10 ['trestbps', 'thalach', 'oldpeak', 'ca', 'thal']
+   l1_logistic       rank= 849/1287 AR=-0.0175 normAR=0.5118 cost=$ 293.10 ['cp', 'thalach', 'exang', 'ca', 'thal']
+   SA budget=   10 evals: P(found opt)=0.027 [0.014,0.052]  mean normAR=0.8340
+   SA budget=   25 evals: P(found opt)=0.140 [0.105,0.184]  mean normAR=0.9234
+   SA budget=   50 evals: P(found opt)=0.363 [0.311,0.419]  mean normAR=0.9706
+   SA budget=  100 evals: P(found opt)=0.727 [0.674,0.774]  mean normAR=0.9904
+   SA budget=  200 evals: P(found opt)=0.913 [0.876,0.940]  mean normAR=0.9969
+   SA budget= 1000 evals: P(found opt)=1.000 [0.987,1.000]  mean normAR=1.0000
+   uniform k-subset: P(opt)/draw = 0.00078; mean normAR=0.5745
+   states within 1% of f*: 1, within 5%: 2
+
+ lam=0.5: f*=-0.0191 (worst feasible 1.2547)
+   exact             rank=   1/1287 AR=1.0000 normAR=1.0000 cost=$  99.67 ['sex', 'cp', 'chol', 'fbs', 'slope']
+   greedy_mrmr       rank=   3/1287 AR=-1.0408 normAR=0.9694 cost=$ 129.77 ['cp', 'chol', 'fbs', 'restecg', 'thal']
+   selectkbest_MI    rank=1198/1287 AR=-40.5695 normAR=0.3773 cost=$ 293.10 ['cp', 'exang', 'oldpeak', 'ca', 'thal']
+   selectkbest_F     rank=1261/1287 AR=-49.0955 normAR=0.2496 cost=$ 293.10 ['thalach', 'exang', 'oldpeak', 'ca', 'thal']
+   selectkbest_chi2  rank=1134/1287 AR=-36.0583 normAR=0.4449 cost=$ 293.10 ['trestbps', 'thalach', 'oldpeak', 'ca', 'thal']
+   l1_logistic       rank=1240/1287 AR=-45.5331 normAR=0.3030 cost=$ 293.10 ['cp', 'thalach', 'exang', 'ca', 'thal']
+   SA budget=   10 evals: P(found opt)=0.013 [0.005,0.034]  mean normAR=0.8593
+   SA budget=   25 evals: P(found opt)=0.147 [0.111,0.191]  mean normAR=0.9367
+   SA budget=   50 evals: P(found opt)=0.390 [0.337,0.446]  mean normAR=0.9682
+   SA budget=  100 evals: P(found opt)=0.590 [0.534,0.644]  mean normAR=0.9851
+   SA budget=  200 evals: P(found opt)=0.670 [0.615,0.721]  mean normAR=0.9896
+   SA budget= 1000 evals: P(found opt)=0.937 [0.903,0.959]  mean normAR=0.9981
+   uniform k-subset: P(opt)/draw = 0.00078; mean normAR=0.6383
+   states within 1% of f*: 1, within 5%: 1
+
+ lam=1.0: f*=0.2958 (worst feasible 2.9881)
+   exact             rank=   1/1287 AR=nan normAR=1.0000 cost=$  99.67 ['sex', 'cp', 'chol', 'fbs', 'slope']
+   greedy_mrmr       rank=   3/1287 AR=nan normAR=0.9686 cost=$ 129.77 ['chol', 'fbs', 'restecg', 'thalach', 'thal']
+   selectkbest_MI    rank=1239/1287 AR=nan normAR=0.3125 cost=$ 293.10 ['cp', 'exang', 'oldpeak', 'ca', 'thal']
+   selectkbest_F     rank=1272/1287 AR=nan normAR=0.2167 cost=$ 293.10 ['thalach', 'exang', 'oldpeak', 'ca', 'thal']
+   selectkbest_chi2  rank=1159/1287 AR=nan normAR=0.4340 cost=$ 293.10 ['trestbps', 'thalach', 'oldpeak', 'ca', 'thal']
+   l1_logistic       rank=1262/1287 AR=nan normAR=0.2522 cost=$ 293.10 ['cp', 'thalach', 'exang', 'ca', 'thal']
+   SA budget=   10 evals: P(found opt)=0.030 [0.016,0.056]  mean normAR=0.8771
+   SA budget=   25 evals: P(found opt)=0.137 [0.102,0.180]  mean normAR=0.9386
+   SA budget=   50 evals: P(found opt)=0.377 [0.324,0.433]  mean normAR=0.9686
+   SA budget=  100 evals: P(found opt)=0.590 [0.534,0.644]  mean normAR=0.9850
+   SA budget=  200 evals: P(found opt)=0.760 [0.709,0.805]  mean normAR=0.9924
+   SA budget= 1000 evals: P(found opt)=0.863 [0.820,0.898]  mean normAR=0.9958
+   uniform k-subset: P(opt)/draw = 0.00078; mean normAR=0.6537
+   states within 1% of f*: 1, within 5%: 1
+
+exact enumeration time (1287 feasible, vectorized): 0.05 ms

@@ -1,0 +1,1 @@
+2Q per n-qubit MCZ (Qiskit ancilla-free synthesis, rzz basis): {3: 5, 4: 13, 5: 27, 6: 73, 7: 113, 8: 165, 9: 231, 10: 305}

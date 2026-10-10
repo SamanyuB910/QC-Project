@@ -1,0 +1,167 @@
+The Prompts for this year’s GT Qiskit Fall Fest!
+…assuming we’ll have one next year, of course.
+
+Or: How can I look cool on my Linkedin resume? 
+
+Theme 1: Quantum Impact. 
+Take on a real challenge in logistics, manufacturing, space, finance, energy or another industry with a hybrid quantum-classical approach: 
+pick a public dataset, 
+build a strong classical baseline
+then show where a quantum subroutine makes a measurable difference. 
+
+
+
+Prompt A: Can a Quantum Circuit Spot a Tumor? 
+A support vector machine (SVM) decides whether a patient's cell measurements look malignant or benign by comparing how similar patients are to each other. The function that scores similarity is called a kernel.
+A quantum kernel encodes each patient as a quantum state and uses the overlap between two states as the similarity score.
+Does this quantum similarity capture structure that a classical kernel misses? For real data like this, nobody knows in advance. You are going to find out.
+Qiskit's QSVC extends scikit-learn's SVC. You fit and score it with the same calls (.fit, .predict, .score) as any scikit-learn model. The quantum part is one swapped component.
+
+
+
+Prompt A: Dataset 
+Wisconsin Diagnostic Breast Cancer: 569 patients, 30 measurements each, labeled malignant or benign.
+Load it with:
+from sklearn.datasets import load_breast_cancer: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html
+Original source: https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic
+
+Prompt A: Reading List 
+Reading List:
+Quantum Kernel Tutorial: https://qiskit.org/ecosystem/machine-learning/tutorials/03_quantum_kernel.html
+Training a quantum kernel with Quantum Kernel Alignment: https://qiskit.org/ecosystem/machine-learning/tutorials/08_quantum_kernel_trainer.html
+QSVC API: https://qiskit.org/ecosystem/machine-learning/locale/fr_FR/stubs/qiskit_machine_learning.algorithms.QSVC.html
+
+
+
+
+Prompt B: Heart Disease Readings
+A clinic wants a cheap screening test for heart disease and can only collect 5 measurements per patient. Some measurements are very informative but redundant with each other (cholesterol and age may tell you overlapping things), so the best 5 are not simply the 5 individually strongest.
+Picking the best set is a combinatorial problem the number of possible subsets explodes as features grow. That is exactly the structure quantum optimization algorithms target.
+Each feature is a yes/no decision: keep or drop One qubit per feature: |1> = keep, |0> = drop. A 13-feature problem is a 13-qubit problem.
+
+
+
+
+Prompt B: Some Ideas
+QUBO: A formula over 0/1 variables that you minimize. Quantum optimizers accept this format 
+QAOA: A quantum algorithm that tries to find low-value QUBO answers, with p layers controlling circuit depth 
+Approximation Ratio: How close a method's answer is to the true optimum (1.0 = perfect) |
+
+
+
+
+Prompt B: Some Ideas
+QUBO: A formula over 0/1 variables that you minimize. Quantum optimizers accept this format 
+QAOA: A quantum algorithm that tries to find low-value QUBO answers, with p layers controlling circuit depth 
+Approximation Ratio: How close a method's answer is to the true optimum (1.0 = perfect) |
+
+
+
+
+Prompt B:  Dataset
+UCI Heart Disease: 303 patients, 13 features, licensed CC BY 4.0. Load with fetch_ucirepo(id=45) from the ucimlrepo package. The Cleveland subset has 297 patients with no missing values, so drop rows with missing entries The target ranges 0 to 4, so binarize 0 = no disease, 1-4 = disease.
+Page: https://archive.ics.uci.edu/ml/datasets/heart%20disease
+
+                   
+
+
+
+
+
+
+Prompt B:  The Math (QUBO)
+You will minimize the expression:
+                   
+- r_i (relevance): mutual information between feature i and the label.
+- c_{ij} (redundancy): absolute correlation between features i and j.
+- lambda: how hard you punish redundancy.
+- P: a large penalty that forces choosing exactly kfeatures.
+-                   : keep (1) or drop (0).
+
+
+
+                   
+
+
+
+
+
+
+Prompt C:  Grover the Seismologist
+A seismologist has a big, unsorted list of earthquakes and wants the ones matching a rare, expensive-to-check condition (say, shallow and high-magnitude).
+Classically you check entries one at a time: with N events, finding a single match costs about       checks on average. 
+Grover's algorithm finds a marked item in roughly             oracle calls. You will measure that gap on real data.
+
+
+
+                   
+
+
+
+
+
+
+Prompt C:  Key Terms
+Oracle: A black box that "marks" the right answer(s) by flipping their phase 
+Diffusion operator: The step that boosts the marked answers' probability 
+Grover iteration: One oracle call + one diffusion step 
+             : n qubits can index N items. 3 qubits -> 8 events, 6 qubits -> 64 |
+Overshoot: Running *too many* iterations lowers your success probability (it rotates past the answer) 
+
+
+
+                   
+
+
+
+
+
+
+Prompt C:  Dataset
+The USGS earthquake catalog. The FDSN event web service lets you search by time, magnitude, depth, and region, and returns CSV.
+Example download: https://earthquake.usgs.gov/fdsnws/event/1/query?format=csv&starttime=2024-01-01&endtime=2024-12-31&minmagnitude=5
+Docs: https://earthquake.usgs.gov/fdsnws/event/1/
+Grover reading: https://quantum.cloud.ibm.com/docs/en/tutorials/grovers-algorithm#grovers-algorithm
+
+
+
+
+                   
+
+
+
+
+
+
+Theme 2: Quantum Playground 
+Turn quantum mechanics into a creative medium: a game, music, art, an interactive experience, or something we haven't imagined. 
+The bar is that superposition, interference, entanglement or measurement is essential to the piece, beyond simply generating randomness.
+Take a look at a few examples of what you could do! (But don’t do these ones.)
+https://qollab.xyz/
+
+
+
+Theme 3: Quantum Unlocked
+Pick a hard, timely topic such as error correction, fault tolerance, quantum networking or algorithms, and teach it: an interactive demo, animation, visualisation or GUI that makes it intuitive.
+
+
+Judges and Criteria
+
+Submissions and Guidelines
+Use the Qiskit framework
+Run on Qollab's free simulators, including IonQ's quantum simulator. Judges run every project on a free local simulator, and results from IonQ's simulators or hardware neither add nor subtract points.
+Be published and runnable on Qollab.xyz on an MIT license before the submission deadline
+Use an MIT license for any outside repo the project relies on, such as a frontend or backend hosted elsewhere
+Have a project page on Qollab.xyz covering what the submission does, what problem it explores, how to run it, and other information to enable others to understand, replicate, or extend it
+Be built during the hackathon window. Existing code, templates and forks are fine as a starting point when disclosed, as Originality below explains; judging is based on what the team adds during the window.
+Include a demo video of 2 to 3 minutes, at a public link that opens without signing in
+Submit your Github with the demo video presentation
+
+--- Formulas transcribed from slide images (rendered from the PDF export) ---
+Prompt B QUBO (slide 11): minimize  - sum_i r_i x_i  +  lambda * sum_{i<j} c_ij x_i x_j  +  P * (sum_i x_i - k)^2
+  r_i = mutual information between feature i and label; c_ij = absolute correlation between features i and j;
+  lambda = redundancy weight; P = large penalty forcing exactly k features; x_i in {0,1}.
+Prompt C (slide 12): classical single-match search costs about n/2 checks on average; Grover needs roughly (pi/4) sqrt(N) oracle calls.
+Judges and Criteria (slide 17): Novelty & Creativity, Technical Execution, Impact Potential, Documentation Quality.
+  "Local judges score first. Top scorers advance to a global panel, which re-scores using the same rubric."
+Source: https://docs.google.com/presentation/d/1O5WEDQost04m8rjneB8nCuAGwgyVhckoyc87dRa8j0g (exported 2026-10-10 11:42 ET)
