@@ -9,7 +9,7 @@
 - **Theme:** Quantum Impact. **Prompt:** QCA Georgia Tech Qiskit Fall Fest 2026, Prompt B ("Heart Disease Readings").
 - **Submissions:** Georgia Tech Qiskit Fall Fest (this repo + demo video) and Qollab × IonQ hackathon (project on qollab.xyz).
 - **Full project page:** [`five_tests_priced/README.md`](five_tests_priced/README.md). This is the same text as the Qollab write-up.
-- **Qollab project:** [qollab.xyz/u/sbadam/five-tests-priced-heart-test-p](https://qollab.xyz/u/sbadam/five-tests-priced-heart-test-p) (published v1.6) · **Demo video:** *(link added after recording)*
+- **Qollab project:** [qollab.xyz/u/sbadam/five-tests-priced-heart-test-p](https://qollab.xyz/u/sbadam/five-tests-priced-heart-test-p) (published v1.6.1) · **Demo video:** *(link added after recording)*
 
 ## In 30 seconds
 
