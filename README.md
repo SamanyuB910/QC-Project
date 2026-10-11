@@ -25,14 +25,14 @@
 
 | Price | Best five-test panel | AUC* |
 |---|---|---|
-| $9.20 | history + one blood test | 0.838 |
-| $91.30 | history + one treadmill ECG | 0.875 |
-| $191.20 | + treadmill ECG + fluoroscopy | 0.902 |
-| $293.10 | + treadmill + thallium + fluoroscopy | 0.911 |
+| \$9.20 | history + one blood test | 0.838 |
+| \$91.30 | history + one treadmill ECG | 0.875 |
+| \$191.20 | + treadmill ECG + fluoroscopy | 0.902 |
+| \$293.10 | + treadmill + thallium + fluoroscopy | 0.911 |
 
 \*Cross-validated on all 297 patients, best of 1,287 panels, so optimistic. The honest held-out numbers are on the project page.
 
-![Price ladder: the best cross-validated AUC reachable at each five-test panel price, rising in steps from $9.20 (AUC 0.838) to $293.10 (AUC 0.911); diamonds mark the exact optimum at each price weight](docs/figures/price_ladder.png)
+![Price ladder: the best cross-validated AUC reachable at each five-test panel price, rising in steps from \$9.20 (AUC 0.838) to \$293.10 (AUC 0.911); diamonds mark the exact optimum at each price weight](docs/figures/price_ladder.png)
 
 ![Chance that one 1,000-shot job finds every optimal panel, against shots per circuit: the ideal circuit reaches 98%, the independent-choice sampler 63%, uniform random panels 11%](docs/figures/recovery_vs_shots.png)
 

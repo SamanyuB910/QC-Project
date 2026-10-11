@@ -29,25 +29,25 @@ Tests come from procedures with real prices: Turney 1995, Ontario Ministry of He
 
 | Shared procedure | Readings it yields | Paid once | Each reading after that |
 |---|---|---|---|
-| Blood draw | cholesterol, fasting blood sugar | $2.10 | $5.17 / $3.10 |
-| Thallium stress test | max heart rate, thallium scan result | $101.90 | $1.00 each |
-| Treadmill ECG | exercise angina, ST depression, ST slope | $86.30 | $1.00 each |
+| Blood draw | cholesterol, fasting blood sugar | \$2.10 | \$5.17 / \$3.10 |
+| Thallium stress test | max heart rate, thallium scan result | \$101.90 | \$1.00 each |
+| Treadmill ECG | exercise angina, ST depression, ST slope | \$86.30 | \$1.00 each |
 
-History and vitals cost $1 each (age, sex, chest-pain type, resting blood pressure). A resting ECG costs $15.50 and fluoroscopy $100.90.
+History and vitals cost \$1 each (age, sex, chest-pain type, resting blood pressure). A resting ECG costs \$15.50 and fluoroscopy \$100.90.
 
 **The answer, as a price ladder.** These are the best five-test panels and their cross-validated AUC: logistic regression, 5×3 cross-validation on all 297 patients. This is the optimistic view, because it is the best of 1,287 panels; section 6 gives the honest held-out numbers.
 
 | Price | Best five-test panel | What the clinic does | AUC |
 |---|---|---|---|
-| $9.20 | age, sex, chest-pain type, resting BP, fasting sugar | history + one blood test | 0.838 |
-| $91.30 | age, sex, chest-pain type, ST depression, ST slope | history + **one treadmill ECG** | 0.875 |
-| $106.90 | sex, chest-pain type, resting BP, max heart rate, thallium | history + thallium scan | 0.878 |
-| $191.20 | sex, chest-pain type, resting BP, ST slope, fluoroscopy | + treadmill ECG + fluoroscopy | 0.902 |
-| $293.10 | sex, chest-pain type, ST slope, fluoroscopy, thallium | + treadmill + thallium + fluoroscopy | 0.911 |
+| \$9.20 | age, sex, chest-pain type, resting BP, fasting sugar | history + one blood test | 0.838 |
+| \$91.30 | age, sex, chest-pain type, ST depression, ST slope | history + **one treadmill ECG** | 0.875 |
+| \$106.90 | sex, chest-pain type, resting BP, max heart rate, thallium | history + thallium scan | 0.878 |
+| \$191.20 | sex, chest-pain type, resting BP, ST slope, fluoroscopy | + treadmill ECG + fluoroscopy | 0.902 |
+| \$293.10 | sex, chest-pain type, ST slope, fluoroscopy, thallium | + treadmill + thallium + fluoroscopy | 0.911 |
 
-![Price ladder: the best cross-validated AUC reachable at each five-test panel price, rising in steps from $9.20 (AUC 0.838) to $293.10 (AUC 0.911); diamonds mark the panel the objective picks at each price weight](https://raw.githubusercontent.com/SamanyuB910/QC-Project/main/docs/figures/price_ladder.png)
+![Price ladder: the best cross-validated AUC reachable at each five-test panel price, rising in steps from \$9.20 (AUC 0.838) to \$293.10 (AUC 0.911); diamonds mark the panel the objective picks at each price weight](https://raw.githubusercontent.com/SamanyuB910/QC-Project/main/docs/figures/price_ladder.png)
 
-*The program draws this figure on every Run, after a text description; diamonds mark the panel the objective picks at each price weight.*
+*The program draws this figure on every Run, after a text description.*
 
 ## 2. Data and prices
 
@@ -121,11 +121,11 @@ f_μ(x) = −Σ relevanceᵢ·xᵢ + 0.1·Σ redundancyᵢⱼ·xᵢxⱼ + μ·pr
 
 | μ | Exact best panel | Price | Greedy | Greedy + local search |
 |---|---|---|---|---|
-| 0 | sex, cp, slope, ca, thal | $293.10 | 3rd best | optimal |
-| 0.02 | cp, trestbps, thalach, ca, thal | $206.80 | 7th best | optimal |
-| 0.05 | cp, trestbps, thalach, ca, thal | $206.80 | optimal | optimal |
-| 0.1 | sex, cp, trestbps, thalach, thal | $106.90 | **26th best** | **26th best (stuck)** |
-| 0.2 | age, sex, cp, trestbps, fbs | $9.20 | optimal | optimal |
+| 0 | sex, cp, slope, ca, thal | \$293.10 | 3rd best | optimal |
+| 0.02 | cp, trestbps, thalach, ca, thal | \$206.80 | 7th best | optimal |
+| 0.05 | cp, trestbps, thalach, ca, thal | \$206.80 | optimal | optimal |
+| 0.1 | sex, cp, trestbps, thalach, thal | \$106.90 | **26th best** | **26th best (stuck)** |
+| 0.2 | age, sex, cp, trestbps, fbs | \$9.20 | optimal | optimal |
 
 ### Why we changed the prompt's formula
 
@@ -195,13 +195,13 @@ One circuit (μ = 0.2) × 1,000 shots through Qollab, Sat Oct 10, 2026. IonQ job
 | | IonQ run | Ideal circuit | Independent-choice | Random panels |
 |---|---|---|---|---|
 | Shots with exactly five tests | 193 of 1,000 | 223 expected | n/a | n/a |
-| Best sampled panel (rank of 1,287) | **2** ($19.50, AUC 0.842) | 1 | n/a | n/a |
+| Best sampled panel (rank of 1,287) | **2** (\$19.50, AUC 0.842) | 1 | n/a | n/a |
 | Share of samples in the top 1% of panels | **3.6%** | 12.6% | 4.3% | 1.0% |
 | P(exact optimum given five tests) [95% CI] | 0.000 [0.000, 0.020] | 0.021 | 0.004 | 0.0008 |
 | Log-likelihood ratio, ideal vs independent | −107.9 | +111.8 ± 15.0 | −119.2 ± 17.0 | n/a |
 
 - **It runs end to end on IonQ.** One job; the one-circuit-per-job rule is handled automatically. A second IonQ job ran a shallow probe with known answers for every gate type we submit, and all seven readings matched within noise (for example RZZ(π/2): 0.482 against 0.500). The main run's per-test frequencies correlate 0.66 with the ideal circuit's, and only 0.06 if the bit order were reversed.
-- **What survives the noise: the circuit's preferences.** Top-1% panels appear 3.6× more often than random picks, and the best sample is the 2nd-best panel of 1,287 ($19.50, AUC 0.842, slightly more accurate than the $9.20 optimum's 0.838).
+- **What survives the noise: the circuit's preferences.** Top-1% panels appear 3.6× more often than random picks, and the best sample is the 2nd-best panel of 1,287 (\$19.50, AUC 0.842, slightly more accurate than the \$9.20 optimum's 0.838).
 - **What does not: the fine correlations.** The exact optimum was not sampled, and the samples score like the independent-choice sampler. With 238 two-qubit gates per circuit, IonQ's current noise model keeps about a quarter of the ideal circuit's signal, against about two thirds under the older published rates behind the 92% row.
 - **What it points to.** Fewer two-qubit gates per circuit (for example a sparser mixer) or lower error rates. Trapped ions already need 3.2× fewer two-qubit gates than a heavy-hex lattice for this circuit.
 - Raw counts and every run log are in the GitHub repo (`docs/runs/`). If a later IonQ job fails, the program shows these counts, labelled as a cached run.
@@ -210,11 +210,11 @@ One circuit (μ = 0.2) × 1,000 shots through Qollab, Sat Oct 10, 2026. IonQ job
 
 | Panel chosen inside each training fold by | Held-out AUC [95% CI] | Mean price |
 |---|---|---|
-| Cost-aware QUBO, μ = 0 | 0.889 [0.849, 0.923] | $289.94 |
-| Cost-aware QUBO, μ = 0.1 | 0.868 [0.826, 0.905] | $100.61 |
-| Cost-aware QUBO, μ = 0.2 | 0.827 [0.776, 0.870] | $18.95 |
+| Cost-aware QUBO, μ = 0 | 0.889 [0.849, 0.923] | \$289.94 |
+| Cost-aware QUBO, μ = 0.1 | 0.868 [0.826, 0.905] | \$100.61 |
+| Cost-aware QUBO, μ = 0.2 | 0.827 [0.776, 0.870] | \$18.95 |
 | SelectKBest (mutual information), 5 tests | 0.895 [0.857, 0.928] | n/a |
-| All 13 tests | 0.902 [0.865, 0.934] | $323.97 |
+| All 13 tests | 0.902 [0.865, 0.934] | \$323.97 |
 
 The honest numbers are lower than the optimistic ladder in section 1, as they should be. At the cheap end, three free history questions (age, sex, chest-pain type) already reach AUC 0.84. **The ladder's value is in the middle, where shared procedures make some upgrades nearly free.**
 
@@ -224,11 +224,11 @@ The honest numbers are lower than the optimistic ladder in section 1, as they sh
 2. The angles were tuned offline (60 small simulations; `ftp_derive.tune_angles` reproduces them exactly), and that compute is not counted.
 3. "All optimal panels" means four distinct panels, because μ = 0.02 and μ = 0.05 share an optimum.
 4. **Noise hurts some circuits more than others.** Under the older noise rates, each circuit's chance of hitting its own optimum falls 25–56% below ideal. At μ = 0 and μ = 0.02 it drops *below* the independent-choice sampler built from the ideal circuit's odds: 0.0100 vs 0.0137, and 0.0032 vs 0.0044. Pooling the samples of all five circuits still recovers every optimum in 92% of 1,000-shot jobs.
-5. **Two panels share the $206.80 price.** On the AUC ladder the program prints, the $206.80 panel (sex, cp, thalach, ca, thal; AUC 0.904) is not the μ = 0.02 optimum (cp, trestbps, thalach, ca, thal; AUC 0.902). The objective is a proxy for accuracy, not accuracy itself.
+5. **Two panels share the \$206.80 price.** On the AUC ladder the program prints, the \$206.80 panel (sex, cp, thalach, ca, thal; AUC 0.904) is not the μ = 0.02 optimum (cp, trestbps, thalach, ca, thal; AUC 0.902). The objective is a proxy for accuracy, not accuracy itself.
 
 ## 7. Conclusion
 
-- **For the clinic: a price ladder for chest-pain triage.** $9.20 (history + one blood test) already reaches AUC 0.838; one treadmill ECG ($91.30) reaches 0.875; adding fluoroscopy ($191.20) reaches 0.902; $293.10 reaches 0.911. Because one procedure yields several readings, the middle of the ladder is where each extra dollar buys the most.
+- **For the clinic: a price ladder for chest-pain triage.** \$9.20 (history + one blood test) already reaches AUC 0.838; one treadmill ECG (\$91.30) reaches 0.875; adding fluoroscopy (\$191.20) reaches 0.902; \$293.10 reaches 0.911. Because one procedure yields several readings, the middle of the ladder is where each extra dollar buys the most.
 - **For the method: a quantum sampler that only ever proposes valid panels.** The mixer keeps exactly five tests in every sample, so no penalty term is needed (every penalty we could choose without the answer made QAOA random-level), and non-additive prices enter exactly as one three-qubit term. At equal numbers of evaluated panels, one 1,000-shot job recovers every price point's optimal panel **98%** of the time (92% under IonQ's older published noise rates), against **63%** for the best classical heuristic and 63% for the same per-test odds without correlations. Both confirmatory checks registered in advance passed.
 - **For hardware: a concrete gate budget.** 238 two-qubit gates per circuit on trapped ions against 775 on a heavy-hex lattice, and a live run on IonQ's current noise model that shows what survives today and what to cut next.
 - **Everything is checkable.** At 13 tests exhaustive search gives the exact answer, every constant is re-derived by the project's own code, and every number on this page is printed by a Run or by `tools/precompute.py`.
