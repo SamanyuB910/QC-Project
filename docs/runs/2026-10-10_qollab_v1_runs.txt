@@ -102,3 +102,14 @@ RUNS 7-8 (final build v1.5, readability rewrite, default settings)
   Built-in simulator: done in 3.6 s; identical to runs 1 and 5 (4 of 4 optima sampled, checks 2 and 3 PASSED).
   IonQ Forte 1 simulator (noise model, free): IonQ job 01a1278b-7c1f-7b0f-8c2c-0aaa467e7755, job 22.8 s, run 25.5 s;
      identical to runs 3 and 6 (193 of 1000 five-test shots, 0 optimal hits, LLR -107.9 -> independent-choice).
+
+============================================================================================================
+RUNS 9-10 (build v1.6, Sun Oct 11, 2026: constants derived in-project, labelled report, conclusion section)
+============================================================================================================
+  Built-in simulator, defaults: done in 8.0 s. Section 2 checks in the browser: prices match Turney's files (yes),
+     relevance recomputed live (max difference 0.0e+00), angles re-tuned offline (differences 0, 0).
+     Results identical to runs 1, 5, 7: 4 of 4 optima sampled, best sample = optimum at 5 of 5 price weights,
+     16.7% of samples in the top 1% of panels (16.5x random), every price weight looks like the ideal circuit.
+  IonQ Forte 1 simulator (noise model, free): IonQ job 01a12b77-08aa-741d-ace2-25022c9735ae, job 22.9 s, run 29.7 s.
+     Same counts as runs 3, 6, 8: best sampled panel rank 2 of 1,287 ($19.50, AUC 0.842), 3.6% of samples in the
+     top 1% (3.6x random; independent-choice 4.3%, ideal 12.6%), exact optimum not sampled, LLR -107.9.
