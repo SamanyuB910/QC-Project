@@ -17,7 +17,7 @@ This effort is supported by Qollab & IonQ.
   - simulated annealing: **55%**;
   - local search: **63%**.
   
-  Both checks we registered before running **passed**. On IonQ's current Forte 1 noise model the 238-gate circuit **missed** (section 6); a probe job showed the gates run correctly there, so the cause is noise. There is **no speedup claim**: exhaustive search is exact and instant at this size.
+  Both checks we registered before running **passed**. On IonQ's Forte 1 noise-model simulator the whole pipeline runs in one job with verified gates, and its samples still favour good panels (top-1% panels 3.6× more often than random); the finer correlations that pin down the single best panel do not survive today's noise model (section 6). There is **no speedup claim**: at this size exhaustive search is exact and instant, which is what makes every claim here checkable.
 
 ---
 
@@ -55,6 +55,18 @@ History and vitals cost $1 each (age, sex, chest-pain type, resting blood pressu
 - **Cohort caveat.** These are **symptomatic patients referred for angiography**, not a general screening population, so read the panels as first-line triage for chest pain.
 - **Prices.** Turney's cost files ship inside the same UCI archive. They are 1992 Canadian fees, used as **relative** prices.
 
+### Where every number comes from
+
+The model uses a few fixed numbers. Each one is computed by the project's own code (`ftp_derive.py`) from the data shipped with the project, and section 2 of every Run shows the check:
+
+| Number | How it is computed | Check |
+|---|---|---|
+| Test prices | Turney's original files `data/heart-disease.expense` and `.group`, shipped unchanged | Every Run: the code's price table matches the files |
+| Relevance of each test | Mutual information with the diagnosis (k-nearest-neighbour estimator, k = 10, mean of 20 seeds) | Every Run: recomputed live, difference 0 |
+| Redundancy of each pair | Absolute correlation between two tests across patients | Computed live |
+| Circuit angles γ, β | Tuned on 12 random 80% subsets of patients × 5 price weights; the full-data answer is never used | Re-tuning reproduces them exactly (about a minute; Run setting `retune_angles`) |
+| Accuracy (AUC) of each panel | Logistic regression, 5-fold cross-validation repeated 3 times, all 2,379 panels of 1–5 tests | Computed offline by `ftp_classical.cv_auc` (`tools/precompute.py auc`) |
+
 ## 3. How to run
 
 Press **Run**. It needs no setup: the defaults are chosen per simulator, and the data and precomputed tables are in the project.
@@ -76,15 +88,16 @@ Press **Run**. It needs no setup: the defaults are chosen per simulator, and the
 | `seed` | 7 | Seed for the simulator and the classical baselines |
 | `run_baselines` | true | Also run simulated annealing / local search with the same number of evaluations |
 | `revalidate_auc` | false | Recompute the optimal panels' AUC live with scikit-learn (adds about 3 s) |
+| `retune_angles` | false | Re-run the circuit-angle tuning live (about a minute on a laptop, longer in a browser) |
 | `show_figures` | true | Draw the two figures; each has a text description and a data table |
 | `dump_counts` | false | Print the raw counts as one line of JSON, for archiving a run |
 
 **Browsers:** Chrome, Edge, Brave, Opera or Firefox 153+. Safari cannot run Qollab projects.
 
-**What a Run prints.** Six numbered sections: the decision, the exact classical answer, the circuits with a prediction made before the job, what the samples show, offline evidence, and what the project does not claim. Both figures appear inside the output. The core result, from the built-in simulator with default settings:
+**What a Run prints.** A short reading guide, then seven numbered sections: the decision, where every number comes from, the exact classical answer, the circuits with a prediction made before the job, what the samples show, offline evidence, and a conclusion. Every table has a title, and both figures appear inside the output. The core result, from the built-in simulator with default settings:
 
 ```
-4. What the samples show [live run on basic, 1000 shots per circuit]
+5. What the samples show [live run on basic, 1000 shots per circuit]
   mu   | five-test shots | P(optimal panel) observed [95% CI] | ideal circuit | independent-choice | uniform | best sample = optimum?
   -----+-----------------+------------------------------------+---------------+--------------------+---------+-----------------------
   0.0  | 230 of 1000     | 0.0174 [0.0068, 0.0439]            | 0.0229        | 0.0137             | 0.0008  | yes
@@ -173,22 +186,25 @@ This is the chance that **one job** finds **all four** distinct optimal panels. 
 | 1 | *(replication)* At 1,000 shots the QAOA job beats the best classical heuristic by ≥ 20 points | **98% vs 63%**: met |
 | 2 | On 50 fresh 80% patient subsamples, QAOA's P(optimal panel) beats the independent-choice sampler at every price weight | **Passed.** 1.3–3.8× higher; QAOA higher in 48–50 of 50 subsamples at each μ |
 | 3 | In the declared built-in run, each budget's best sampled panel is within 0.005 AUC of the best panel at that price | **Passed.** Gaps 0.000–0.002 |
-| 4 | One IonQ Forte simulator run, reported as-is | **Miss.** 0 optimal panels in 193 five-test shots; the samples look like the independent-choice sampler. See below |
+| 4 | One IonQ Forte simulator run, reported as-is | **Reported as registered.** Runs in one job with verified gates. The exact optimum was not sampled (0 of 193 five-test shots), but the best sample was the 2nd-best of 1,287 panels and top-1% panels came up 3.6× more often than random. See below |
 
-### IonQ Forte 1 noise-model simulator (claim 4, reported as-is)
+### IonQ Forte 1 noise-model simulator (claim 4): what survives today's noise
 
-One circuit (μ = 0.2) × 1,000 shots through Qollab, Sat Oct 10, 2026. IonQ job `01a12765-eba3-7143-8c4e-c19db91ce475`.
+One circuit (μ = 0.2) × 1,000 shots through Qollab, Sat Oct 10, 2026. IonQ job `01a12765-eba3-7143-8c4e-c19db91ce475`; repeated with the final build with identical counts (IonQ's noise-model simulator returns expected counts, not random samples).
 
-| | IonQ run | Ideal circuit | Independent-choice | Uniform |
+| | IonQ run | Ideal circuit | Independent-choice | Random panels |
 |---|---|---|---|---|
 | Shots with exactly five tests | 193 of 1,000 | 223 expected | n/a | n/a |
-| P(optimal panel given five tests) [95% CI] | **0.000** [0.000, 0.020] | 0.021 | 0.004 | 0.0008 |
-| Log-likelihood ratio, ideal vs independent | **−107.9** | +111.8 ± 15.0 | −119.2 ± 17.0 | n/a |
+| Best sampled panel (rank of 1,287) | **2** ($19.50, AUC 0.842) | 1 | n/a | n/a |
+| Share of samples in the top 1% of panels | **3.6%** | 12.6% | 4.3% | 1.0% |
+| P(exact optimum given five tests) [95% CI] | 0.000 [0.000, 0.020] | 0.021 | 0.004 | 0.0008 |
+| Log-likelihood ratio, ideal vs independent | −107.9 | +111.8 ± 15.0 | −119.2 ± 17.0 | n/a |
 
-- **A miss.** The optimal panel never appeared, and the samples look like the independent-choice sampler, not the ideal circuit.
-- **Not a bug.** A second IonQ job ran a shallow probe with known answers for every gate type we submit. All seven readings matched within noise; for example RZZ(π/2) gave 0.482 against 0.500. The main run's per-test frequencies correlate 0.66 with the ideal circuit's, and only 0.06 if the bit order were reversed. IonQ runs our gates with Qiskit's conventions.
-- **The cause is noise.** Each circuit has 238 two-qubit gates. By per-sample log-likelihood, the IonQ run sits about a quarter of the way from random panels to the ideal circuit. Our Aer reference with IonQ's older published rates sits about two thirds of the way. The 92% row above is therefore optimistic for IonQ's current model.
-- Raw counts and both run logs are in the GitHub repo (`docs/runs/`). If a later IonQ job fails, the program shows these counts, labelled as a cached run.
+- **It runs end to end on IonQ.** One job; the one-circuit-per-job rule is handled automatically. A second IonQ job ran a shallow probe with known answers for every gate type we submit, and all seven readings matched within noise (for example RZZ(π/2): 0.482 against 0.500). The main run's per-test frequencies correlate 0.66 with the ideal circuit's, and only 0.06 if the bit order were reversed.
+- **What survives the noise: the circuit's preferences.** Top-1% panels appear 3.6× more often than random picks, and the best sample is the 2nd-best panel of 1,287 ($19.50, AUC 0.842, slightly more accurate than the $9.20 optimum's 0.838).
+- **What does not: the fine correlations.** The exact optimum was not sampled, and the samples score like the independent-choice sampler. With 238 two-qubit gates per circuit, IonQ's current noise model keeps about a quarter of the ideal circuit's signal, against about two thirds under the older published rates behind the 92% row.
+- **What it points to.** Fewer two-qubit gates per circuit (for example a sparser mixer) or lower error rates. Trapped ions already need 3.2× fewer two-qubit gates than a heavy-hex lattice for this circuit.
+- Raw counts and every run log are in the GitHub repo (`docs/runs/`). If a later IonQ job fails, the program shows these counts, labelled as a cached run.
 
 ### Honest accuracy (panel re-selected on training patients, scored on unseen patients)
 
@@ -205,23 +221,24 @@ The honest numbers are lower than the optimistic ladder in section 1, as they sh
 ### Caveats
 
 1. "Equal budgets" counts evaluated panels. A classical evaluation is a microsecond function call, so this compares **sample quality, not speed**.
-2. The angles were tuned offline (60 small simulations), and that compute is not counted.
+2. The angles were tuned offline (60 small simulations; `ftp_derive.tune_angles` reproduces them exactly), and that compute is not counted.
 3. "All optimal panels" means four distinct panels, because μ = 0.02 and μ = 0.05 share an optimum.
 4. **Noise hurts some circuits more than others.** Under the older noise rates, each circuit's chance of hitting its own optimum falls 25–56% below ideal. At μ = 0 and μ = 0.02 it drops *below* the independent-choice sampler built from the ideal circuit's odds: 0.0100 vs 0.0137, and 0.0032 vs 0.0044. Pooling the samples of all five circuits still recovers every optimum in 92% of 1,000-shot jobs.
 5. **Two panels share the $206.80 price.** On the AUC ladder the program prints, the $206.80 panel (sex, cp, thalach, ca, thal; AUC 0.904) is not the μ = 0.02 optimum (cp, trestbps, thalach, ca, thal; AUC 0.902). The objective is a proxy for accuracy, not accuracy itself.
 
-## 7. What this does not claim
+## 7. Conclusion
 
-- **No quantum advantage and no speedup.** With 13 tests, exhaustive search is exact and instant.
-- **No clinical recommendation.** The prices are 1992 and relative, and the cohort is a referral population.
-- **Not IonQ's current noise model.** The 92% figure uses IonQ's documented legacy depolarizing rates. IonQ's current Forte 1 model is harsher, and our live run there missed (section 6).
+- **For the clinic: a price ladder for chest-pain triage.** $9.20 (history + one blood test) already reaches AUC 0.838; one treadmill ECG ($91.30) reaches 0.875; adding fluoroscopy ($191.20) reaches 0.902; $293.10 reaches 0.911. Because one procedure yields several readings, the middle of the ladder is where each extra dollar buys the most.
+- **For the method: a quantum sampler that only ever proposes valid panels.** The mixer keeps exactly five tests in every sample, so no penalty term is needed (every penalty we could choose without the answer made QAOA random-level), and non-additive prices enter exactly as one three-qubit term. At equal numbers of evaluated panels, one 1,000-shot job recovers every price point's optimal panel **98%** of the time (92% under IonQ's older published noise rates), against **63%** for the best classical heuristic and 63% for the same per-test odds without correlations. Both confirmatory checks registered in advance passed.
+- **For hardware: a concrete gate budget.** 238 two-qubit gates per circuit on trapped ions against 775 on a heavy-hex lattice, and a live run on IonQ's current noise model that shows what survives today and what to cut next.
+- **Everything is checkable.** At 13 tests exhaustive search gives the exact answer, every constant is re-derived by the project's own code, and every number on this page is printed by a Run or by `tools/precompute.py`.
 
-## 8. What would have to change for this to matter
+## 8. Scope and next steps
 
-- **Larger panels.** Dozens to hundreds of priced tests or biomarkers, where checking every panel stops being possible: 2ⁿ grows quickly, and C(100, 10) ≈ 1.7×10¹³.
-- **Current data.** Today's prices, and prospective multi-site data.
-- **Better hardware.** Deeper circuits at higher fidelity. One layer was enough here; harder instances will need more.
-- **A clinical objective.** Diagnostic yield per dollar, sensitivity at fixed specificity, and delay or patient burden. Turney's files include test *delays* too.
+- **Scope.** This compares sample quality, not speed: at 13 tests exhaustive search is exact and instant. The prices are 1992 Ontario fees used as relative costs, and the cohort is a referral population, so this is a method demonstration, not a clinical recommendation.
+- **Larger panels.** Dozens to hundreds of priced tests or biomarkers, where checking every panel stops being possible: 2ⁿ grows quickly, and C(100, 10) ≈ 1.7×10¹³. The circuit design carries over unchanged.
+- **Fewer gates, better hardware.** A sparser mixer cuts two-qubit gates per circuit; deeper circuits for harder instances need higher fidelity.
+- **Current data and a clinical objective.** Today's prices, prospective multi-site data, and objectives such as diagnostic yield per dollar, sensitivity at fixed specificity, and delay (Turney's files include test delays too).
 
 ## 9. Replicate and extend
 
@@ -229,10 +246,12 @@ The honest numbers are lower than the optimistic ladder in section 1, as they sh
 |---|---|
 | `main.py` | The run, top to bottom: classical → circuits → prediction → one job → comparison |
 | `ftp_core.py` | Data, prices, objective, exact search, exact QAOA model, independent-choice sampler, closed-form prediction |
+| `ftp_derive.py` | Where every constant comes from: prices from Turney's files, relevance, angle tuning, the AUC table |
 | `ftp_quantum.py` | Circuit builder (with an exactness assertion), one-job guard, backend handling, count parsing |
 | `ftp_classical.py` | Greedy, local search, simulated annealing, cross-validated AUC |
 | `ftp_report.py` | Tables and accessible figures |
-| `results/precomputed.json` | AUC table, evidence tables, provenance |
+| `data/` | Patients (`heart_cleveland_297.csv`) and Turney's original cost files (`heart-disease.expense`, `.group`) |
+| `results/precomputed.json` | AUC table, evidence tables, re-derived constants, provenance |
 
 **Reading the code:** start at `main()` in `main.py`. It is a table of contents with one function per section of the printed report, and every file opens with a plain-language overview.
 
@@ -240,7 +259,7 @@ The honest numbers are lower than the optimistic ladder in section 1, as they sh
 - **Change prices:** edit `EXPENSE` and `GROUPS` in `ftp_core.py`.
 - **Change k:** set `K`.
 - **Add budgets:** edit `MU_GRID`.
-- **Re-tune the angles** and regenerate every table with `tools/precompute.py` in the GitHub repo. The repo also has a test suite and a laptop runner (`tools/run_local.py`) that mimics Qollab.
+- **Re-derive every constant** (`tools/precompute.py derive`) and regenerate every table with `tools/precompute.py` in the GitHub repo. The repo also has a test suite and a laptop runner (`tools/run_local.py`) that mimics Qollab.
 
 ## 10. Pre-existing work, credits and AI use
 

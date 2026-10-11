@@ -20,5 +20,5 @@ The **code** in this repository is MIT-licensed (see `LICENSE`). The **data** it
 
 - **Source:** the `costs/` folder distributed inside the same UCI Heart Disease archive (`heart-disease.cost`, `.expense`, `.group`, `.delay`).
 - **Origin:** Peter D. Turney, *Cost-Sensitive Classification: Empirical Evaluation of a Hybrid Genetic Decision Tree Induction Algorithm*, Journal of Artificial Intelligence Research 2 (1995) 369–409, https://arxiv.org/abs/cs/9503102. The costs are from the Ontario Ministry of Health fee schedule (October 1992), in Canadian dollars.
-- **Use here:** each test's full cost, its discounted cost, and its shared-procedure group (A = {chol, fbs}, B = {thalach, thal}, C = {exang, oldpeak, slope}) are transcribed into code constants. We treat them as **relative** prices, not as current prices.
+- **Use here:** `heart-disease.expense` and `heart-disease.group` are shipped unchanged in `five_tests_priced/data/`. Each test's full cost, its discounted cost, and its shared-procedure group (A = {chol, fbs}, B = {thalach, thal}, C = {exang, oldpeak, slope}) are also written as code constants, and every Run checks them against these files. We treat them as **relative** prices, not as current prices.
 - The cost files carry no separate licence. We treat them as part of the UCI archive (CC BY 4.0) and credit Turney.

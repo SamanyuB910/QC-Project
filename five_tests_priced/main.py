@@ -17,17 +17,19 @@ THE QUANTUM PART
 
 HOW TO READ THIS FILE
   main() just below is the table of contents. Each step is one function and one section of the printed report:
-    step_1_the_decision            the patients, the decision, and the test prices
-    step_2_classical_first         the exact answer by checking every panel, and how greedy shortcuts do
-    step_3_build_circuits          build the circuits and check them against an exact model
-    step_3_predict                 print, BEFORE the job, what an ideal circuit should achieve
-    step_3_run_the_job             send the one job and read back the measured panels
-    step_4_results                 compare the samples with the exact answer and with classical methods
-    step_5_precomputed_evidence    offline results (too slow for a Run), from results/precomputed.json
-    step_6_what_this_does_not_claim
+    step_1_the_decision            the patients, the 13 tests and their prices
+    step_2_where_numbers_come_from every constant in the model, how it is computed, and a check run now
+    step_3_classical_first         the exact answer by checking every panel, and how greedy shortcuts do
+    step_4_build_circuits          build the circuits and check them against an exact model
+    step_4_predict                 print, BEFORE the job, what an ideal circuit should achieve
+    step_4_run_the_job             send the one job and read back the measured panels
+    step_5_results                 grade the samples against the exact answer and classical methods
+    step_6_precomputed_evidence    offline results (too slow for a Run), from results/precomputed.json
+    step_7_conclusion              what this run and the offline evidence show
 
 THE OTHER FILES
   ftp_core.py       data, prices, the objective, exact search, an exact NumPy model of the circuit, statistics
+  ftp_derive.py     where every constant comes from: prices from Turney's files, relevance, angle tuning, AUCs
   ftp_quantum.py    builds the Qiskit circuits, sends the one job, reads the measured counts
   ftp_classical.py  classical comparison methods (greedy, local search, simulated annealing) and accuracy (AUC)
   ftp_report.py     printing helpers: section titles, tables, accessible figures
@@ -39,7 +41,8 @@ RUN SETTINGS (Qollab shows these as a form; the runtime calls main() with them)
   single_mu      price weight used when circuits = "single"
   seed           seed for the simulator and the classical baselines
   run_baselines  also run simulated annealing / local search with the same number of evaluations
-  revalidate_auc recompute cross-validated AUCs live with scikit-learn (slower; precomputed values are shown anyway)
+  revalidate_auc recompute the optimal panels' cross-validated AUCs live with scikit-learn
+  retune_angles  re-run the circuit-angle tuning live (about a minute on a laptop, longer in a browser)
   show_figures   draw the figures (each also has a text description and a table)
   dump_counts    print the raw five-test counts as one line of JSON (for archiving a run)
 
@@ -62,34 +65,39 @@ import numpy as np
 
 import ftp_classical as classical   # classical comparison methods and accuracy (AUC)
 import ftp_core as core             # data, prices, objective, exact search, exact circuit model, statistics
+import ftp_derive as derive         # where every constant comes from
 import ftp_quantum as quantum       # Qiskit circuits, the one job, reading counts
 import ftp_report as rep            # section titles, tables, figures
 
-BUILD = "v1.5 2026-10-10"
+BUILD = "v1.6 2026-10-11"
 ATTRIBUTION = "This effort is supported by Qollab & IonQ."
+TOP_SHARE = 13          # "top 1%": the 13 best of the 1,287 five-test panels
 
 
 # =================================================================================================================
 # main(): the table of contents. Qollab calls it when you press Run, passing the values of the Run settings form.
 # Qollab only recognises main() if its signature stays on ONE line with simple types, so it is left long.
 # =================================================================================================================
-def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: int = 7, run_baselines: bool = True, revalidate_auc: bool = False, show_figures: bool = True, dump_counts: bool = False):
+def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: int = 7, run_baselines: bool = True, revalidate_auc: bool = False, retune_angles: bool = False, show_figures: bool = True, dump_counts: bool = False):
     run_started = time.time()
     print(f"Five Tests, Priced   [build {BUILD}]")
     print(ATTRIBUTION)
     print("Theme: Quantum Impact. QCA Prompt B: pick 5 of 13 heart-disease measurements, now with real prices.\n")
+    print_reading_guide()
 
     # Load the problem, and the offline results that ship with the project.
     problem = Problem()
     precomputed = load_project_json("precomputed") or {}
     auc = auc_lookup(precomputed)
 
-    # Sections 1-2: the clinic's decision, then the exact answer found by checking every panel.
+    # Sections 1-3: the decision, where the numbers come from, and the exact answer found by checking every panel.
     step_1_the_decision(problem)
-    step_2_classical_first(problem, auc, show_figures, revalidate_auc)
+    step_2_where_numbers_come_from(problem, precomputed, retune_angles)
+    ladder = step_3_classical_first(problem, auc, show_figures, revalidate_auc)
 
-    # Section 3: the quantum step. First: which simulator did Qollab give us, and what should we send it?
-    rep.section("3. The quantum step: one job, 13 qubits, exactly five tests in every sample")
+    # Section 4: the quantum step. First: which simulator did Qollab give us, and what should we send it?
+    rep.section("4. The quantum step: one circuit per price weight, all sent in one job")
+    explain_the_circuit()
     backend = injected_backend()
     if backend is None:
         print("  No backend was injected (are you running outside Qollab?). Stopping here.")
@@ -112,22 +120,32 @@ def main(shots: int = 0, circuits: str = "auto", single_mu: float = 0.2, seed: i
     independent = {mu: core.independent_choice(ideal[mu]) for mu in price_weights}
     targets = sorted({problem.optimum[mu] for mu in price_weights})
 
-    logical_circuits, job_circuits, gate_counts = step_3_build_circuits(problem, price_weights, mode, ideal, seed)
+    logical_circuits, job_circuits, gate_counts = step_4_build_circuits(problem, price_weights, mode, ideal, seed)
     if quantum.needs_routing(backend, kind):
         job_circuits = route_for_lattice_device(job_circuits, backend, seed, gate_counts)
     print_runtime_note(kind, shots_per_circuit)
-    step_3_predict(price_weights, ideal, independent, targets, shots_per_circuit, show_figures)
-    counts, label = step_3_run_the_job(backend, kind, mode, job_circuits, logical_circuits, price_weights,
+    step_4_predict(price_weights, ideal, independent, targets, shots_per_circuit, show_figures)
+    counts, label = step_4_run_the_job(backend, kind, mode, job_circuits, logical_circuits, price_weights,
                                        shots_per_circuit, seed, ideal)
 
-    # Sections 4-6: what the samples show, the offline evidence, and what the project does not claim.
-    step_4_results(problem, price_weights, counts, ideal, independent, targets, label, run_baselines, seed)
-    step_5_precomputed_evidence(precomputed)
-    step_6_what_this_does_not_claim()
+    # Sections 5-7: what the samples show, the offline evidence, and the conclusion.
+    summary = step_5_results(problem, price_weights, counts, ideal, independent, targets, label, run_baselines, seed)
+    step_6_precomputed_evidence(precomputed)
+    step_7_conclusion(problem, ladder, auc, kind, label, summary, precomputed, gate_counts)
 
     if dump_counts and counts:
         print_counts_json(backend_description, shots_per_circuit, label, counts, price_weights)
     print(f"\nDone in {time.time() - run_started:.1f}s. {ATTRIBUTION}")
+
+
+def print_reading_guide():
+    rep.section("How to read this report")
+    print("  * A chest-pain clinic can order only 5 of 13 tests per patient. A 'panel' is the set of 5 tests it orders.")
+    print("  * Each panel gets a score (lower is better): informative tests, little overlap between them, low price.")
+    print("    The price weight mu sets how much price matters: mu = 0 ignores price, mu = 0.2 makes it matter a lot.")
+    print("  * Sections 1-3 find the exact best panel at each price weight by checking all 1,287 panels.")
+    print("  * Sections 4-5 ask a 13-qubit quantum circuit (one qubit per test) to find the same panels by sampling,")
+    print("    and grade it against that exact answer. Section 6 adds results computed offline; section 7 sums up.")
 
 
 # =================================================================================================================
@@ -180,30 +198,105 @@ def auc_lookup(precomputed):
     return dict(zip(auc_table.get("states", []), auc_table.get("aucs", [])))
 
 
+def names(panel, limit=60):
+    """Readable list of a panel's tests, e.g. 'age, sex, cp, trestbps, fbs'."""
+    return rep.panel(core.state_to_names(panel), limit)
+
+
 # =================================================================================================================
-# Sections 1 and 2: the problem, solved classically
+# Sections 1-3: the problem, where its numbers come from, and the exact classical answer
 # =================================================================================================================
 def step_1_the_decision(problem):
-    """Section 1: the patients, the decision the clinic faces, and the procedures that several tests share."""
+    """Section 1: the patients, the 13 tests with their prices, and the procedures that several tests share."""
     # Self-test: the fast price formula (a polynomial, which the circuit uses) must equal the obvious
     # test-by-test price for all 8,192 possible panels.
     worst_difference = max(abs(problem.price[panel] - core.panel_cost(panel)) for panel in range(2 ** core.N))
 
-    rep.section("1. The decision")
+    rep.section("1. The decision: which five tests should the clinic order?")
     print(f"  {len(problem.y)} Cleveland chest-pain patients ({int(problem.y.sum())} with heart disease), "
           f"13 possible measurements.")
     print("  The clinic can collect only 5. Tests have real prices (Turney 1995, Ontario fee schedule 1992, CAD),")
     print("  and some share one procedure: pay for the procedure once, the extra readings are almost free.")
+    print()
+    rep.table(["qubit", "test", "what it measures", "comes from", "price alone", "price if procedure already paid"],
+              [[i, f, core.LABELS[f], core.PROCEDURE_OF[f], rep.money(core.EXPENSE[f][0]),
+                rep.money(core.EXPENSE[f][1])] for i, f in enumerate(core.FEATURES)],
+              title="The 13 tests (one qubit each):")
     shared = core.shared_costs()
-    rep.table(["shared procedure", "tests", "paid once"],
+    rep.table(["shared procedure", "tests it yields", "paid once"],
               [[group, ", ".join(core.GROUPS[group]), rep.money(shared[group])] for group in core.GROUPS],
+              title="Procedures shared by several tests (this is what makes price more than a simple sum):",
               note=f"price self-test: polynomial vs table on all 8,192 subsets, max difference {worst_difference:.1e}")
 
 
-def step_2_classical_first(problem, auc, show_figures, revalidate_auc):
-    """Section 2: the exact best panel at each price weight, how greedy shortcuts compare, and the price ladder
-    (the best accuracy reachable at each price)."""
-    rep.section("2. Classical first: exhaustive search is exact and instant at 13 tests")
+def step_2_where_numbers_come_from(problem, precomputed, retune_angles):
+    """Section 2: every constant the model uses, how it is computed, and a check run on this Run."""
+    rep.section("2. Where every number comes from (and the checks run now)")
+    rep.paragraph("The model uses four kinds of fixed numbers. Each one is computed by this project's own code "
+                  "(ftp_derive.py) from the data in the project; the right-hand column says how it was checked.")
+
+    # Prices: compare with Turney's original files, shipped in data/.
+    try:
+        price_check = "match the files: " + rep.yesno(derive.prices_match_turney())
+    except Exception as e:  # noqa: BLE001
+        price_check = f"could not read the files ({type(e).__name__})"
+
+    # Relevance: recompute it now and compare with the shipped values.
+    try:
+        live_relevance = derive.relevance(problem.X, problem.y)
+        relevance_check = (f"recomputed now: max difference {np.abs(live_relevance - core.R_K10).max():.1e}")
+    except Exception as e:  # noqa: BLE001
+        relevance_check = f"not recomputed here ({type(e).__name__}); see tools/precompute.py"
+
+    # Angles: re-tune now if asked (slow); otherwise report the recorded offline re-run.
+    recorded = precomputed.get("derivations", {})
+    if retune_angles:
+        started = time.time()
+        gamma, beta, _ = derive.tune_angles(problem.X, problem.y)
+        angle_check = (f"re-tuned now in {time.time() - started:.0f}s: differences {abs(gamma - core.GAMMA):.1e}, "
+                       f"{abs(beta - core.BETA):.1e}")
+    elif "gamma" in recorded:
+        angle_check = (f"re-tuned offline {recorded.get('created', '?')[:10]}: differences "
+                       f"{abs(recorded['gamma'] - core.GAMMA):.1e}, {abs(recorded['beta'] - core.BETA):.1e} "
+                       f"(set retune_angles = true to repeat)")
+    else:
+        angle_check = "set retune_angles = true to re-run the tuning"
+    auc_source = precomputed.get("auc_table", {}).get("source", "")
+    auc_check = (f"computed offline {recorded.get('auc_created', '?')[:10]} by ftp_classical.cv_auc"
+                 if "ftp_" in auc_source else "see tools/precompute.py")
+
+    rep.table(["number", "value", "how it is computed", "check"],
+              [["test prices", "13 tests, 3 shared procedures",
+                "Turney (1995) cost files, shipped as data/heart-disease.expense and .group",
+                price_check],
+               ["relevance r_i of each test", f"{core.R_K10.min():.3f} to {core.R_K10.max():.3f} nats",
+                "mutual information with the diagnosis (kNN estimator, k = 10, mean of 20 seeds)", relevance_check],
+               ["redundancy c_ij of each pair", f"78 pairs, {problem.redundancy.min():.2f} to "
+                f"{problem.redundancy.max():.2f}", "|correlation| between two tests across the 297 patients",
+                "computed now from the data"],
+               ["circuit angles gamma, beta", f"{core.GAMMA:.4f}, {core.BETA:.4f}",
+                "tuned on 12 random 80% subsets x 5 price weights (never on the full-data answer)", angle_check],
+               ["accuracy (AUC) of each panel", "2,379 panels of 1-5 tests",
+                "logistic regression, 5-fold cross-validation repeated 3 times", auc_check]],
+              title="Every constant in the model:")
+
+    order = np.argsort(-core.R_K10)
+    rep.table(["rank", "test", "what it measures", "relevance r_i (nats)"],
+              [[rank + 1, core.FEATURES[i], core.LABELS[core.FEATURES[i]], f"{core.R_K10[i]:.4f}"]
+               for rank, i in enumerate(order)],
+              title="Relevance of each test to the diagnosis (higher = more informative on its own):")
+
+
+def step_3_classical_first(problem, auc, show_figures, revalidate_auc):
+    """Section 3: the exact best panel at each price weight, how greedy shortcuts compare, and the price ladder
+    (the best accuracy reachable at each price). Returns the ladder (list of panels, cheapest first)."""
+    rep.section("3. Classical first: the exact answer, by checking all 1,287 five-test panels")
+    rep.paragraph("Score of a panel (lower is better):  f_mu = - (sum of the relevance of its tests)  "
+                  "+ 0.1 x (sum of the redundancy of each pair of its tests)  + mu x (its price) / 100.  "
+                  "Checking all 1,287 five-test panels gives the exact best panel for each price weight mu. "
+                  "'Greedy' adds the single best test five times; 'greedy + 1-swaps' then swaps one test at a time "
+                  "while that helps. 'Rank k' means it stopped at the k-th best panel instead of the best.")
+    print()
 
     # (a) Exact answer vs greedy selection, for each price weight.
     started = time.time()
@@ -213,20 +306,25 @@ def step_2_classical_first(problem, auc, show_figures, revalidate_auc):
         greedy_panel, _ = classical.greedy(f)
         greedy_then_swaps, _ = classical.local_search(f, greedy_panel)   # greedy, then 1-swaps until stuck
         greedy_misses += greedy_panel != best
-        rows.append([mu, rep.panel(core.state_to_names(best)), rep.money(problem.price[best]),
+        rows.append([mu, names(best), rep.money(problem.price[best]),
                      f"{auc[best]:.3f}" if best in auc else "?",
                      "optimal" if greedy_panel == best else f"rank {core.rank_of(f, greedy_panel)} of 1287",
                      "optimal" if greedy_then_swaps == best else f"rank {core.rank_of(f, greedy_then_swaps)}"])
-    rep.table(["price weight mu", "exact best 5-test panel", "price", "CV AUC", "greedy", "greedy + 1-swap"], rows,
+    rep.table(["price weight mu", "exact best 5-test panel", "its price", "its CV AUC", "greedy finds",
+               "greedy + 1-swaps finds"], rows,
+              title="The exact best panel at each price weight, and what shortcuts find:",
               note=f"exhaustive search over all 1,287 panels x 5 price weights took {time.time() - started:.2f}s; "
-                   f"greedy misses the optimum at {greedy_misses} of 5 price weights")
+                   f"greedy misses the optimum at {greedy_misses} of 5 price weights. "
+                   f"CV AUC: 0.5 = guessing, 1.0 = perfect.")
 
     # (b) The price ladder: cheapest panel that reaches each new level of accuracy (needs the precomputed AUCs).
+    ladder = []
     if auc:
         ladder = core.auc_front(auc, problem.price)
-        rep.table(["price", "panel (cheapest way to reach this AUC)", "CV AUC"],
-                  [[rep.money(problem.price[s]), rep.panel(core.state_to_names(s), 70), f"{auc[s]:.3f}"]
+        rep.table(["price", "cheapest panel that reaches this AUC", "what the clinic orders", "CV AUC"],
+                  [[rep.money(problem.price[s]), names(s, 70), core.procedures(s), f"{auc[s]:.3f}"]
                    for s in ladder],
+                  title="The price ladder: what each extra dollar buys",
                   note="[precomputed] cost-vs-accuracy front of all 1,287 five-test panels "
                        "(logistic regression, 5x3 CV, all 297 patients; optimistic: best of many)")
         if show_figures:
@@ -247,16 +345,29 @@ def step_2_classical_first(problem, auc, show_figures, revalidate_auc):
         rows = []
         for best in sorted(set(problem.optimum.values()), key=lambda s: problem.price[s]):
             live = classical.cv_auc(problem.X, problem.y, best)
-            rows.append([rep.panel(core.state_to_names(best)), rep.money(problem.price[best]), f"{live:.4f}",
+            rows.append([names(best), rep.money(problem.price[best]), f"{live:.4f}",
                          f"{auc.get(best, float('nan')):.4f}"])
         rep.table(["optimal panel", "price", "CV AUC recomputed now", "precomputed"], rows,
                   note=f"[live] scikit-learn logistic regression, 5x3 repeated stratified CV, random_state=7 "
                        f"({time.time() - started:.1f}s)")
+    return ladder
 
 
 # =================================================================================================================
-# Section 3: the quantum step
+# Section 4: the quantum step
 # =================================================================================================================
+def explain_the_circuit():
+    print("  How the circuit works (one circuit per price weight, 13 qubits, qubit i = test i, 1 = 'order it'):")
+    print("    1. Start: every qubit is 'in' with probability 5/13, so many shots have exactly five tests.")
+    print("    2. Cost layer: the score above, written exactly as quantum gates (13 one-qubit, 78 two-qubit, and one")
+    print("       three-qubit term for 'pay for the treadmill once'). Better panels pick up phases that the next")
+    print("       layer turns into higher probability.")
+    print("    3. Mixer: on every pair of tests, swap one in for one out. The number of tests never changes, so no")
+    print("       penalty term is needed to enforce 'exactly five'.")
+    print("    4. Measure, and keep the shots with exactly five tests (about 22% of shots): each is a valid panel.")
+    print()
+
+
 def choose_circuit_mode(requested, kind):
     """Turn the 'circuits' setting into "all", "single" or "probe".
 
@@ -293,7 +404,7 @@ def circuit_name(mu):
     return f"ftp_mu{str(mu).replace('.', 'p')}"
 
 
-def step_3_build_circuits(problem, price_weights, mode, ideal, seed):
+def step_4_build_circuits(problem, price_weights, mode, ideal, seed):
     """Build one QAOA circuit per price weight, plus the bit-order check circuit when all five go in one job.
     Compile them to simple gates, and check the result against the exact NumPy model.
 
@@ -313,6 +424,7 @@ def step_3_build_circuits(problem, price_weights, mode, ideal, seed):
           f"two-qubit gates (RZZ) per circuit: {gate_counts}")
     print(f"  check: submitted circuit vs exact NumPy model, total-variation distance {tvd:.1e} "
           f"(P(five tests) = {p_five_tests:.4f}, expected {core.P_HW5:.4f})")
+    print("         (0 would mean identical; about 1e-15 is rounding error, so the circuit is exactly the model)")
     if tvd > 1e-6:
         print("  WARNING: the circuit does not match the model (gate convention changed?). Results below are suspect.")
     return logical_circuits, job_circuits, gate_counts
@@ -342,13 +454,18 @@ def print_runtime_note(kind, shots_per_circuit):
         print("  note: IonQ's simulator runs in IonQ's cloud; with queueing this can take a few minutes.")
 
 
-def step_3_predict(price_weights, ideal, independent, targets, shots_per_circuit, show_figures):
+def step_4_predict(price_weights, ideal, independent, targets, shots_per_circuit, show_figures):
     """BEFORE the job runs, print the exact chance that one job of this size samples every optimal panel: for the
     ideal circuit, and for two samplers without its correlations. The run is then graded against this."""
     uniform = [np.full(len(core.FEAS_IDX), 1 / len(core.FEAS_IDX)) for _ in price_weights]
     ideal_list = [ideal[mu] for mu in price_weights]
     independent_list = [independent[mu] for mu in price_weights]
 
+    print()
+    rep.paragraph("Prediction, made before the job: the chance that ONE job samples every optimal panel at least "
+                  "once. Three samplers get the same number of shots: the ideal circuit; an 'independent-choice' "
+                  "sampler that picks each test with the circuit's own odds but independently (it isolates what "
+                  "the correlations between qubits add); and random five-test panels.")
     shot_grid = sorted({100, 200, 500, 1000, shots_per_circuit})
     rep.table(["sampler (same shots)"] +
               [f"{s} shots" + (" <- this run" if s == shots_per_circuit else "") for s in shot_grid],
@@ -381,7 +498,7 @@ def step_3_predict(price_weights, ideal, independent, targets, shots_per_circuit
             print(f"  (figure unavailable: {type(e).__name__}: {e})")
 
 
-def step_3_run_the_job(backend, kind, mode, job_circuits, logical_circuits, price_weights, shots_per_circuit, seed,
+def step_4_run_the_job(backend, kind, mode, job_circuits, logical_circuits, price_weights, shots_per_circuit, seed,
                        ideal):
     """Send the ONE job and read back, for each price weight, how often each five-test panel was measured.
 
@@ -488,13 +605,18 @@ def run_gate_probe(backend, kind, shots, seed):
 
 
 # =================================================================================================================
-# Section 4: what the samples show
+# Section 5: what the samples show
 # =================================================================================================================
-def step_4_results(problem, price_weights, counts, ideal, independent, targets, label, run_baselines, seed):
-    """Section 4: grade the measured panels against the exact answer, the two models, and classical methods."""
-    rep.section("4. What the samples show " + label)
+def step_5_results(problem, price_weights, counts, ideal, independent, targets, label, run_baselines, seed):
+    """Section 5: grade the measured panels against the exact answer, the two models, and classical methods.
 
-    # (a) For each price weight: how often the optimal panel was measured, vs what each model predicts.
+    Returns a summary of this run for the conclusion.
+    """
+    rep.section("5. What the samples show " + label)
+    summary = {"price_weights": len(price_weights), "targets": len(targets), "best_is_optimum": 0,
+               "looks_ideal": 0, "llr_tested": 0, "top_share": [], "best_rank": [], "best_sampled": []}
+
+    # (a) For each price weight: how often the exact best panel was measured, vs what each model predicts.
     rows, sampled = [], set()
     for mu in price_weights:
         panel_counts, total_shots = counts[mu]
@@ -503,6 +625,7 @@ def step_4_results(problem, price_weights, counts, ideal, independent, targets, 
         hits = panel_counts.get(best, 0)
         low, high = core.wilson(hits, five_test_shots)
         best_sampled = min(panel_counts, key=lambda s: problem.objective[mu][s]) if panel_counts else None
+        summary["best_is_optimum"] += best_sampled == best
         sampled |= set(panel_counts)
         position = core.POS_IN_FEAS[best]
         rows.append([mu, f"{five_test_shots} of {total_shots}",
@@ -511,17 +634,41 @@ def step_4_results(problem, price_weights, counts, ideal, independent, targets, 
                      rep.yesno(best_sampled == best)])
     rep.table(["mu", "five-test shots", "P(optimal panel) observed [95% CI]", "ideal circuit",
                "independent-choice", "uniform", "best sample = optimum?"], rows,
+              title="How often each price weight's exact best panel was sampled (share of five-test shots):",
               note="independent-choice = same per-test odds as the circuit, tests drawn independently "
-                   "(isolates what correlations between qubits add)")
+                   "(isolates what correlations between qubits add); uniform = a random five-test panel")
 
     # (b) Pooled over all circuits in the job: which of the distinct optimal panels were measured at least once.
     found = [t for t in targets if t in sampled]
+    summary["found"] = len(found)
     print(f"  pooled over the job: {len(found)} of {len(targets)} distinct optimal panels sampled")
     for t in targets:
         print(f"    {rep.yesno(t in sampled):3s}  {rep.money(problem.price[t]):>8s}  {', '.join(core.state_to_names(t))}")
     print()
 
-    # (c) Do the samples look like the ideal circuit, or like the sampler without correlations?
+    # (c) How good the sampled panels are overall: the best one's rank, and how many were among the top 1%.
+    rows = []
+    for mu in price_weights:
+        panel_counts = counts[mu][0]
+        vector = quantum.as_vector(panel_counts)
+        if vector.sum() == 0:
+            rows.append([mu, "no five-test shots", "", "", "", ""])
+            continue
+        top_positions = np.argsort(problem.objective[mu][core.FEAS_IDX])[:TOP_SHARE]
+        observed_share = vector[top_positions].sum() / vector.sum()
+        best_sampled = min(panel_counts, key=lambda s: problem.objective[mu][s])
+        best_rank = core.rank_of(problem.objective[mu], best_sampled)
+        summary["top_share"].append(observed_share)
+        summary["best_rank"].append(best_rank)
+        summary["best_sampled"].append(best_sampled)
+        rows.append([mu, f"{best_rank} of 1287", rep.pct(observed_share, 1),
+                     rep.pct(ideal[mu][top_positions].sum(), 1), rep.pct(independent[mu][top_positions].sum(), 1),
+                     rep.pct(TOP_SHARE / 1287, 1)])
+    rep.table(["mu", "best sampled panel's rank", "share of samples in the top 1% (13 best panels)",
+               "expected: ideal circuit", "expected: independent-choice", "expected: random panels"], rows,
+              title="How good the sampled panels are overall (rank 1 = the exact best panel):")
+
+    # (d) Do the samples look like the ideal circuit, or like the sampler without correlations?
     llr_rows = []
     for mu in price_weights:
         vector = quantum.as_vector(counts[mu][0])
@@ -532,14 +679,17 @@ def step_4_results(problem, price_weights, counts, ideal, independent, targets, 
             core.llr_stats(vector, ideal[mu], independent[mu])
         closer_to_ideal = abs(observed - mean_if_ideal) / max(sd_if_ideal, 1e-9) < \
             abs(observed - mean_if_null) / max(sd_if_null, 1e-9)
+        summary["llr_tested"] += 1
+        summary["looks_ideal"] += closer_to_ideal
         llr_rows.append([mu, f"{observed:+.1f}", f"{mean_if_ideal:+.1f} +- {sd_if_ideal:.1f}",
                          f"{mean_if_null:+.1f} +- {sd_if_null:.1f}",
                          "ideal circuit" if closer_to_ideal else "independent-choice"])
     rep.table(["mu", "log-likelihood ratio (ideal vs independent)", "expected if ideal", "expected if independent",
                "samples look like"], llr_rows,
+              title="Do the samples carry the circuit's correlations? (positive = like the ideal circuit)",
               note="a per-run test that the samples carry the circuit's correlations, not just its per-test odds")
 
-    # (d) Classical methods given the same number of evaluated panels as the job produced.
+    # (e) Classical methods given the same number of evaluated panels as the job produced.
     if run_baselines and sampled:
         rng = np.random.default_rng(seed)
         annealing_evaluated, local_search_evaluated = set(), set()
@@ -554,20 +704,22 @@ def step_4_results(problem, price_weights, counts, ideal, independent, targets, 
                     f"{sum(t in annealing_evaluated for t in targets)} of {len(targets)}"],
                    ["random-restart local search (one seeded run)",
                     f"{sum(t in local_search_evaluated for t in targets)} of {len(targets)}"]],
+                  title="Classical search methods with the same budget (one run each; section 6 has 200 runs):",
                   note="classical evaluations are microsecond function calls: this compares sample quality, not speed")
+    return summary
 
 
 # =================================================================================================================
-# Sections 5 and 6: offline evidence, and limits
+# Section 6: offline evidence
 # =================================================================================================================
-def step_5_precomputed_evidence(precomputed):
-    """Section 5: results that take minutes to hours to compute, so they were run offline (tools/precompute.py in
+def step_6_precomputed_evidence(precomputed):
+    """Section 6: results that take minutes to hours to compute, so they were run offline (tools/precompute.py in
     the GitHub repo) and saved in results/precomputed.json."""
     evidence = precomputed.get("evidence", {})
     if not evidence:
         return
     provenance = precomputed.get("provenance", {})
-    rep.section("5. Precomputed evidence (offline runs; file results/precomputed.json)")
+    rep.section("6. Precomputed evidence (offline runs; file results/precomputed.json)")
 
     # (a) Chance that one job finds all four optimal panels, at several job sizes: quantum vs classical.
     recovery = evidence.get("recovery")
@@ -583,6 +735,7 @@ def step_5_precomputed_evidence(precomputed):
             rows.append([name] + [rep.pct(method[str(recovery["shots_to_evals"][c])]["all_found_rate"])
                                   for c in columns])
         rep.table(["method", "100 shots (22 evals)", "200 (44)", "500 (111)", "1000 (222)"], rows,
+                  title="Quantum vs classical at equal budgets: chance that one job finds all 4 optimal panels",
                   note="chance ONE job finds all 4 optimal panels. Quantum rows: exact formula (noisy row from a "
                        "10,000-shot noisy reference); classical rows: 200 seeded jobs with the same number of "
                        f"evaluated panels per price weight "
@@ -595,6 +748,7 @@ def step_5_precomputed_evidence(precomputed):
                  f"{r['P_opt_per_raw_shot']:.5f}"] for r in penalty["rows"]]
         rep.table(["formulation (mu = 0)", "layers p", "2-qubit gates", "P(optimum | 5 tests)",
                    "P(optimum) per raw shot"], rows,
+                  title="Why the mixer replaces the prompt's penalty term (chance of sampling the optimum):",
                   note=f"QCA's penalty term vs the XY mixer, all angles tuned without knowing the answer. Penalty "
                        f"values: Qiskit automatic {penalty['P_auto']:.3f}, textbook bound {penalty['P_bound']:.3f}, "
                        f"smallest valid {penalty['P_min']:.4f} (finding it requires solving the problem). "
@@ -608,8 +762,9 @@ def step_5_precomputed_evidence(precomputed):
                 for r in honest["rows"]]
         rep.table(["panel chosen inside each training fold by", "held-out AUC [95% CI]", "per-repeat AUC",
                    "mean panel price"], rows,
+                  title="Accuracy on unseen patients (the panel is chosen without seeing them):",
                   note="honest numbers: the panel is re-selected on training patients only, then scored on unseen "
-                       "patients (lower than the optimistic price ladder in section 2)")
+                       "patients (lower than the optimistic price ladder in section 3)")
 
     # (d) Two-qubit gate counts: trapped ions (all-to-all) vs an IBM-style heavy-hex lattice.
     gates = evidence.get("gates")
@@ -617,9 +772,11 @@ def step_5_precomputed_evidence(precomputed):
         rows = [[mu, ionq, ibm_all_to_all, ibm_heavy_hex] for mu, ionq, ibm_all_to_all, ibm_heavy_hex in
                 zip(gates["mu"], gates["ionq_native_zz"], gates["cz_all_to_all"], gates["cz_heavy_hex"])]
         rep.table(["mu", "IonQ native ZZ (all-to-all)", "IBM CZ, all-to-all", "IBM CZ, heavy-hex routed"], rows,
+                  title="Two-qubit gates per circuit on different hardware (fewer = less noise):",
                   note="the same circuit on trapped ions vs a superconducting heavy-hex lattice")
 
     # (e) The two pre-registered confirmatory checks.
+    print("  Checks registered in advance (git tag 'prereg', before any confirmatory run):")
     for key, title in (("confirm2", "pre-registered check 2"), ("confirm3", "pre-registered check 3")):
         check = evidence.get(key)
         if not check:
@@ -636,13 +793,93 @@ def step_5_precomputed_evidence(precomputed):
         print()
 
 
-def step_6_what_this_does_not_claim():
-    rep.section("6. What this does not claim")
-    print("  * No advantage over exhaustive search: at 13 tests it is exact and takes milliseconds (section 2).")
-    print("  * No speedup. The quantum job is compared on sample quality at equal numbers of samples.")
-    print("  * Prices are 1992 Ontario fees, used as relative costs; patients are a referral cohort, not screening.")
-    print("  * The AUC front is the best of 1,287 panels on all patients (optimistic); re-selecting the panel")
-    print("    inside each cross-validation fold gives lower, honest numbers (project page, 'Results').")
+# =================================================================================================================
+# Section 7: conclusion
+# =================================================================================================================
+def step_7_conclusion(problem, ladder, auc, kind, label, summary, precomputed, gate_counts):
+    """Section 7: what this run and the offline evidence show, in plain words. Every number is computed above."""
+    rep.section("7. Conclusion: what this shows")
+    evidence = precomputed.get("evidence", {})
+
+    print("  For the clinic:")
+    if ladder:
+        cheapest, best = ladder[0], ladder[-1]
+        jumps = [(auc[b] - auc[a], a, b) for a, b in zip(ladder, ladder[1:])]
+        _, before, after = max(jumps)
+        print(f"  * A price ladder: {rep.money(problem.price[cheapest])} ({core.procedures(cheapest)}) already "
+              f"reaches AUC {auc[cheapest]:.3f}; {rep.money(problem.price[best])} reaches {auc[best]:.3f}.")
+        added = [p for p in core.procedures(after).split(" + ") if p not in core.procedures(before).split(" + ")]
+        print(f"  * The biggest single step is {rep.money(problem.price[before])} -> {rep.money(problem.price[after])}: "
+              f"adding {' + '.join(added) or 'a different test mix'} raises AUC from {auc[before]:.3f} to "
+              f"{auc[after]:.3f}. Shared procedures make some upgrades almost free.")
+
+    print("  From this run's quantum job:")
+    live = label.startswith("[live run")
+    n = summary["price_weights"]
+    if not live:
+        print(f"  * This press did not produce live samples {label}; the offline evidence below still holds.")
+    else:
+        if kind == "ionq":
+            print("  * The whole pipeline runs on IonQ in one job. A separate probe job (archived in the GitHub repo;")
+            print("    repeat it with circuits = probe) showed IonQ executes every gate type we use as Qiskit defines it.")
+        if summary["found"] == summary["targets"]:
+            print(f"  * One job sampled all {summary['targets']} exact best panel(s); at {summary['best_is_optimum']} "
+                  f"of {n} price weight(s) the best sampled panel was the exact optimum.")
+        elif summary["found"]:
+            print(f"  * One job sampled {summary['found']} of {summary['targets']} exact best panels; at "
+                  f"{summary['best_is_optimum']} of {n} price weights the best sampled panel was the exact optimum.")
+        elif summary["best_rank"]:
+            k = int(np.argmin(summary["best_rank"]))
+            panel = summary["best_sampled"][k]
+            accuracy = f", AUC {auc[panel]:.3f}" if panel in auc else ""
+            print(f"  * The best sampled panel was number {summary['best_rank'][k]} of 1,287 ({names(panel)}: "
+                  f"{rep.money(problem.price[panel])}{accuracy}); the exact optimum itself was not sampled.")
+        if summary["top_share"]:
+            share = float(np.mean(summary["top_share"]))
+            print(f"  * {rep.pct(share, 1)} of samples were top-1% panels: {share / (TOP_SHARE / 1287):.1f}x what "
+                  f"random panels give.")
+        if summary["llr_tested"]:
+            if summary["looks_ideal"] == summary["llr_tested"]:
+                print(f"  * At every price weight tested ({summary['llr_tested']}) the samples carry the circuit's "
+                      f"correlations: they match the ideal circuit, not a sampler with the same per-test odds.")
+            elif summary["looks_ideal"]:
+                print(f"  * At {summary['looks_ideal']} of {summary['llr_tested']} price weights the samples carry "
+                      f"the circuit's correlations (they match the ideal circuit).")
+            else:
+                print(f"  * On this simulator's noise the circuit's per-test preferences survive, but the "
+                      f"correlations between qubits that single out the exact optimum do not: the samples match "
+                      f"the independent-choice sampler. With {max(gate_counts)} two-qubit gates per circuit, this "
+                      f"measures how much noise the circuit can absorb; fewer gates or lower error rates are the "
+                      f"next step.")
+
+    print("  From the offline evidence (section 6):")
+    recovery = evidence.get("recovery")
+    if recovery:
+        ideal_rate = recovery["quantum_exact"]["1000"]["ideal QAOA circuit"]
+        null_rate = recovery["quantum_exact"]["1000"]["independent-choice"]
+        classical_rates = {name: method[str(recovery["shots_to_evals"]["1000"])]["all_found_rate"]
+                           for name, method in recovery["classical_pooled_200_jobs"].items()}
+        best_classical_name = max(classical_rates, key=classical_rates.get)
+        noisy = evidence.get("noisy")
+        noisy_text = (f" ({rep.pct(noisy['closed_form_all_found']['1000'])} with IonQ's older published noise rates)"
+                      if noisy else "")
+        print(f"  * At equal numbers of evaluated panels, one 1,000-shot job finds every optimal panel "
+              f"{rep.pct(ideal_rate)} of the time{noisy_text}, against {rep.pct(classical_rates[best_classical_name])} "
+              f"for the best classical method ({best_classical_name}) and {rep.pct(null_rate)} without "
+              f"correlations.")
+    checks = [evidence.get(key, {}).get("passed") for key in ("confirm2", "confirm3")]
+    if all(c is True for c in checks):
+        print("  * Both confirmatory checks registered before the runs passed.")
+    gates = evidence.get("gates")
+    if gates:
+        ionq_gates, heavy_hex_gates = max(gates["ionq_native_zz"]), max(gates["cz_heavy_hex"])
+        print(f"  * On trapped ions each circuit needs {ionq_gates} two-qubit gates; a heavy-hex lattice needs "
+              f"{heavy_hex_gates} ({heavy_hex_gates / ionq_gates:.1f}x more).")
+
+    print("  Where it goes next:")
+    print("  * At 13 tests a laptop can check all 1,287 panels, which is what makes every claim above checkable.")
+    print("    The same circuit applies unchanged to larger priced panels (choose 10 of 100 tests: 1.7 x 10^13")
+    print("    panels), where checking every panel is no longer possible and sample quality is what counts.")
 
 
 def print_counts_json(backend_description, shots_per_circuit, label, counts, price_weights):

@@ -1,11 +1,12 @@
 """Offline precompute for Five Tests, Priced. Writes five_tests_priced/results/precomputed.json.
 
-Every number written here is either recomputed from the project's own code (five_tests_priced/ftp_*.py) or read
-from the research results in research_notes/QCA prompts Quantum Impact plan/scripts/prompt_b/results/ (provenance
-recorded) -- nothing is typed in by hand.
+Every number written here is recomputed from the project's own code (five_tests_priced/ftp_*.py), except the
+honest nested-CV table (honestcv), which is read from the research results in research_notes/.../prompt_b/results/
+(provenance recorded). Nothing is typed in by hand.
 
 Steps (run any subset, in any order; each updates its own block):
-  auc        2,379-panel cross-validated AUC table + constants mirror           (fast)
+  derive     re-derive every constant in ftp_core (prices, relevance, angles) and record the differences (~1 min)
+  auc        2,379-panel cross-validated AUC table, recomputed with ftp_classical.cv_auc (~3 min)
   baselines  SA / random-restart local search, pooled, 200 jobs, matched evals   (~1 min)
   penalty    penalty-QAOA vs XY-QAOA on THIS project's objective, p = 1..3        (~3 min)
   gates      two-qubit gates: all-to-all (IonQ) vs heavy-hex (IBM)               (fast)
@@ -67,22 +68,52 @@ def relevance(X, y, seeds, k=10):
 
 
 # ------------------------------------------------------------------------------------------------------- steps
+def step_derive(doc):
+    """Re-derive every constant in ftp_core.py from the data with ftp_derive.py, and record the differences."""
+    import ftp_derive as derive
+    X, y = core.load_data()
+    t = time.time()
+    r = derive.relevance(X, y)
+    gamma, beta, train_mean = derive.tune_angles(X, y)
+    doc["derivations"] = {
+        "created": now(),
+        "prices_match_turney_files": derive.prices_match_turney(),
+        "relevance": [float(v) for v in r],
+        "relevance_max_diff": float(np.abs(r - core.R_K10).max()),
+        "gamma": gamma, "beta": beta, "train_mean_P_opt": train_mean,
+        "gamma_diff": abs(gamma - core.GAMMA), "beta_diff": abs(beta - core.BETA),
+        "auc_max_diff": doc.get("derivations", {}).get("auc_max_diff"),
+        "seconds": round(time.time() - t, 1),
+        "how": "ftp_derive.relevance (k=10, 20 seeds), ftp_derive.tune_angles (12 x 80% subsets, seed 4242, "
+               "Nelder-Mead from 16 starts), ftp_derive.prices_match_turney (data/heart-disease.expense, .group)",
+    }
+    doc["constants_mirror"] = {"note": "Constants re-derived by ftp_derive.py (tests check ftp_core agrees).",
+                               "r_k10": [float(v) for v in r], "gamma": gamma, "beta": beta}
+    print(f"  prices match Turney: {doc['derivations']['prices_match_turney_files']}; relevance max diff "
+          f"{doc['derivations']['relevance_max_diff']:.1e}; gamma/beta diff {doc['derivations']['gamma_diff']:.1e} "
+          f"/ {doc['derivations']['beta_diff']:.1e}")
+
+
 def step_auc(doc):
-    z = np.load(RESEARCH / "results" / "s05_all_subsets.npz")
+    """Cross-validated AUC of every panel of 1-5 tests, recomputed with the project's own ftp_classical.cv_auc."""
+    import ftp_derive as derive
+    X, y = core.load_data()
+    table = derive.auc_table(X, y)
+    previous = dict(zip(doc.get("auc_table", {}).get("states", []), doc.get("auc_table", {}).get("aucs", [])))
+    states = sorted(table)
     doc["auc_table"] = {
         "description": ("Cross-validated AUC of logistic regression (max_iter=2000, C=1; numeric tests standardised, "
                         "cp/restecg/slope/thal one-hot) on every panel of 1-5 tests; 5x3 repeated stratified CV, "
-                        "random_state=7, all 297 patients. ftp_classical.cv_auc reproduces it exactly."),
-        "source": "research_notes/QCA prompts Quantum Impact plan/scripts/prompt_b/results/s05_all_subsets.npz "
-                  "(s05_downstream.py part C)",
-        "states": [int(s) for s in z["states"]],
-        "aucs": [round(float(a), 6) for a in z["aucs"]],
+                        "random_state=7, all 297 patients."),
+        "source": "five_tests_priced/ftp_derive.auc_table (ftp_classical.cv_auc)",
+        "states": states,
+        "aucs": [round(float(table[s]), 6) for s in states],
     }
-    s07 = json.loads((RESEARCH / "results" / "s07_robustness.json").read_text())
-    s10 = json.loads((RESEARCH / "results" / "s10_pareto_onejob.json").read_text())
-    doc["constants_mirror"] = {"note": "Mirror of constants hard-coded in ftp_core.py (tests check they agree).",
-                               "r_k10": s07["estimators"]["kNN-MI k=10"]["r"],
-                               "gamma": s10["gamma"][0], "beta": s10["beta"][0]}
+    if previous:
+        diff = max(abs(round(float(table[s]), 6) - previous[s]) for s in previous)
+        doc.setdefault("derivations", {})["auc_max_diff"] = diff
+        doc["derivations"]["auc_created"] = now()
+        print(f"  AUC table: {len(states)} panels; max difference from the previous table {diff:.1e}")
 
 
 def step_baselines(doc):
@@ -364,11 +395,11 @@ def step_noisy(doc, shots=10000):
     }
 
 
-STEPS = {"auc": step_auc, "baselines": step_baselines, "penalty": step_penalty, "gates": step_gates,
+STEPS = {"derive": step_derive, "auc": step_auc, "baselines": step_baselines, "penalty": step_penalty, "gates": step_gates,
          "honestcv": step_honestcv, "confirm2": step_confirm2, "confirm3": step_confirm3, "noisy": step_noisy}
 
 
-TOP_KEYS = {"auc": ["auc_table", "constants_mirror"]}
+TOP_KEYS = {"derive": ["derivations", "constants_mirror"], "auc": ["auc_table", "derivations"]}
 EVIDENCE_KEY = {"baselines": "recovery", "penalty": "penalty", "gates": "gates", "honestcv": "honest_cv",
                 "confirm2": "confirm2", "confirm3": "confirm3", "noisy": "noisy"}
 
@@ -378,7 +409,7 @@ def _load():
 
 
 def main():
-    names = sys.argv[1:] or ["auc"]
+    names = sys.argv[1:] or ["derive"]
     for n in names:
         t = time.time()
         print(f"step {n} ...", flush=True)

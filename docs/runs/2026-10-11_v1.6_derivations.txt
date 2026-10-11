@@ -1,0 +1,16 @@
+Build v1.6 (Sun Oct 11, 2026): every constant in five_tests_priced/ftp_core.py is re-derived by the project's own
+code (five_tests_priced/ftp_derive.py), instead of being copied from the research scripts.
+
+tools/precompute.py derive   (60 s)
+  prices:      ftp_core.EXPENSE / GROUPS == Turney's files data/heart-disease.expense, .group   -> True
+  relevance:   ftp_derive.relevance (kNN mutual information, k = 10, 20 seeds) vs ftp_core.R_K10  -> max diff 0.0
+  angles:      ftp_derive.tune_angles (12 x 80% subsets, seed 4242, Nelder-Mead, 16 starts)
+               gamma 1.7181724313553923, beta 0.16760994251739314                               -> diff 0.0, 0.0
+
+tools/precompute.py auc      (304 s)
+  AUC of all 2,379 panels of 1-5 tests recomputed with ftp_classical.cv_auc (was: research table s05_all_subsets.npz).
+  118 of 2,379 panels differ from the research table, by at most 6.6e-4 (newer scikit-learn). The price ladder
+  (8 panels), every optimal panel's AUC and every AUC printed by a Run are unchanged at 3 decimals.
+  Pre-registered check 3 was computed on Oct 10 with the research table; its panels' AUCs are unchanged.
+
+Still read from research results (display only, not used by the model): the honest nested-CV table (honestcv).

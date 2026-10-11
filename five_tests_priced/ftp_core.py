@@ -47,22 +47,24 @@ MU_GRID = [0.0, 0.02, 0.05, 0.1, 0.2]   # price weights mu: 0 = ignore price ...
 
 # Relevance r_i of each test: how much it tells us about the diagnosis (mutual information, estimated with
 # k = 10 nearest neighbours, averaged over 20 random seeds, on all 297 patients).
-# Shipped as fixed numbers rather than re-estimated on every Run: two optimal panels are nearly tied (margins
-# about 1e-4), so a slightly different estimate could swap them.
-# Source: prompt_b/results/s07_robustness.json ["kNN-MI k=10"]["r"].
+# Computed by ftp_derive.relevance(X, y); every Run recomputes it and prints the difference (0 on our machines).
+# Written out as fixed numbers so a different scikit-learn version cannot silently change the answer: two optimal
+# panels are nearly tied (margins about 1e-4).
 R_K10 = np.array([0.02809099244605955, 0.04011519336902181, 0.13669130599364226, 0.02024255183378254,
                   0.009050224611943514, 5.01278870687627e-06, 0.016270742304905654, 0.09439720938402159,
                   0.09169989289124486, 0.10784624302560919, 0.07539719598659554, 0.12797945853741322,
                   0.14572276699853198])
 
 # The two angles of the one-layer (p = 1) QAOA circuit: gamma for the cost layer, beta for the mixer.
-# Tuned offline on 12 random 80% subsets of the patients x 5 price weights, never on the answer, then frozen.
-# Source: prompt_b/results/s10_pareto_onejob.json
+# Tuned on 12 random 80% subsets of the patients x 5 price weights, never on the answer, then frozen.
+# Computed by ftp_derive.tune_angles(X, y) (about a minute; Run setting retune_angles = true repeats it).
 GAMMA = 1.7181724313553923
 BETA = 0.16760994251739314
 
 # Test prices from Turney (1995): Ontario fee schedule, Oct 1992, Canadian dollars.
 # Each test has two prices: (full price, price when its shared procedure is already paid for).
+# These are exactly Turney's files data/heart-disease.expense and data/heart-disease.group; every Run checks this
+# (ftp_derive.prices_match_turney).
 EXPENSE = {"age": (1.00, 1.00), "sex": (1.00, 1.00), "cp": (1.00, 1.00), "trestbps": (1.00, 1.00),
            "chol": (7.27, 5.17), "fbs": (5.20, 3.10), "restecg": (15.50, 15.50),
            "thalach": (102.90, 1.00), "exang": (87.30, 1.00), "oldpeak": (87.30, 1.00),
@@ -72,6 +74,13 @@ EXPENSE = {"age": (1.00, 1.00), "sex": (1.00, 1.00), "cp": (1.00, 1.00), "trestb
 GROUPS = {"blood draw": ["chol", "fbs"],
           "thallium stress test": ["thalach", "thal"],
           "treadmill ECG": ["exang", "oldpeak", "slope"]}
+
+# The procedure each test comes from, for the printed tables.
+PROCEDURE_OF = {"age": "history", "sex": "history", "cp": "history", "trestbps": "vital signs",
+                "chol": "blood draw", "fbs": "blood draw", "restecg": "resting ECG",
+                "thalach": "thallium stress test", "thal": "thallium stress test",
+                "exang": "treadmill ECG", "oldpeak": "treadmill ECG", "slope": "treadmill ECG",
+                "ca": "fluoroscopy"}
 
 # =================================================================================================================
 # 2. Panel tables (computed once, used everywhere)

@@ -20,8 +20,16 @@ def section(title):
     print("-" * len(title), flush=True)
 
 
-def table(headers, rows, note=None):
-    """Print rows as a plain-text table with aligned columns, then an optional note line."""
+def paragraph(text, width=112):
+    """Print explanatory text, wrapped and indented to match the tables."""
+    import textwrap
+    print(textwrap.fill(text, width=width, initial_indent="  ", subsequent_indent="  "))
+
+
+def table(headers, rows, note=None, title=None):
+    """Print a titled plain-text table with aligned columns, then an optional note line."""
+    if title:
+        print("  " + title)
     cells = [[str(h) for h in headers]] + [[str(c) for c in row] for row in rows]
     widths = [max(len(row[i]) for row in cells) for i in range(len(headers))]
 
