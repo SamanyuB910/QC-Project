@@ -45,7 +45,7 @@ History and vitals cost \$1 each (age, sex, chest-pain type, resting blood press
 | \$191.20 | sex, chest-pain type, resting BP, ST slope, fluoroscopy | + treadmill ECG + fluoroscopy | 0.902 |
 | \$293.10 | sex, chest-pain type, ST slope, fluoroscopy, thallium | + treadmill + thallium + fluoroscopy | 0.911 |
 
-![Price ladder: the best cross-validated AUC reachable at each five-test panel price, rising in steps from \$9.20 (AUC 0.838) to \$293.10 (AUC 0.911); diamonds mark the panel the objective picks at each price weight](https://raw.githubusercontent.com/SamanyuB910/QC-Project/main/docs/figures/price_ladder.png)
+![Price ladder: the best cross-validated AUC reachable at each five-test panel price, rising in steps from a 9.20-dollar panel (AUC 0.838) to a 293.10-dollar panel (AUC 0.911); diamonds mark the panel the objective picks at each price weight](https://raw.githubusercontent.com/SamanyuB910/QC-Project/main/docs/figures/price_ladder.png)
 
 *The program draws this figure on every Run, after a text description.*
 
