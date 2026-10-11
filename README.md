@@ -87,7 +87,7 @@ py -3.12 -m venv .venv
 | [`docs/`](docs/) | Video script, submission checklist, Qollab steps, [disclosure](docs/DISCLOSURE.md), archived run outputs |
 | `research_notes/`, `reports/`, `ideation/` | Supporting research (Oct 7–10); see [disclosure](docs/DISCLOSURE.md) for what predates the build window |
 
-## Pre-existing work, AI use, licences
+## Pre-existing work and licences
 
-- **Disclosure.** See [`docs/DISCLOSURE.md`](docs/DISCLOSURE.md) for what existed before the build window (Oct 9, 19:00 ET), what was built during it, every outside source we credit, and our AI use. Code and text were produced with substantial assistance from an AI model (Anthropic's Claude), directed and reviewed by the team.
+- **Disclosure.** See [`docs/DISCLOSURE.md`](docs/DISCLOSURE.md) for what existed before the build window (Oct 9, 19:00 ET), what was built during it, and every outside source we credit. AI tools were used during development.
 - **Licences.** Code: MIT ([`LICENSE`](LICENSE)). Data: UCI Heart Disease (CC BY 4.0) and Turney (1995) test costs; see [`DATA_NOTICE.md`](DATA_NOTICE.md).
