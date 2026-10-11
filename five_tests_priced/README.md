@@ -132,7 +132,7 @@ f_μ(x) = −Σ relevanceᵢ·xᵢ + 0.1·Σ redundancyᵢⱼ·xᵢxⱼ + μ·pr
 > **Pitfalls we hit, all measured.**
 > - **The penalty term.** The prompt enforces "exactly five" with P·(Σx − 5)². Every penalty you can choose without already knowing the answer makes QAOA **no better than random**: Qiskit's automatic value 3.12, and the textbook safe bound 0.395.
 > - **The relevance estimate.** scikit-learn's default k = 3 nearest-neighbour estimate inflates cholesterol's relevance 4–10×. We use k = 10, averaged over 20 seeds.
-> - **Fixed constants.** Two optimal panels are nearly tied, so the relevance values ship as fixed constants rather than being re-estimated on every Run.
+> - **Fixed constants.** Two optimal panels are nearly tied, so the relevance values ship as fixed constants; every Run re-estimates them only as a check (difference 0).
 > - **Units.** Relevance is in nats and redundancy is a correlation. With λ ≥ 0.5 the "optimal" panel includes a feature with zero information, so we use λ = 0.1.
 
 Probability of the optimal panel per valid sample, at μ = 0, with all angles tuned **without** knowing the answer (random five-test panel = 0.00078):
